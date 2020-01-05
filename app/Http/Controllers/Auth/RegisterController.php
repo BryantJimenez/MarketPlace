@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -63,8 +64,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $count=User::where('name', $data['name'])->count();
+        $slug=Str::slug($data['name'], '-');
+        if ($count>0) {
+            $slug=$slug.$count;
+        }
+
+        // Validación para que no se repita el slug
+        $num=0;
+        while (true) {
+            $count2=User::where('slug', $slug)->count();
+            if ($count2>0) {
+                $slug=$slug.$num;
+                $num++;
+            } else {
+                break;
+            }
+        }
+
         return User::create([
             'name' => $data['name'],
+            'slug' => $slug,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

@@ -63,14 +63,6 @@ class SubcategoryController extends Controller
             }
         }
 
-        // Mover imagen a carpeta subcategories y extraer nombre
-        if ($request->hasFile('image')) {
-            $file=$request->file('image');
-            $image=time()."_".$file->getClientOriginalName();
-            $file->move(public_path().'/admins/img/subcategories/', $image);
-            $data['image']=$image;
-        }
-
         $subcategory=Subcategory::create($data)->save();
         if ($subcategory) {
             return redirect()->route('subcategorias.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La subcategoria ha sido registrada exitosamente.']);
@@ -116,14 +108,6 @@ class SubcategoryController extends Controller
         $category=Category::where('slug', request('category'))->firstOrFail();
         $data=array('name' => request('name'), 'category_id' => $category->id);
 
-        // Mover imagen a carpeta subcategories y extraer nombre
-        if ($request->hasFile('image')) {
-            $file=$request->file('image');
-            $image=time()."_".$file->getClientOriginalName();
-            $file->move(public_path().'/admins/img/subcategories/', $image);
-            $data['image']=$image;
-        }
-
         $subcategory->fill($data)->save();
 
         if ($subcategory) {
@@ -149,5 +133,19 @@ class SubcategoryController extends Controller
         } else {
             return redirect()->route('subcategorias.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
+    }
+
+    public function addSubcategories($slug)
+    {
+        $category=Category::where('slug', $slug)->firstOrFail();
+        $subcategories=Subcategory::where('category_id', $category->id)->get();
+
+        // Agregar subcategorias al arreglo
+        $num=0;
+        foreach ($subcategories as $subcategory) {
+            $data[$num]=['slug' => $subcategory->slug, 'name' => $subcategory->name];
+            $num++;
+        }
+        return response()->json($data);
     }
 }

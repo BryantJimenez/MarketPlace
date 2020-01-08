@@ -32,11 +32,7 @@
 							@foreach($subcategories as $subcategory)
 							<tr>
 								<td>{{ $num++ }}</td>
-								<td>
-									<span class="image-list">
-										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/subcategories/'.$subcategory->image) }}' style='width: 150px; height: 150px;' ><br><b>{{ $subcategory->name }}</b>"><img src="{{ asset('/admins/img/subcategories/'.$subcategory->image) }}" class="img-circle" alt="Imagen de subcategoria" width="40" height="40" /> {{ $subcategory->name }}</a>
-									</span>
-								</td>
+								<td>{{ $subcategory->name }}</td>
 								<td>{{ $subcategory->category->name }}</td>
 								<td class="d-flex">
 									<a class="btn btn-info btn-circle btn-sm" href="{{ route('subcategorias.show', ['slug' => $subcategory->slug]) }}"><i class="fa fa-briefcase"></i></a>&nbsp;&nbsp;

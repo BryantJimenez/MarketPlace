@@ -29,6 +29,18 @@
                         <li><a href="{{ route('subcategorias.index') }}">Lista</a></li>
                     </ul>
                 </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-home"></i><span class="hide-menu">Tiendas</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('tiendas.create') }}">Registrar</a></li>
+                        <li><a href="{{ route('tiendas.index') }}">Lista</a></li>
+                    </ul>
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-briefcase"></i><span class="hide-menu">Productos</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('productos.create') }}">Registrar</a></li>
+                        <li><a href="{{ route('productos.index') }}">Lista</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

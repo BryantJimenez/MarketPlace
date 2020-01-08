@@ -55,7 +55,7 @@ class CategoryController extends Controller
                 $slug=$slug.$num;
                 $num++;
             } else {
-                $data=array('name' => request('name'), 'slug' => $slug);
+                $data=array('name' => request('name'), 'slug' => $slug, );
                 break;
             }
         }

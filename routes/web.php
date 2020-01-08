@@ -17,6 +17,10 @@ Auth::routes();
 ///// WEB /////
 // Inicio
 Route::get('/', 'WebController@index')->name('home');
+Route::get('/tienda', 'WebController@shop')->name('tienda');
+Route::get('/carrito', 'WebController@cart')->name('carrito');
+Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
+Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
 
 ///// ADMIN /////
 // Inicio
@@ -49,3 +53,25 @@ Route::get('/misterfix/subcategorias/{slug}', 'SubcategoryController@show')->nam
 Route::get('/misterfix/subcategorias/{slug}/editar', 'SubcategoryController@edit')->name('subcategorias.edit');
 Route::put('/misterfix/subcategorias/{slug}', 'SubcategoryController@update')->name('subcategorias.update');
 Route::delete('/misterfix/subcategorias/{slug}', 'SubcategoryController@destroy')->name('subcategorias.destroy');
+Route::get('/misterfix/subcategorias/{slug}/agregar', 'SubcategoryController@addSubcategories')->name('subcategorias.add');
+
+// Tiendas
+Route::get('/misterfix/tiendas', 'StoreController@index')->name('tiendas.index');
+Route::get('/misterfix/tiendas/registrar', 'StoreController@create')->name('tiendas.create');
+Route::post('/misterfix/tiendas', 'StoreController@store')->name('tiendas.store');
+Route::get('/misterfix/tiendas/{slug}', 'StoreController@show')->name('tiendas.show');
+Route::get('/misterfix/tiendas/{slug}/editar', 'StoreController@edit')->name('tiendas.edit');
+Route::put('/misterfix/tiendas/{slug}', 'StoreController@update')->name('tiendas.update');
+Route::delete('/misterfix/tiendas/{slug}', 'StoreController@destroy')->name('tiendas.destroy');
+
+// Productos
+Route::get('/misterfix/productos', 'ProductController@index')->name('productos.index');
+Route::get('/misterfix/productos/registrar', 'ProductController@create')->name('productos.create');
+Route::post('/misterfix/productos', 'ProductController@store')->name('productos.store');
+Route::get('/misterfix/productos/{slug}', 'ProductController@show')->name('productos.show');
+Route::get('/misterfix/productos/{slug}/editar', 'ProductController@edit')->name('productos.edit');
+Route::put('/misterfix/productos/{slug}', 'ProductController@update')->name('productos.update');
+Route::delete('/misterfix/productos/{slug}', 'ProductController@destroy')->name('productos.destroy');
+Route::post('/misterfix/imagenes/productos', 'ProductController@image')->name('productos.store.images');
+Route::post('/misterfix/imagenes/productos/{slug}', 'ProductController@imageEdit')->name('productos.edit.images');
+Route::get('/misterfix/imagenes/productos/{slug}/{url}', 'ProductController@imageDestroy')->name('productos.destroy.images');

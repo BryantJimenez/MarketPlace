@@ -5,7 +5,6 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/lobibox/Lobibox.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -23,14 +22,10 @@
 				@include('admin.partials.errors')
 
 				<h6 class="card-subtitle">Campos obligatorios (<b class="text-danger">*</b>)</h6>
-				<form action="{{ route('subcategorias.update', ['slug' => $subcategory->slug]) }}" method="POST" class="form" id="formSubcategory" enctype="multipart/form-data">
+				<form action="{{ route('subcategorias.update', ['slug' => $subcategory->slug]) }}" method="POST" class="form" id="formSubcategory">
 					@method('PUT')
 					@csrf
 					<div class="row">
-						<div class="form-group col-lg-6 col-md-6 col-12">
-							<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ $subcategory->name }}">
-						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Categoria<b class="text-danger">*</b></label>
 							<select class="form-control" name="category" required>
@@ -40,9 +35,9 @@
 								@endforeach
 							</select>
 						</div>
-						<div class="form-group col-lg-12 col-md-12 col-12">
-							<label class="col-form-label">Imagen<b class="text-danger">*</b></label>
-							<input type="file" name="image" accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" data-default-file="{{ '/admins/img/subcategories/'.$subcategory->image }}" />
+						<div class="form-group col-lg-6 col-md-6 col-12">
+							<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
+							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ $subcategory->name }}">
 						</div>
 						<div class="form-group col-12">
 							<div class="btn-group" role="group">
@@ -60,7 +55,6 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('/admins/vendors/dropify/js/dropify.min.js') }}"></script>
 <script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>

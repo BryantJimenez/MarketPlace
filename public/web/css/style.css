@@ -8222,7 +8222,7 @@ h1, h2, h3, h4, h5,
     bottom: 0;
     content: '';
     opacity: .6;
-    width: 50%;
+    width: 100%;
     background: #0f1d41; }
   .hero-wrap .slider-text {
     color: #fff;
@@ -8379,7 +8379,7 @@ h1, h2, h3, h4, h5,
         left: 0;
         right: 0;
         background: #000000;
-        opacity: .2; }
+        opacity: .5; }
       .owl-carousel.home-slider .slider-item .slider-text {
         height: 650px;
         z-index: 0; }
@@ -8524,6 +8524,10 @@ h1, h2, h3, h4, h5,
       border: 1px solid #0f1d41;
       background: transparent;
       color: #0f1d41; }
+    #home-section .btn.btn-primary:hover {
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff; }
     .btn.btn-primary.btn-outline-primary {
       border: 1px solid #0f1d41;
       background: transparent;
@@ -9156,15 +9160,15 @@ h1, h2, h3, h4, h5,
         display: none; } }
 
 .form-control {
-  height: 52px !important;
+  height: 45px !important;
   background: #fff !important;
   color: #000000 !important;
   font-size: 18px;
-  border-radius: 0px;
+  border-radius: 5px;
   -webkit-box-shadow: none !important;
   box-shadow: none !important; }
   .form-control:focus, .form-control:active {
-    border-color: #000000; }
+    border-color: #ddd; }
 
 textarea.form-control {
   height: inherit !important; }
@@ -9742,6 +9746,33 @@ textarea.form-control {
       color: #fff;
       border: 1px solid transparent; }
 
+  .block-27 .pagination li {
+    display: inline-block;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    font-weight: 400; }
+    .block-27 .pagination li a, .block-27 .pagination li span {
+      color: #000000;
+      text-align: center;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 50%;
+      border: 1px solid #e6e6e6;
+      background: #fff;
+      padding: 0;
+    }
+    .block-27 .pagination li.active a, .block-27 .pagination li.active span {
+      background: #0f1d41;
+      color: #fff;
+      border: 1px solid transparent;
+      padding: 0;
+    }
+    .block-27 .pagination .page-item:first-child .page-link, .block-27 .pagination .page-item:last-child .page-link {
+      border-radius: 50%;
+    }
+
 .contact-section .contact-info p a {
   color: #1a1a1a; }
 
@@ -10014,3 +10045,7 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+.product .img-prod img {
+  height: 180px;
+}

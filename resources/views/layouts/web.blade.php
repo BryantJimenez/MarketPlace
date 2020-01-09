@@ -22,7 +22,7 @@
 
 	<link rel="stylesheet" href="{{ asset('/web/css/ionicons.min.css') }}">
 
-	<link rel="stylesheet" href="{{ asset('/web/css/bootstrap-datepicker.css') }}">
+	{{-- <link rel="stylesheet" href="{{ asset('/web/css/bootstrap-datepicker.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/web/css/jquery.timepicker.css') }}">
 
 
@@ -52,10 +52,10 @@
 	<script src="{{ asset('/web/js/jquery.magnific-popup.min.js') }}"></script>
 	<script src="{{ asset('/web/js/aos.js') }}"></script>
 	<script src="{{ asset('/web/js/jquery.animateNumber.min.js') }}"></script>
-	<script src="{{ asset('/web/js/bootstrap-datepicker.js') }}"></script>
+	{{-- <script src="{{ asset('/web/js/bootstrap-datepicker.js') }}"></script> --}}
 	<script src="{{ asset('/web/js/scrollax.min.js') }}"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="{{ asset('/web/js/google-map.js') }}"></script>
+	{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> --}}
+	{{-- <script src="{{ asset('/web/js/google-map.js') }}"></script> --}}
 	<script src="{{ asset('/web/js/main.js') }}"></script>
 	@yield('script')
 </body>

@@ -47,7 +47,7 @@ class WebController extends Controller
         }
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        $products=Product::select('slug', 'name', 'price', 'ofert', 'quality');
+        $products=Product::select('id', 'slug', 'name', 'price', 'ofert', 'quality');
         if (($request->has('search') && !empty(request('search'))) || ($request->has('min') && !empty(request('min'))) || ($request->has('max') && !empty(request('max'))) || ($request->has('quality') && !empty(request('quality'))) || ($request->has('province') && !empty(request('province')))) {
 
             if ($request->has('search') && !empty(request('search'))) {
@@ -67,20 +67,31 @@ class WebController extends Controller
 
         if ($request->has('page')) {
             $offset=8*(request('page')-1);
-            $products->offset($offset)->limit(8)->get();
-
-            dd($offset);
         } else {
-            $products->limit(8)->get();
-
-            dd($products);
+            $offset=0;
         }
+
+        $products=$products->get();
 
         $varPage='page';
         $page=Paginator::resolveCurrentPage($varPage);
         $pagination=new LengthAwarePaginator($products, $total=count($products), $perPage = 8, $page, ['path' => Paginator::resolveCurrentPath(), 'pageName' => $varPage,]);
 
-        return view('web.shop', compact("categories", "products", "districts", "cart", "pagination"));
+        return view('web.shop', compact("categories", "products", "districts", "cart", "pagination", "offset"));
+    }
+
+    public function categories(Request $request) {
+        $categories=Category::all();
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+
+        return view('web.categories', compact("categories", "cart"));
+    }
+
+    public function category(Request $request, $slugCategory, $slugSubcategory=null) {
+        $category=Category::where('slug', $slugCategory)->firstOrFail();
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+
+        return view('web.category', compact("category", "cart"));
     }
 
     public function cart(Request $request) {
@@ -105,8 +116,10 @@ class WebController extends Controller
 
     public function productSingle(Request $request, $slug) {
         $product=Product::where('slug', $slug)->firstOrFail();
+        $relatedProducts=Product::select('products.id', 'products.slug', 'products.name', 'products.price', 'products.ofert')->join('subcategories', 'products.subcategory_id', '=', 'subcategories.id')->where('products.subcategory_id', $product->subcategory_id)->orWhere('subcategories.category_id', $product->subcategory->category_id)->limit(4)->inRandomOrder()->get();
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-        return view('web.product', compact("product", "cart"));
+
+        return view('web.product', compact("product", "cart", "relatedProducts"));
     }
 
     public function addCart($slug, Request $request) {

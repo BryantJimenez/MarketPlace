@@ -9,7 +9,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active"><a href="{{ route('home') }}" class="nav-link">Inicio</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{ route('tienda') }}">Tienda</a></li>
-				<li class="nav-item"><a href="#" class="nav-link">Nosotros</a></li>
+				<li class="nav-item"><a href="{{ route('categorias') }}" class="nav-link">Categorías</a></li>
 				<li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
 				<li class="nav-item cta cta-colored"><a href="{{ route('carrito') }}" class="nav-link"><span class="icon-shopping_cart"></span>[<span class="count-cart">{{ $cart }}</span>]</a></li>
 				@guest

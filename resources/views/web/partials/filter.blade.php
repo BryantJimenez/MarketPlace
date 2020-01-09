@@ -16,7 +16,7 @@
   </div>
 
   <div class="mb-3">
-    <p class="h6">Categorias</p>
+    <p class="h6">Categorías</p>
     @foreach($categories as $category)
     <a href="{{ route('tienda') }}" class="nav-link text-primary">{{ $category->name }}</a>
     @endforeach

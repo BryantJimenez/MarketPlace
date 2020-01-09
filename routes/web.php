@@ -18,6 +18,8 @@ Auth::routes();
 // Inicio
 Route::get('/', 'WebController@index')->name('home');
 Route::get('/tienda', 'WebController@shop')->name('tienda');
+Route::get('/categorias', 'WebController@categories')->name('categorias');
+Route::get('/categoria/{slugCategory}/{slugSubcategory?}', 'WebController@category')->name('categoria');
 Route::get('/carrito', 'WebController@cart')->name('carrito');
 Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');

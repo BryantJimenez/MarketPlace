@@ -20,7 +20,7 @@ class WebController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request) {
-    	$products=Product::all();
+    	$products=Product::limit(8)->get();
         $brands=Brand::all();
     	$categories=Category::all();
     	$stores=Store::all();
@@ -34,7 +34,7 @@ class WebController extends Controller
         }
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        return view('web.home', compact("categories", "brands", "products", "districts", "cart"));
+        return view('web.home', compact("categories", "brands", "stores", "products", "districts", "cart"));
     }
 
     public function shop(Request $request) {

@@ -1,5 +1,5 @@
 @extends('layouts.web')
- 
+
 @section('title', 'Mister Fix')
 
 @section('content')
@@ -54,34 +54,101 @@
 	</div>
 </section>
 
-<section class="ftco-section ftco-category ftco-no-pb">
+<section class="ftco-section ftco-no-pt ftco-no-pb mt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-6 col-12 mb-4">
+				<div class="ftco-animate img d-flex align-items-end shadow rounded bg-primary">
+					<div class="text text-center px-3 py-4">
+						<h2 class="mb-2 text-white">¿Quieres ofrecer los productos y servicios de tu tienda o taller?</h2>
+						<a href="#" class="btn btn-white">Ingresa</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-6 col-12 mb-4">
+				<div class="ftco-animate img mb-4 d-flex align-items-end shadow rounded bg-primary">
+					<div class="text text-center px-3 py-4">
+						<h2 class="mb-2 text-white">Encuentra profesionales listos para atender tus necesidades</h2>
+						<a href="#" class="btn btn-white">Encuentra</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-category ftco-no-pt">
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
-			<div class="col-md-12 heading-section text-center ftco-animate">
-				<h2 class="mb-4">Categorías</h2>
+			<div class="col-md-12 heading-section text-left ftco-animate">
+				<h2 class="mb-4">Categorías <a href="{{ route('categorias') }}" class="h6 pl-2">Ver más</a></h2>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="row">
+				<div class="carousel-category owl-carousel">
 
-					@foreach($categories as $category)
-					<div class="col-md-3">
-						<a href="{{ route('categoria', ['slugCategory' => $category->slug]) }}"><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/categories/'.$category->image) }});">
-							<div class="text px-3 py-1">
-								<h2 class="mb-0 text-white">{{ $category->name }}</h2>
-							</div>
-						</div></a>
-					</div>
-					@endforeach
+						@foreach($categories as $category)
+						<div class="item">
+							<a href="{{ route('categoria', ['slugCategory' => $category->slug]) }}"><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/categories/'.$category->image) }});">
+								<div class="text px-3 py-1">
+									<h2 class="mb-0 text-white">{{ $category->name }}</h2>
+								</div>
+							</div></a>
+						</div>
+						@endforeach
 
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </section>
+
+
+
+
+
+
+
+
+
+<section class="ftco-section ftco-category ftco-no-pt">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-left ftco-animate">
+				<h2 class="mb-4">Marcas <a href="" class="h6 pl-2">Ver más</a></h2>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="carousel-brand owl-carousel">
+
+						@foreach($brands as $brand)
+						<div class="item shadow">
+							<a href=""><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/brands/'.$brand->image) }}); background-size: 100%;">
+								<div class="text px-3 py-1">
+									<h2 class="mb-0 text-white">{{ $brand->name }}</h2>
+								</div>
+							</div></a>
+						</div>
+						@endforeach
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+
+
+
+
 
 <section class="ftco-section bg-light">
 	<div class="container">

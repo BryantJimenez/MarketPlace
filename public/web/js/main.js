@@ -86,14 +86,15 @@
 		// 	}
 		// });
 
-		$('.carousel-testimony').owlCarousel({
+		$('.carousel-category').owlCarousel({
 			center: true,
 			loop: true,
 			items:1,
 			margin: 30,
 			stagePadding: 0,
 			nav: false,
-			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+			autoplay:true,
+			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
 			responsive:{
 				0:{
 					items: 1
@@ -102,7 +103,29 @@
 					items: 3
 				},
 				1000:{
+					items: 4
+				}
+			}
+		});
+
+		$('.carousel-brand').owlCarousel({
+			center: true,
+			loop: true,
+			items:1,
+			margin: 30,
+			stagePadding: 0,
+			nav: false,
+			autoplay:true,
+			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
+			responsive:{
+				0:{
+					items: 1
+				},
+				600:{
 					items: 3
+				},
+				1000:{
+					items: 5
 				}
 			}
 		});

@@ -16,7 +16,7 @@ class BrandsTableSeeder extends Seeder
     		['id' => 2, 'name' => 'KIA', 'slug' => 'kia', 'image' => 'kia.jpg'],
     		['id' => 3, 'name' => 'Suzuki', 'slug' => 'suzuki', 'image' => 'suzuki.png'],
     		['id' => 4, 'name' => 'Chevrolet', 'slug' => 'chevrolet', 'image' => 'chevrolet.jpg'],
-    		['id' => 5, 'name' => 'Hyunday', 'slug' => 'hyunday', 'image' => 'hyunday.png']
+    		['id' => 5, 'name' => 'Hyundai', 'slug' => 'hyundai', 'image' => 'hyundai.png']
     	];
     	DB::table('brands')->insert($brands);
     }

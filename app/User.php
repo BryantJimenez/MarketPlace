@@ -34,6 +34,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function blogs() {
+        return $this->hasMany(Blogs::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(Comments::class);
+    }
+
     public function stores() {
         return $this->belongsToMany(Store::class)->withTimestamps();
     }

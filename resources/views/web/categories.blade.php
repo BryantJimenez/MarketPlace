@@ -20,11 +20,11 @@
 		<div class="row bg-white py-4">
 			@foreach($categories as $category)
 			<div class="col-12 pb-4 px-4 ftco-animate">
-				<p class="h5">{{ $category->name }}</p>
+				<p class="h5"><a href="{{ route('categoria', ['slugCategory' => $category->slug]) }}">{{ $category->name }}</a></p>
 				<div class="row">
 					@forelse ($category->subcategories as $subcategory)
 					<div class="col-md-4 col-lg-3 col-sm-6 col-12">
-						<p>{{ $subcategory->name }}</p>
+						<p><a href="{{ route('categoria', ['slugCategory' => $category->slug, 'slugSubcategory' => $subcategory->slug]) }}">{{ $subcategory->name }}</a></p>
 					</div>
 					@empty
 					@endforelse

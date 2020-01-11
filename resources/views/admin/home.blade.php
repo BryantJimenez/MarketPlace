@@ -23,55 +23,82 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-body text-center">
-				<a href="#" class="m-t-10 m-b-20 waves-effect waves-dark btn btn-success btn-md btn-rounded">Ver Listado Ventas</a>
-			</div>
 		</div>
 	</div>
 
-	<div class="col-lg-4">
-		<div class="card bg-info text-white">
+	
+	<div class="col-lg-3">
+		<div class="card">
 			<div class="card-body">
-				<div class="d-flex">
-					<div class="stats">
-						<h1 class="text-white">0</h1>
-						<h6 class="text-white">Usuarios</h6>
-						<a href="#" class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Ver Listado</a>
+				<div class="d-flex no-block">
+					<div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ '/admins/img/icon/staff.png'}}" alt="Income" /></div>
+					<div class="align-self-center">
+						<h6 class="text-muted m-t-10 m-b-0">Tiendas</h6>
+						<h2 class="m-t-0">0</h2></div>
 					</div>
-					<div class="stats-icon text-right ml-auto"><i class="fa fa-users display-5 op-3 text-dark"></i></div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-lg-4">
-		<div class="card bg-primary text-white">
-			<div class="card-body">
-				<div class="d-flex">
-					<div class="stats">
-						<h1 class="text-white">0</h1>
-						<h6 class="text-white">Productos</h6>
-						<a href="#" class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Ver Listado</a>
+		<div class="col-lg-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex no-block">
+						<div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ '/admins/img/icon/assets.png'}}" alt="Income" /></div>
+						<div class="align-self-center">
+							<h6 class="text-muted m-t-10 m-b-0">Productos</h6>
+							<h2 class="m-t-0">0</h2></div>
+						</div>
 					</div>
-					<div class="stats-icon text-right ml-auto"><i class="fa fa-briefcase display-5 op-3 text-dark"></i></div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col-lg-4">
-		<div class="card bg-success text-white">
-			<div class="card-body">
-				<div class="d-flex">
-					<div class="stats">
-						<h1 class="text-white">0</h1>
-						<h6 class="text-white">Profesionales</h6>
-						<a href="#" class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Ver Listado</a>
+			<div class="col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex no-block">
+							<div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ '/admins/img/icon/income.png'}}" alt="Income" /></div>
+							<div class="align-self-center">
+								<h6 class="text-muted m-t-10 m-b-0">Artículos / Blog</h6>
+								<h2 class="m-t-0">0</h2></div>
+							</div>
+						</div>
 					</div>
-					<div class="stats-icon text-right ml-auto"><i class="fa fa-star display-5 op-3 text-dark"></i></div>
 				</div>
-			</div>
-		</div>
-	</div>
+				<div class="col-lg-3">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex no-block">
+								<div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ '/admins/img/icon/assets.png'}}" alt="Income" /></div>
+								<div class="align-self-center">
+									<h6 class="text-muted m-t-10 m-b-0">Marcas</h6>
+									<h2 class="m-t-0">0</h2></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<div class="col-lg-12">
+                        <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"><span class="lstick"></span>Módulos del Sistema</h4>
+                            <ul class="feeds">
+                                <li>
+                                    <div class="bg-light-info"><i class="fa fa-bell-o"></i></div> 
+                                    Control de almacenamiento de categorías y subcategorías(Productos)</li>
+                                <li>
+                                    <div class="bg-light-success"><i class="ti-user"></i></div>Registro y control de Usuarios</li>
+                                <li>
+                                    <div class="bg-light-warning"><i class="ti-shopping-cart"></i></div> Registro y Control de Productos por Tienda.</li>
+                                <li>
+                                    <div class="bg-light-danger"><i class="fa fa-home"></i></div> Visualización y control de tiendas.</li>
+                                <li>
+                                    <div class="bg-light-inverse"><i class="fa fa-pencil"></i></div> Registro y control de artículos de blog.</li>
+                                <li>
+                                    <div class="bg-light-danger"><i class="fa fa-id-card"></i></div> Registro de Marcas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+
 
 </div>
 
-@endsection
+				@endsection

@@ -3,12 +3,8 @@
 @section('title', 'Perfil')
 @section('page-title', 'Perfil')
 
-@section('links')
-<link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
-@endsection
-
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ route('blog.index') }}">Perfil</a></li>
+<li class="breadcrumb-item">Perfil</li>
 @endsection
 
 @section('content')
@@ -28,27 +24,33 @@
 				</div>
 				<div class="text-center bg-light">
 					<div class="row">
+						<div class="col-6 p-20 b-r">
+							<h4 class="m-b-0 font-medium">Correo Electrónico</h4><small>{{ Auth::user()->email }}</small>
+						</div>
+						<div class="col-6 p-20">
+							<h4 class="m-b-0 font-medium">Tipo de Usuario</h4><small> @if (Auth::user()->type=='1')
+								{{'Administrador'}}
+							@endif </small>
+						</div>
+					</div>
+				</div>
+				<div class="text-center bg-light">
+					<div class="row">
 						<div class="col-6  p-20 b-r">
-							<h4 class="m-b-0 font-medium">Correo Electrónico</h4><small>{{ Auth::user()->email }}</small></div>
-							<div class="col-6  p-20">
-								<h4 class="m-b-0 font-medium">Tipo de Usuario</h4><small>...</small></div>
-							</div>
+							<h4 class="m-b-0 font-medium">Estado</h4>@if (Auth::user()->state=='1')
+							{{'Activo'}}
+						@endif</div>
+						<div class="col-6  p-20">
+							<h4 class="m-b-0 font-medium">Fecha de Inscripción</h4><small>{{  Auth::user()->created_at }}</small></div>
 						</div>
-						<div class="card-body text-center">
-							<a href=" {{ route('admin') }}" class="m-t-10 m-b-20 waves-effect waves-dark btn btn-success btn-md btn-rounded">Volver al Inicio</a>
-						</div>
+					</div>
+					<div class="card-body text-center">
+						<a href=" {{ route('admin') }}" class="m-t-10 m-b-20 waves-effect waves-dark btn btn-success btn-md btn-rounded">Volver al Inicio</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	@endsection
-
-	@section('script')
-	<script src="{{ asset('/admins/vendors/dropify/js/dropify.min.js') }}"></script>
-	<script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
-	<script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
-	<script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
-	<script src="{{ asset('/admins/js/validate.js') }}"></script>
-	@endsection
+@endsection

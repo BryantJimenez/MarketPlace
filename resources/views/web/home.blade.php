@@ -156,7 +156,7 @@
 			<div class="col-md-12 heading-section text-center ftco-animate">
 				<span class="subheading">Productos Destacados</span>
 				<h2 class="mb-4">Productos</h2>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+				<p>Seleccione con seguridad todos los productos que sean de su interés. Le aseguramos que cada uno contiene una alta proporcion de calidad</p>
 			</div>
 		</div>
 	</div>

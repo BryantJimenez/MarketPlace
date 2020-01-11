@@ -138,8 +138,7 @@ class UserController extends Controller
         }
     }
 
-    public function profile($slug) {
-        $user=User::where('slug', $slug)->firstOrFail();
-        return view('admin.users.profile', compact('user'));
+    public function profile(Request $request) {
+        return view('admin.users.profile');
     }
 }

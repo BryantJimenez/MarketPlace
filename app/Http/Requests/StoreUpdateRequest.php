@@ -25,7 +25,7 @@ class StoreUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:2|max:191',
-            'district_id' => 'required|min:2|max:191',
+            'district_id' => 'required',
             'address' => 'required|min:2|max:191',
             'phone' => 'required|min:2|max:15'
         ];

@@ -10049,3 +10049,8 @@ textarea.form-control {
 .product .img-prod img {
   height: 180px;
 }
+
+.img-100-50 {
+  width: 100%;
+  height: 60px;
+}

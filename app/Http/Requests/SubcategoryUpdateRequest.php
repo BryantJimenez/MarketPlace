@@ -25,7 +25,6 @@ class SubcategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:2|max:191'
-
         ];
     }
 }

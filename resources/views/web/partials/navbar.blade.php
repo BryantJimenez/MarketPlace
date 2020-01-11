@@ -20,7 +20,7 @@
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name." ".Auth::user()->lastname }}</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown05">
 						<a class="dropdown-item" href="{{ route('admin') }}">Panel Administrativo</a>
-						<a class="dropdown-item" href="#">Perfil</a>
+						<a class="dropdown-item" href="{{ route('web.profile') }}">Perfil</a>
 						<a class="dropdown-item" href="#">Pedidos</a>
 						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

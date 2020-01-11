@@ -83,9 +83,9 @@ class WebBlogController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        // $blog=Blog::where('slug', $slug)->firstOrFail();
+         $blog=Blog::where('slug', $slug)->firstOrFail();
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-        return view('web.blogs', compact('cart'));
+        return view('web.blogs', compact('blog','cart'));
     }
 
     /**

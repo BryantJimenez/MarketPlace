@@ -14,7 +14,7 @@
 <li class="breadcrumb-item"><a href="{{ route('productos.index') }}">Productos</a></li>
 <li class="breadcrumb-item active">Registro</li>
 @endsection
-
+ 
 @section('content')
 
 <div class="row">
@@ -30,7 +30,7 @@
 					<div class="row">
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Tienda<b class="text-danger">*</b></label>
-							<select class="form-control multiselect" required name="store_id">
+							<select class="form-control multiselect" required name="store_id" id="store_id">
 								<option value="">Seleccione</option>
 								@foreach($stores as $store)
 								<option value="{{ $store->slug }}" @if(old('store_id')==$store->slug) selected @endif>{{ $store->name }}</option>
@@ -39,7 +39,7 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Marca<b class="text-danger">*</b></label>
-							<select class="form-control multiselect" name="brand_id" required>
+							<select class="form-control multiselect" name="brand_id" id="brand_id" required>
 								<option value="">Seleccione</option>
 								@foreach($brands as $brand)
 								<option value="{{ $brand->slug }}">{{ $brand->name }}</option>

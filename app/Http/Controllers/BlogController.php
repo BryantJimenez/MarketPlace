@@ -20,9 +20,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        // $blog=Blog::orderBy('id', 'DESC')->get();
-        // $num=1;
-        return view('admin.blogs.index');
+         $blog=Blog::orderBy('id', 'DESC')->get();
+         $num=1;
+        return view('admin.blogs.index', compact('blog', 'num'));
     }
 
     /**
@@ -43,52 +43,34 @@ class BlogController extends Controller
      */
     public function store(WebBlogStoreRequest $request)
     {
-        // $count=Blog::where('name', request('name'))->count();
-        // $slug=Str::slug(request('name'), '-');
-        // if ($count>0) {
-        //     $slug=$slug.$count;
-        // }
+        $count=Blog::where('title', request('title'))->count();
+        $slug=Str::slug(request('title'), '-');
+        if ($count>0) {
+            $slug=$slug.$count;
+        }
 
-        // // Validación para que no se repita el slug
-        // $num=0;
-        // while (true) {
-        //     $count2=Blog::where('slug', $slug)->count();
-        //     if ($count2>0) {
-        //         $slug=$slug.$num;
-        //         $num++;
-        //     } else {
-        //         $data=array('name' => request('name'), 'slug' => $slug, );
-        //         break;
-        //     }
-        // }
+        // Validación para que no se repita el slug
+        $num=0;
+        while (true) {
+            $count2=Blog::where('slug', $slug)->count();
+            if ($count2>0) {
+                $slug=$slug.$num;
+                $num++;
+            } else {
+                $data=array('title' => request('title'), 'slug' => $slug, 'content' => request('content'), 'user_id' => request('user_id'));
+                break;
+            }
+        }
 
-        // // Mover imagen a carpeta Blogs y extraer nombre
-        // if ($request->hasFile('image')) {
-        //     $file=$request->file('image');
-        //     $image=time()."_".$file->getClientOriginalName();
-        //     $file->move(public_path().'/admins/img/blog/', $image);
-        //     $data['image']=$image;
-        // }
 
-        // $blog=Blog::create($data)->save();
-        // if ($blog) {
-        //     return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El artículo ha sido registrada exitosamente.']);
-        // } else {
-        //     return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
-        // }
+        $blog=Blog::create($data)->save();
+        if ($blog) {
+            return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El artículo ha sido registrada exitosamente.']);
+        } else {
+            return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    // public function show(Request $request)
-    // {
-    //     $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-    //     return view('admin.blogs.show', compact('cart'));
-    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -98,8 +80,8 @@ class BlogController extends Controller
      */
     public function edit($slug)
     {
-        // $blog=Blog::where('slug', $slug)->firstOrFail();
-        // return view('admin.blogs.edit', compact("blog"));
+        $blog=Blog::where('slug', $slug)->firstOrFail();
+        return view('admin.blogs.edit', compact("blog"));
     }
 
     /**
@@ -111,24 +93,16 @@ class BlogController extends Controller
      */
     public function update(WebBlogUpdateRequest $request, $slug)
     {
-        // $blog=Blog::where('slug', $slug)->firstOrFail();
-        // $data=array('name' => request('name'));
+        $blog=Blog::where('slug', $slug)->firstOrFail();
+        $data=array('title' => request('title'), 'slug' => request('slug'), 'content' => request('content'), 'user_id' => request('user_id'));
 
-        // // Mover imagen a carpeta blogs y extraer nombre
-        // if ($request->hasFile('image')) {
-        //     $file=$request->file('image');
-        //     $image=time()."_".$file->getClientOriginalName();
-        //     $file->move(public_path().'/admins/img/blog/', $image);
-        //     $data['image']=$image;
-        // }
+        $blog->fill($data)->save();
 
-        // $blog->fill($data)->save();
-
-        // if ($blog) {
-        //     return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'El artículo ha sido editado exitosamente.']);
-        // } else {
-        //     return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'error', 'title' => 'Edición fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
-        // }
+        if ($blog) {
+            return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'El artículo ha sido editado exitosamente.']);
+        } else {
+            return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'error', 'title' => 'Edición fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }
     }
 
     /**
@@ -139,13 +113,13 @@ class BlogController extends Controller
      */
     public function destroy($slug)
     {
-        // $blogs=Blog::where('slug', $slug)->firstOrFail();
-        // $blogs->delete();
+        $blogs=Blog::where('slug', $slug)->firstOrFail();
+        $blogs->delete();
 
-        // if ($blogs) {
-        //     return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'La Marca ha sido eliminada exitosamente.']);
-        // } else {
-        //     return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
-        // }
+        if ($blogs) {
+            return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'La Marca ha sido eliminada exitosamente.']);
+        } else {
+            return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }
     }
 }

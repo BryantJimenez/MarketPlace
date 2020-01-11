@@ -10,7 +10,7 @@
                 </li>
                 <li class="nav-devider"></li>
                 <li class="nav-small-cap">MÓDULOS</li>
-                <li><a class="waves-effect waves-dark" href="{{ route('home') }}"><i class="mdi mdi-coffee"></i><span class="hide-menu">Inicio</span></a></li>
+                <li><a class="waves-effect waves-dark" href="{{ route('admin') }}"><i class="mdi mdi-coffee"></i><span class="hide-menu">Inicio</span></a></li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-star"></i><span class="hide-menu">Usuarios</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('usuarios.create') }}">Registrar</a></li>

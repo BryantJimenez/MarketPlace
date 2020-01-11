@@ -13,7 +13,7 @@ class WebBlogUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class WebBlogUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|string|min:2|max:191',
+            'content' => 'required|string|min:2|max:191'
         ];
     }
 }

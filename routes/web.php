@@ -26,6 +26,7 @@ Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
 Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
 
+
 ///// ADMIN /////
 // Inicio
 Route::get('/misterfix', 'AdminController@index')->name('admin');

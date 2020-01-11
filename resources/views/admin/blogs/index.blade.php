@@ -28,21 +28,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							{{-- @foreach($blogs as $blog)
+							@foreach($blog as $blogs)
 							<tr>
 								<td>{{ $num++ }}</td>
 								<td>
 									<span class="image-list">
-										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/blogs/'.$blog->image) }}' style='width: 150px; height: 150px;' ><br><b>{{ $blog->name }}</b>"><img src="{{ asset('/admins/img/blogs/'.$blog->image) }}" class="img-circle" alt="Foto de perfil" width="40" height="40" /> {{ $blog->name }}</a>
+										 {{ $blogs->title }}
 									</span>
 								</td>
 								<td class="d-flex">
-									<a class="btn btn-primary btn-circle btn-sm" href="{{ route('blog.verblog', ['slug' => $blog->slug]) }}"><i class="fa fa-briefcase"></i></a>&nbsp;&nbsp;
-									<a class="btn btn-info btn-circle btn-sm" href="{{ route('blog.edit', ['slug' => $blog->slug]) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-									<button class="btn btn-danger btn-circle btn-sm" onclick="deleteBlog('{{ $blog->slug }}')"><i class="fa fa-trash"></i></button>
+									<a class="btn btn-primary btn-circle btn-sm" href="{{ route('web.blog.show', ['slug' => $blogs->slug]) }}"><i class="fa fa-briefcase"></i></a>&nbsp;&nbsp;
+									<a class="btn btn-info btn-circle btn-sm" href="{{ route('blog.edit', ['slug' => $blogs->slug]) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+									<button class="btn btn-danger btn-circle btn-sm" onclick="deleteBlog('{{ $blogs->slug }}')"><i class="fa fa-trash"></i></button>
 								</td>
 							</tr> 
-							@endforeach --}}
+							@endforeach
 						</tbody>
 					</table>
 				</div>

@@ -22,25 +22,22 @@
 				@include('admin.partials.errors')
 
 				<h6 class="card-subtitle">Campos obligatorios (<b class="text-danger">*</b>)</h6>
-				<form action="{{ route('blog.store') }}" method="POST" class="form" id="formCategory" enctype="multipart/form-data">
+				<form action="{{ route('blog.update', ['slug' => $blog->slug]) }}" method="POST" class="form" id="formBlog" enctype="multipart/form-data">
 					@method('PUT')
 					@csrf
 					<div class="row">
 						<div class="form-group col-lg-12 col-md-12 col-12">
-							<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name') }}">
-						</div>
-						<div class="form-group col-lg-12 col-md-12 col-12">
-							<label class="col-form-label">Imagen<b class="text-danger">*</b></label>
-							<input type="file" name="image" required accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" />
+							<label class="col-form-label">Título<b class="text-danger">*</b></label>
+							<input class="form-control" type="text" name="title" required placeholder="Introduzca un nombre" value="{{ $blog->title }}">
 						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Cuerpo del Artículo<b class="text-danger">*</b></label>
-							<textarea class="form-control" type="text" name="body" required placeholder="Introduzca la temática del artículo" value="{{ old('body') }}"></textarea>
+							<textarea class="form-control" type="text" name="content" required placeholder="Introduzca la temática del artículo" value="{{ $blog->content }}"></textarea>
 						</div>
+						<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 						<div class="form-group col-12">
 							<div class="btn-group" role="group">
-								<button type="submit" class="btn btn-primary" action="category">Guardar</button>
+								<button type="submit" class="btn btn-primary" action="blog">Guardar</button>
 								<a href="{{ route('blog.index') }}" class="btn btn-secondary">Volver</a>
 							</div>
 						</div>

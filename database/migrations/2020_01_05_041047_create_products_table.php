@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->float('price', 10, 2)->default(0.00);
             $table->integer('qty')->default(0);
-            $table->string('description');
+            $table->mediumText('description');
             $table->integer('min')->default(5);
             $table->integer('ofert')->default(0);
             $table->enum('quality', [1, 2, 3])->default(2);

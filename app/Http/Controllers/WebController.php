@@ -6,6 +6,8 @@ use App\Product;
 use App\Category;
 use App\District;
 use App\Store;
+use App\Brand;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -19,6 +21,7 @@ class WebController extends Controller
      */
     public function index(Request $request) {
     	$products=Product::all();
+        $brands=Brand::all();
     	$categories=Category::all();
     	$stores=Store::all();
         $num=0;
@@ -31,7 +34,7 @@ class WebController extends Controller
         }
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        return view('web.home', compact("categories", "products", "districts", "cart"));
+        return view('web.home', compact("categories", "brands", "products", "districts", "cart"));
     }
 
     public function shop(Request $request) {
@@ -48,19 +51,24 @@ class WebController extends Controller
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
         $products=Product::select('id', 'slug', 'name', 'price', 'ofert', 'quality');
-        if (($request->has('search') && !empty(request('search'))) || ($request->has('min') && !empty(request('min'))) || ($request->has('max') && !empty(request('max'))) || ($request->has('quality') && !empty(request('quality'))) || ($request->has('province') && !empty(request('province')))) {
+        if (($request->has('buscar') && !empty(request('buscar'))) || ($request->has('precio') && !empty(request('precio'))) || ($request->has('marca') && !empty(request('marca'))) || ($request->has('provincia') && !empty(request('provincia')))) {
 
-            if ($request->has('search') && !empty(request('search'))) {
-                $products->where('name', 'LIKE', '%'.request('search').'%');
+            if ($request->has('buscar') && !empty(request('buscar'))) {
+                $products->where('slug', 'LIKE', '%'.Str::slug(request('buscar'), '-').'%');
+            }
+            if ($request->has('marca') && !empty(request('marca'))) {
+                $brand=Brand::where('slug', request('marca'))->firstOrFail();
+                $products->where('brand_id', $brand->id);
             }
             if ($request->has('min') && !empty(request('min'))) {
                 $products->where('price', '>=', request('min'));
             }
-            if ($request->has('max') && !empty(request('max'))) {
-                $products->where('price', '<=', request('max'));
-            }
-            if ($request->has('quality') && !empty(request('quality'))) {
-                $products->where('quality', request('quality'));
+            if ($request->has('precio') && !empty(request('precio'))) {
+                if (request('precio')=='bajo') {
+                    $products->orderBy('price', 'ASC');
+                } elseif (request('precio')=='alto') {
+                    $products->orderBy('price', 'DESC');
+                }
             }
 
         }
@@ -89,14 +97,33 @@ class WebController extends Controller
 
     public function category(Request $request, $slugCategory, $slugSubcategory=null) {
         $category=Category::where('slug', $slugCategory)->firstOrFail();
+        $stores=Store::all();
+        $num=0;
+        $districts=[];
+        foreach ($stores as $store) {
+            if (array_search($store->district_id, array_column($districts, 'id'))===false) {
+                $districts[$num]=['name' => $store->district->name, 'id' => $store->district->id];
+                $num++;
+            }
+        }
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+        $products=Product::select('products.id', 'products.slug', 'products.name', 'products.price', 'products.ofert')->join('subcategories', 'products.subcategory_id', '=', 'subcategories.id')->where('subcategories.category_id', $category->id)->get();
 
-        return view('web.category', compact("category", "cart"));
+        if ($request->has('page')) {
+            $offset=8*(request('page')-1);
+        } else {
+            $offset=0;
+        }
+
+        $varPage='page';
+        $page=Paginator::resolveCurrentPage($varPage);
+        $pagination=new LengthAwarePaginator($products, $total=count($products), $perPage = 8, $page, ['path' => Paginator::resolveCurrentPath(), 'pageName' => $varPage,]);
+
+        return view('web.category', compact("category", "districts", "cart", "products", "pagination", "offset"));
     }
 
     public function cart(Request $request) {
 
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
         if ($request->session()->has('cart')) {
             $cart=session('cart');
             $num=0;
@@ -110,6 +137,7 @@ class WebController extends Controller
         } else {
             $products=[];
         }
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
         return view('web.cart', compact("products", "cart"));
     }
@@ -144,19 +172,14 @@ class WebController extends Controller
         return response()->json(session('cart'));
     }
 
-    public function show($slug) {
-        $user=User::where('slug', $slug)->firstOrFail();
-        echo json_encode([
-            'photo' => $user->photo,
-            'name' => $user->name,
-            'email' => $user->email,
-            'state' => userState($user->state)
-        ]);
-    }
-
-     public function blog(Request $request) 
-    {
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-        return view('web.blog', compact("cart"));
+    public function profile() {
+        /* Aqui en vez de slug usas los datos del usuario logueado asi por ejemplo: Auth::user()->name */
+        // $user=User::where('slug', $slug)->firstOrFail();
+        // echo json_encode([
+        //     'photo' => $user->photo,
+        //     'name' => $user->name,
+        //     'email' => $user->email,
+        //     'state' => userState($user->state)
+        // ]);
     }
 }

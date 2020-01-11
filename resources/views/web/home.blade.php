@@ -15,27 +15,25 @@
 						<form method="GET" action="{{ route('tienda') }}">
 							<div class="row">
 								<div class="form-group col-12">
-									<input class="form-control" type="text" name="search" placeholder="Buscar">
+									<input class="form-control" type="text" name="buscar" placeholder="Buscar">
 								</div>
 								<div class="form-group col-lg-4 col-md-4 col-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">S/.</span>
-										</div>
-										<input class="form-control" type="text" name="min" placeholder="Min">
-										<input class="form-control" type="text" name="max" placeholder="Max">
-									</div>
-								</div>
-								<div class="form-group col-lg-4 col-md-4 col-12">
-									<select class="form-control" name="quality">
-										<option value="">Calidad</option>
-										<option value="1">Baja</option>
-										<option value="2">Media</option>
-										<option value="3">Alta</option>
+									<select class="form-control" name="precio">
+										<option value="">Precio</option>
+										<option value="bajo">Precio más bajo</option>
+										<option value="alto">Precio más alto</option>
 									</select>
 								</div>
 								<div class="form-group col-lg-4 col-md-4 col-12">
-									<select class="form-control" name="province">
+									<select class="form-control" name="marca">
+										<option value="">Marca</option>
+										@foreach($brands as $brand)
+										<option value="{{ $brand->slug }}">{{ $brand->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-lg-4 col-md-4 col-12">
+									<select class="form-control" name="provincia">
 										<option value="">Provincia</option>
 										@foreach($districts as $district)
 										<option value="{{ $district['id'] }}">{{ $district['name'] }}</option>
@@ -56,64 +54,13 @@
 	</div>
 </section>
 
-{{-- <section class="ftco-section">
-	<div class="container">
-		<div class="row no-gutters ftco-services">
-			<div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services mb-md-0 mb-4">
-					<div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
-						<span class="flaticon-shipped"></span>
-					</div>
-					<div class="media-body">
-						<h3 class="heading">Free Shipping</h3>
-						<span>On order over $100</span>
-					</div>
-				</div>      
-			</div>
-			<div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services mb-md-0 mb-4">
-					<div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-						<span class="flaticon-diet"></span>
-					</div>
-					<div class="media-body">
-						<h3 class="heading">Always Fresh</h3>
-						<span>Product well package</span>
-					</div>
-				</div>    
-			</div>
-			<div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services mb-md-0 mb-4">
-					<div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
-						<span class="flaticon-award"></span>
-					</div>
-					<div class="media-body">
-						<h3 class="heading">Superior Quality</h3>
-						<span>Quality Products</span>
-					</div>
-				</div>      
-			</div>
-			<div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services mb-md-0 mb-4">
-					<div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
-						<span class="flaticon-customer-service"></span>
-					</div>
-					<div class="media-body">
-						<h3 class="heading">Support</h3>
-						<span>24/7 Support</span>
-					</div>
-				</div>      
-			</div>
-		</div>
-	</div>
-</section> --}}
-
-<section class="ftco-section ftco-category ftco-no-pt ftco-no-pb">
+<section class="ftco-section ftco-category ftco-no-pb">
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
 			<div class="col-md-12 heading-section text-center ftco-animate">
 				<h2 class="mb-4">Categorías</h2>
 			</div>
-		</div>   		
+		</div>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -122,11 +69,11 @@
 
 					@foreach($categories as $category)
 					<div class="col-md-3">
-						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/categories/'.$category->image) }});">
+						<a href="{{ route('categoria', ['slugCategory' => $category->slug]) }}"><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/categories/'.$category->image) }});">
 							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">{{ $category->name }}</a></h2>
+								<h2 class="mb-0 text-white">{{ $category->name }}</h2>
 							</div>
-						</div>
+						</div></a>
 					</div>
 					@endforeach
 
@@ -193,5 +140,4 @@
 		</div>
 	</div>
 </section>
-
 @endsection

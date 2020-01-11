@@ -8,18 +8,21 @@ use Illuminate\Http\Request;
 use App\Http\Requests\WebBlogStoreRequest;
 use App\Http\Requests\WebBlogUpdateRequest;
 
-class WebBlogController extends Controller
+class BlogController extends Controller
 {
+     public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) 
+    public function index()
     {
-        // $blogs=Blog::orderBy('id', 'DESC')->get();
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-        return view('web.blog', compact("cart"));
+        // $blog=Blog::orderBy('id', 'DESC')->get();
+        // $num=1;
+        return view('admin.blogs.index');
     }
 
     /**
@@ -69,9 +72,9 @@ class WebBlogController extends Controller
 
         // $blog=Blog::create($data)->save();
         // if ($blog) {
-        //     return redirect()->route('web.blog.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El artículo ha sido registrada exitosamente.']);
+        //     return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El artículo ha sido registrada exitosamente.']);
         // } else {
-        //     return redirect()->route('web.blog.index')->with(['type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        //     return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         // }
     }
 
@@ -81,12 +84,11 @@ class WebBlogController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $slug)
-    {
-        // $blog=Blog::where('slug', $slug)->firstOrFail();
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-        return view('web.blogs', compact('cart'));
-    }
+    // public function show(Request $request)
+    // {
+    //     $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+    //     return view('admin.blogs.show', compact('cart'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -97,7 +99,7 @@ class WebBlogController extends Controller
     public function edit($slug)
     {
         // $blog=Blog::where('slug', $slug)->firstOrFail();
-        // return view('admin.blog.edit', compact("blog"));
+        // return view('admin.blogs.edit', compact("blog"));
     }
 
     /**
@@ -123,9 +125,9 @@ class WebBlogController extends Controller
         // $blog->fill($data)->save();
 
         // if ($blog) {
-        //     return redirect()->route('web.blog.edit', ['slug' => $slug])->with(['type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'El artículo ha sido editado exitosamente.']);
+        //     return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'El artículo ha sido editado exitosamente.']);
         // } else {
-        //     return redirect()->route('web.blog.edit', ['slug' => $slug])->with(['type' => 'error', 'title' => 'Edición fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        //     return redirect()->route('blog.edit', ['slug' => $slug])->with(['type' => 'error', 'title' => 'Edición fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         // }
     }
 
@@ -141,9 +143,9 @@ class WebBlogController extends Controller
         // $blogs->delete();
 
         // if ($blogs) {
-        //     return redirect()->route('web.blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'La Marca ha sido eliminada exitosamente.']);
+        //     return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'La Marca ha sido eliminada exitosamente.']);
         // } else {
-        //     return redirect()->route('web.blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        //     return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         // }
     }
 }

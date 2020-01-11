@@ -35,7 +35,11 @@
 							<tr class="text-center">
 								<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 								<td class="image-prod">
+									@isset($product->images[0])
+									<div class="img" style="background-image:url({{ asset('/admins/img/products/'.$product->images[0]->image) }});"></div>
+									@else
 									<div class="img" style="background-image:url({{ asset('/admins/img/products/imagen.jpg') }});"></div>
+									@endisset
 								</td>
 								<td class="product-name">
 									<h3>{{ $product['name'] }}</h3>
@@ -49,7 +53,9 @@
 								<td class="total">{{ 'S/. '.number_format($product['price']*$product['cartQty'], 2, ",", ".") }}</td>
 							</tr>
 							@empty
-							<p>No users</p>
+							<tr class="text-center">
+								<td colspan="6">No hay productos agregados al carrito</td>
+							</tr>
 							@endforelse
 						</tbody>
 					</table>

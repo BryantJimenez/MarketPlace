@@ -340,17 +340,26 @@
 
 	setInterval(function() { makeTimer(); }, 1000);
 
-
-
 })(jQuery);
 
+$(document).ready(function() {
+	if ($('#imagesProduct').length) {
+		$('#imagesProduct').lightGallery();
+		$('#imagesProduct').lightSlider();
+	}
+});
+
 $('.addCart').click(function(event) {
-	var slug=$(this).attr('slug');;
+	var slug=$(this).attr('slug');
+	$(event.currentTarget.childNodes[1].childNodes[0]).removeClass('ion-ios-cart');
+	$(event.currentTarget.childNodes[1].childNodes[0]).addClass('spinner-border spinner-border-sm');
 	$.ajax({
 		url: '/carrito/' + slug,
 		dataType: 'html',
 	}).done(function(result) {
 		var obj=JSON.parse(result);
 		$(".count-cart").text(obj.length);
+		$(event.currentTarget.childNodes[1].childNodes[0]).removeClass('spinner-border spinner-border-sm');
+		$(event.currentTarget.childNodes[1].childNodes[0]).addClass('ion-ios-cart');
 	});
 });

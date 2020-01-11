@@ -15,12 +15,14 @@
     </div>
   </div>
 
+  @isset($categories)
   <div class="mb-3">
     <p class="h6">Categorías</p>
     @foreach($categories as $category)
     <a href="{{ route('tienda') }}" class="nav-link text-primary">{{ $category->name }}</a>
     @endforeach
   </div>
+  @endisset
 
   <div class="mb-3">
     <p class="h6">Distritos</p>

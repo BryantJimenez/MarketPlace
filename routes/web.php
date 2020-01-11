@@ -24,6 +24,8 @@ Route::get('/carrito', 'WebController@cart')->name('carrito');
 Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
 
+
+
 ///// ADMIN /////
 // Inicio
 Route::get('/misterfix', 'AdminController@index')->name('admin');
@@ -77,3 +79,22 @@ Route::delete('/misterfix/productos/{slug}', 'ProductController@destroy')->name(
 Route::post('/misterfix/imagenes/productos', 'ProductController@image')->name('productos.store.images');
 Route::post('/misterfix/imagenes/productos/{slug}', 'ProductController@imageEdit')->name('productos.edit.images');
 Route::get('/misterfix/imagenes/productos/{slug}/{url}', 'ProductController@imageDestroy')->name('productos.destroy.images');
+
+// Marcas
+Route::get('/misterfix/marcas', 'BrandController@index')->name('marcas.index');
+Route::get('/misterfix/marcas/registrar', 'BrandController@create')->name('marcas.create');
+Route::post('/misterfix/marcas', 'BrandController@store')->name('marcas.store');
+Route::get('/misterfix/marcas/{slug}', 'BrandController@show')->name('marcas.show');
+Route::get('/misterfix/marcas/{slug}/editar', 'BrandController@edit')->name('marcas.edit');
+Route::put('/misterfix/marcas/{slug}', 'BrandController@update')->name('marcas.update');
+Route::delete('/misterfix/marcas/{slug}', 'BrandController@destroy')->name('marcas.destroy');
+
+// Blog
+Route::get('/misterfix/blog', 'WebBlogController@index')->name('blog.index');
+Route::get('/misterfix/blog/registrar', 'WebBlogController@create')->name('blog.create');
+Route::post('/misterfix/blog', 'WebBlogController@store')->name('blog.store');
+Route::get('/misterfix/blog/{slug}/editar', 'WebBlogController@edit')->name('blog.edit');
+Route::put('/misterfix/blog/{slug}', 'WebBlogController@update')->name('blog.update');
+Route::delete('/misterfix/blog/{slug}', 'WebBlogController@destroy')->name('blog.destroy');
+Route::get('/blog', 'WebBlogController@show')->name('blog.show');
+// Route::get('/blog', 'WebBlogController@verblog')->name('blog.verblog');

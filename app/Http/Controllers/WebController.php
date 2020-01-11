@@ -143,4 +143,20 @@ class WebController extends Controller
 
         return response()->json(session('cart'));
     }
+
+    public function show($slug) {
+        $user=User::where('slug', $slug)->firstOrFail();
+        echo json_encode([
+            'photo' => $user->photo,
+            'name' => $user->name,
+            'email' => $user->email,
+            'state' => userState($user->state)
+        ]);
+    }
+
+     public function blog(Request $request) 
+    {
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+        return view('web.blog', compact("cart"));
+    }
 }

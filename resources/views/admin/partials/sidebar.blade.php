@@ -41,6 +41,18 @@
                         <li><a href="{{ route('productos.index') }}">Lista</a></li>
                     </ul>
                 </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-address-card"></i><span class="hide-menu">Marcas</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('marcas.create') }}">Registrar</a></li>
+                        <li><a href="{{ route('marcas.index') }}">Lista</a></li>
+                    </ul>
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-bookmark"></i><span class="hide-menu">Blog</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('blog.create') }}">Registrar</a></li>
+                        <li><a href="{{ route('blog.index') }}">Lista</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

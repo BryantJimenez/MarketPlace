@@ -6,6 +6,8 @@ use App\Store;
 use App\District;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreStoreRequest;
+use App\Http\Requests\StoreUpdateRequest;
 
 class StoreController extends Controller
 {
@@ -41,7 +43,7 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStoreRequest $request)
     {
         $count=Store::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
@@ -102,7 +104,7 @@ class StoreController extends Controller
      * @param  \App\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(StoreUpdateRequest $request, $slug)
     {
         $store=Store::where('slug', $slug)->firstOrFail();
         $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();

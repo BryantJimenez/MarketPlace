@@ -6,6 +6,8 @@ use App\Subcategory;
 use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\SubcategoryStoreRequest;
+use App\Http\Requests\SubcategoryUpdateRequest;
 
 class SubcategoryController extends Controller
 {
@@ -41,7 +43,7 @@ class SubcategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubcategoryStoreRequest $request)
     {
         $count=Subcategory::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
@@ -102,7 +104,7 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(SubcategoryUpdateRequest $request, $slug)
     {
         $subcategory=Subcategory::where('slug', $slug)->firstOrFail();
         $category=Category::where('slug', request('category'))->firstOrFail();

@@ -171,4 +171,15 @@ class WebController extends Controller
 
         return response()->json(session('cart'));
     }
+
+    public function profile() {
+        /* Aqui en vez de slug usas los datos del usuario logueado asi por ejemplo: Auth::user()->name */
+        // $user=User::where('slug', $slug)->firstOrFail();
+        // echo json_encode([
+        //     'photo' => $user->photo,
+        //     'name' => $user->name,
+        //     'email' => $user->email,
+        //     'state' => userState($user->state)
+        // ]);
+    }
 }

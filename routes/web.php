@@ -15,7 +15,6 @@
 Auth::routes();
 
 ///// WEB /////
-// Inicio
 Route::get('/', 'WebController@index')->name('home');
 Route::get('/tienda', 'WebController@shop')->name('tienda');
 Route::get('/categorias', 'WebController@categories')->name('categorias');
@@ -23,6 +22,9 @@ Route::get('/categoria/{slugCategory}/{slugSubcategory?}', 'WebController@catego
 Route::get('/carrito', 'WebController@cart')->name('carrito');
 Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
+Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
+Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
+Route::get('/perfil', 'WebController@profile')->name('web.profile');
 
 ///// ADMIN /////
 // Inicio
@@ -77,3 +79,20 @@ Route::delete('/misterfix/productos/{slug}', 'ProductController@destroy')->name(
 Route::post('/misterfix/imagenes/productos', 'ProductController@image')->name('productos.store.images');
 Route::post('/misterfix/imagenes/productos/{slug}', 'ProductController@imageEdit')->name('productos.edit.images');
 Route::get('/misterfix/imagenes/productos/{slug}/{url}', 'ProductController@imageDestroy')->name('productos.destroy.images');
+
+// Marcas
+Route::get('/misterfix/marcas', 'BrandController@index')->name('marcas.index');
+Route::get('/misterfix/marcas/registrar', 'BrandController@create')->name('marcas.create');
+Route::post('/misterfix/marcas', 'BrandController@store')->name('marcas.store');
+Route::get('/misterfix/marcas/{slug}', 'BrandController@show')->name('marcas.show');
+Route::get('/misterfix/marcas/{slug}/editar', 'BrandController@edit')->name('marcas.edit');
+Route::put('/misterfix/marcas/{slug}', 'BrandController@update')->name('marcas.update');
+Route::delete('/misterfix/marcas/{slug}', 'BrandController@destroy')->name('marcas.destroy');
+
+// Blog
+Route::get('/misterfix/blog', 'BlogController@index')->name('blog.index');
+Route::get('/misterfix/blog/registrar', 'BlogController@create')->name('blog.create');
+Route::post('/misterfix/blog', 'BlogController@store')->name('blog.store');
+Route::get('/misterfix/blog/{slug}/editar', 'BlogController@edit')->name('blog.edit');
+Route::put('/misterfix/blog/{slug}', 'BlogController@update')->name('blog.update');
+Route::delete('/misterfix/blog/{slug}', 'BlogController@destroy')->name('blog.destroy');

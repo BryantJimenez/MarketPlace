@@ -1,5 +1,5 @@
 @extends('layouts.web')
-
+ 
 @section('title', 'Mister Fix')
 
 @section('content')

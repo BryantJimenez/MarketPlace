@@ -38,7 +38,7 @@ Route::get('/misterfix/usuarios/{slug}', 'UserController@show')->name('usuarios.
 Route::get('/misterfix/usuarios/{slug}/editar', 'UserController@edit')->name('usuarios.edit');
 Route::put('/misterfix/usuarios/{slug}', 'UserController@update')->name('usuarios.update');
 Route::delete('/misterfix/usuarios/{slug}', 'UserController@destroy')->name('usuarios.destroy');
-// Route::get('/misterfix/perfil', 'UserController@profile')->name('usuarios.profile');
+Route::get('/misterfix/perfil', 'UserController@profile')->name('usuarios.profile');
 
 // Categorias
 Route::get('/misterfix/categorias', 'CategoryController@index')->name('categorias.index');

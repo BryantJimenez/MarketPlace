@@ -86,6 +86,12 @@ $(document).ready(function(){
 					required: true,
 					minlength: 2,
 					maxlength: 191
+				},
+
+				quality: {
+					required: true,
+					min: 1,
+					max: 5
 				}
 			},
 			messages:
@@ -93,6 +99,11 @@ $(document).ready(function(){
 				name: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				quality: {
+					min: 'Escribe un valor mayor o igual a {0}.',
+					max: 'Escribe un valor menor o igual a {0}.'
 				}
 			}
 		});
@@ -212,10 +223,6 @@ $(document).ready(function(){
 					max: 100
 				},
 
-				quality: { 
-					required: true
-				},
-
 				description: { 
 					required: true,
 					minlength: 10,
@@ -254,10 +261,6 @@ $(document).ready(function(){
 				ofert: {
 					min: 'Escribe un valor mayor o igual a {0}.',
 					max: 'Escribe un valor menor o igual a {0}.'
-				},
-
-				quality: {
-					required: 'Seleccione una opción.'
 				},
 
 				description: {

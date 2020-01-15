@@ -6,6 +6,7 @@
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/lobibox/Lobibox.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -27,9 +28,13 @@
 					@method('PUT')
 					@csrf
 					<div class="row">
-						<div class="form-group col-lg-12 col-md-12 col-12">
+						<div class="form-group col-lg-8 col-md-8 col-12">
 							<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
 							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ $brand->name }}">
+						</div>
+						<div class="form-group col-lg-4 col-md-4 col-12">
+							<label class="col-form-label">Calidad (1 al 5)<b class="text-danger">*</b></label>
+							<input class="form-control quality" type="text" name="quality" required placeholder="Introduzca la valocación de la marca" value="{{ $brand->quality }}">
 						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Imagen<b class="text-danger">*</b></label>
@@ -51,6 +56,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 <script src="{{ asset('/admins/vendors/dropify/js/dropify.min.js') }}"></script>
 <script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>

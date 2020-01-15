@@ -42,10 +42,24 @@
 								</div>
 								<div class="form-group col-lg-12 col-md-12 col-12">
 									<label class="col-form-label">Tipo<b class="text-danger">*</b></label>
-									<select class="form-control" name="type" required>
+									<select class="form-control" name="type" required id="typeUser">
 										<option value="">Seleccione</option>
 										<option value="1" @if($user->type==1) selected @endif>Super Administrador</option>
-										<option value="2" @if($user->type==2) selected @endif>Normal</option>
+										<option value="2" @if($user->type==2) selected @endif>Administrador de Tienda</option>
+										<option value="3" @if($user->type==3) selected @endif>Normal</option>
+									</select>
+								</div>
+								<div class="form-group col-lg-12 col-md-12 col-12" id="storeField">
+									<label class="col-form-label">Tienda<b class="text-danger">*</b></label>
+									<select class="form-control" name="store_id" required>
+										<option value="">Seleccione</option>
+										@foreach($stores as $store)
+										@isset($user->stores[0]->id)
+										<option value="{{ $store->slug }}" @if($user->stores[0]->id==$store->id) selected @endif>{{ $store->name }}</option>
+										@else
+										<option value="{{ $store->slug }}">{{ $store->name }}</option>
+										@endisset
+										@endforeach
 									</select>
 								</div>
 							</div>

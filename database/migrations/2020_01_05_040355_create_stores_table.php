@@ -20,6 +20,8 @@ class CreateStoresTable extends Migration
             $table->bigInteger('district_id')->unsigned()->nullable();
             $table->string('address');
             $table->string('phone');
+            $table->string('lat');
+            $table->string('lng');
             $table->timestamps();
 
             #Relations

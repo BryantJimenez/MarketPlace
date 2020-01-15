@@ -18,13 +18,14 @@ Auth::routes();
 Route::get('/', 'WebController@index')->name('home');
 Route::get('/tienda', 'WebController@shop')->name('tienda');
 Route::get('/categorias', 'WebController@categories')->name('categorias');
-Route::get('/categoria/{slugCategory}/{slugSubcategory?}', 'WebController@category')->name('categoria');
 Route::get('/carrito', 'WebController@cart')->name('carrito');
 Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
 Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
 Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
+Route::get('/agregar/productos/{slug?}', 'WebController@addProducts')->name('web.add.products');
+Route::get('/agregar/ubicacion/{lat}/{lng}', 'WebController@addLocation')->name('web.add.location');
 
 ///// ADMIN /////
 // Inicio

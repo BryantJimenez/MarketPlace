@@ -46,7 +46,7 @@ class BlogController extends Controller
         $count=Blog::where('title', request('title'))->count();
         $slug=Str::slug(request('title'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -54,7 +54,7 @@ class BlogController extends Controller
         while (true) {
             $count2=Blog::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 $data=array('title' => request('title'), 'slug' => $slug, 'content' => request('content'), 'user_id' => request('user_id'));

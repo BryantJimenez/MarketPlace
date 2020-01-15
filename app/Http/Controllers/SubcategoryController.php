@@ -48,7 +48,7 @@ class SubcategoryController extends Controller
         $count=Subcategory::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -56,7 +56,7 @@ class SubcategoryController extends Controller
         while (true) {
             $count2=Subcategory::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 $category=Category::where('slug', request('category'))->firstOrFail();

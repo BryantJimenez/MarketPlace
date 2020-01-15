@@ -43,10 +43,20 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Tipo<b class="text-danger">*</b></label>
-							<select class="form-control" name="type" required>
+							<select class="form-control" name="type" required id="typeUser">
 								<option value="">Seleccione</option>
 								<option value="1">Super Administrador</option>
-								<option value="2">Normal</option>
+								<option value="2">Administrador de Tienda</option>
+								<option value="3">Normal</option>
+							</select>
+						</div>
+						<div class="form-group col-lg-6 col-md-6 col-12 d-none" id="storeField">
+							<label class="col-form-label">Tienda<b class="text-danger">*</b></label>
+							<select class="form-control" name="store_id" required>
+								<option value="">Seleccione</option>
+								@foreach($stores as $store)
+								<option value="{{ $store->slug }}">{{ $store->name }}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">

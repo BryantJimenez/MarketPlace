@@ -409,12 +409,81 @@
 })(jQuery);
 
 $(document).ready(function() {
+	//API de Javascript para obtener geolocalización del usuario
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showLocation, errorLocation, { timeout: 0 });
+	} else {
+		//Aqui no
+	}
+	function showLocation (location) {
+		var userLng=location.coords.longitude;
+		var userLat=location.coords.latitude;
+
+		// alert('Ubicación obtenida');
+
+		$.ajax({
+			url: '/agregar/ubicacion/'+userLat+'/'+userLng,
+			dataType: 'html'
+		});
+
+		if (typeof(userLat)!="undefined" && typeof(userLng)!="undefined") {
+			showDistance(userLat, userLng);
+		}
+	}
+	function  errorLocation (error) {
+		if (error.code==1 || error.code==2 || error.code==3) {
+			//alert('Ha habido un error');
+			// navigator.geolocation.getCurrentPosition(showLocation, errorLocation, { timeout: 0 });
+		}
+
+		// switch (error.code) {
+		// 	case 3:
+  //     		// ... error del timeout
+  //     		alert('Error del timeout');
+  //     		break;
+  //     		case 2:
+  //     		alert('Dispositivo no puede acceder a la ubicación');
+  //     		// ... dispositivo no puede obtener la ubicación
+  //     		break;
+  //     		case 1:
+  //     		// ... no se tiene permisos :(
+  //     		alert('Permiso denegado');
+  //     	}
+      }
+
+	//multiselect
+	if ($('.multiselect').length) {
+		$('.multiselect').select2({
+			theme: "bootstrap",
+			language: "es"
+		});
+	}
+
+	//Funcion para mostrar la distancia entre el producto o tienda y el usuario
+	function showDistance(userLat, userLng) {
+		$(".distance").each(function(){
+			var lat=$(this).attr('lat'), lng=$(this).attr('lng');
+			var km=getDistance(lat, lng, userLat, userLng);
+			$(this).append($('<p>', {
+				'class': 'text-muted my-0',
+				'text': km+' Km'
+			}));
+		});
+	}
+
+	//Galeria de imagenes en la vista del producto
 	if ($('#imagesProduct').length) {
 		$('#imagesProduct').lightGallery();
 		$('#imagesProduct').lightSlider();
 	}
+
+	//Plugin para la calidad (estrellas) de las marcas
+	if ($('.ratings').length) {
+		$(".ratings").rate();
+	}
 });
 
+//Funcion para agregar productos al carrito
 $('.addCart').click(function(event) {
 	var slug=$(this).attr('slug');
 	$(event.currentTarget.childNodes[1].childNodes[0]).removeClass('ion-ios-cart');
@@ -429,3 +498,74 @@ $('.addCart').click(function(event) {
 		$(event.currentTarget.childNodes[1].childNodes[0]).addClass('ion-ios-cart');
 	});
 });
+
+$('.addCartList').click(function(event) {
+	var slug=$(this).attr('slug');
+	$(this).text('Agregado');
+	$.ajax({
+		url: '/carrito/' + slug,
+		dataType: 'html',
+	}).done(function(result) {
+		var obj=JSON.parse(result);
+		$(".count-cart").text(obj.length);
+		// $('.addCartList[slug="'+obj.product+'"]').text('Agregado');
+	});
+});
+
+//Funcion para agregar productos a select del filtro de inicio
+$('#searchBrand').change(function(event) {
+	var slug=$(this).val();
+	$.ajax({
+		url: '/agregar/productos/' + slug,
+		dataType: 'html',
+	}).done(function(result) {
+		var obj=JSON.parse(result);
+		$('#searchField').select2("destroy");
+		$("#searchField option").remove();
+		$('#searchField').append($('<option>', {
+			value: "",
+			text: "Buscar"
+		}));
+		for (var i=obj.length-1; i>=0; i--) {
+			$('#searchField').append($('<option>', {
+				value: obj[i].slug,
+				text: obj[i].name
+			}));
+		}
+		$('#searchField').select2({
+			theme: "bootstrap",
+			language: "es"
+		});
+	});
+});
+
+$('#filterPrice').change(function() {
+	if ($(this).val()!="") {
+		var url=window.location.href;
+		if (url.indexOf('?')!=-1) {
+			if (url.indexOf('precio=alto')!=-1) {
+				url.replace(/precio=alto/g, 'precio='+$(this).val());
+				location.href=url
+			} else if(url.indexOf('precio=bajo')!=-1) {
+				url.replace(/precio=bajo/g, 'precio='+$(this).val());
+				location.href=url
+			} else {
+				location.href=url+'&precio='+$(this).val();	
+			}
+		} else {
+			location.href=url+'?precio='+$(this).val();
+		}
+	}
+});
+
+//Función para calcular las distancia entre 2 puntos en km
+function getDistance(lat1, lon1, lat2, lon2){
+	rad = function(x) {return x*Math.PI/180;}
+	var R = 6378.137; //Radio de la tierra en km
+	var dLat = rad( lat2 - lat1 );
+	var dLong = rad( lon2 - lon1 );
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	var d = R * c;
+	return d.toFixed(0); //Retorna cero decimales
+}

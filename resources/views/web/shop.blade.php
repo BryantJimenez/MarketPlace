@@ -2,62 +2,51 @@
 
 @section('title', 'Tienda')
 
-@section('content')
-<div class="hero-wrap hero-bread" style="background-image: url('/web/images/bg_1.jpg');">
-	<div class="overlay"></div>
-	<div class="container">
-		<div class="row no-gutters slider-text align-items-center justify-content-center">
-			<div class="col-md-9 ftco-animate text-center">
-				<h1 class="mb-0 bread">Tienda</h1>
-			</div>
-		</div>
-	</div>
-</div>
+@section('links')
+<link rel="stylesheet" href="{{ asset('/web/vendors/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ asset('/web/vendors/select2/select2-bootstrap.css') }}">
+@endsection
 
-<section class="ftco-section bg-light">
+@section('content')
+<section class="ftco-section ftco-no-pt bg-light">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-3 col-md-3">
+			@if(count($products)>0 && strpos(url()->full(), '?')===true)
+			<div class="col-12 mt-5">
+				<p class="h5">La tienda más cercana para encontrar el respuesto que busca es: <a href="#" class="text-primary">{{ $products[0]->stores[0]->name }}</a></p>
+			</div>
+			@endif
+			<div class="col-lg-3 col-md-3 mt-4">
 				@include('web.partials.filter')
 			</div>
-			<div class="col-lg-9 col-md-9">
+			<div class="col-lg-9 col-md-9 mt-4">
 				<div class="row">
 
 					@forelse ($products as $product)
 					@if($loop->index>=$offset && $loop->index<$offset+8)
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod">
-								@if(count($product->images)>0)
-								<img class="img-fluid" src="{{ asset('/admins/img/products/'.$product->images[0]->image) }}" alt="{{ $product->name }}">
-								@else
-								<img class="img-fluid" src="{{ asset('/admins/img/products/imagen.jpg') }}" alt="{{ $product->name }}">
-								@endif
-
-								@if($product->ofert>0)
-								<span class="status">{{ $product->ofert." %" }}</span>
-								@endif
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">{{ $product->name }}</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										@if($product->ofert>0)
-										<p class="price"><span class="mr-2 price-dc">{{ "S/. ".number_format($product->price, 2, ',', '.') }}</span><span class="price-sale">{{ "S/. ".number_format($product->price-($product->price*$product->ofert/100), 2, ',', '.') }}</span></p>
-										@else
-										<p class="price"><span>{{ "S/. ".number_format($product->price, 2, ',', '.') }}</span></p>
-										@endif
+					<div class="col-12 ftco-animate">
+						<div class="card mb-3">
+							<div class="row no-gutters">
+								<div class="col-lg-3 col-md-3 col-12">
+									<a href="{{ route('web.producto', ['slug' => $product->slug]) }}">
+										{!! imageCardProduct($product, 1) !!}
+									</a>
+								</div>
+								<div class="col-lg-7 col-md-6 col-12">
+									<div class="card-body">
+										<h5 class="card-title mb-0 d-flex"><a href="{{ route('web.producto', ['slug' => $product->slug]) }}">{{ $product->name }}</a> <div class="distance ml-2" lat="{{ $product->stores[0]->lat }}" lng="{{ $product->stores[0]->lng }}"></div></h5>
+										<div class="ratings text-warning" data-rate-value="{{ number_format($product->brand->quality, 1, ".", ".") }}"></div>
+										<p class="card-text mb-0">Marca: {{ $product->brand->name }}</p>
+										<p class="card-text text-truncate">{{ $product->description }}</p>
+										<p class="card-text"><small class="text-muted"><i class="icon-home"></i> {{ $product->stores[0]->name }} - <i class="icon-map-marker"></i> {{ $product->stores[0]->district->name }}</small></p>
 									</div>
 								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="{{ route('web.producto', ['slug' => $product->slug]) }}" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a class="buy-now d-flex justify-content-center align-items-center mx-1 addCart" slug="{{ $product->slug }}">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
+								<div class="col-lg-2 col-md-3 col-12">
+									<div class="card-body">
+										{!! productPrice($product) !!}
+										<a href="#" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
+										<button type="button" class="btn btn-primary btn-sm mb-lg-2 mb-md-2 addCartList" slug="{{ $product->slug }}">Carrito</button>
+										<a href="#" class="btn btn-primary btn-sm">Entrega</a>
 									</div>
 								</div>
 							</div>
@@ -65,7 +54,9 @@
 					</div>
 					@endif
 					@empty
-					<p>No hay resultados encontrados</p>
+					<div class="col-12 text-center">
+						<p class="h3 text-danger">No hay resultados encontrados</p>
+					</div>
 					@endforelse
 
 					<div class="col-12 text-center mt-4 d-flex justify-content-center">
@@ -81,4 +72,10 @@
 	</div>
 </section>
 
+@endsection
+
+@section('script')
+<script src="{{ asset('/web/vendors/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('/web/vendors/select2/es.js') }}"></script>
+<script src="{{ asset('/admins/vendors/rater/rater.min.js') }}"></script>
 @endsection

@@ -40,14 +40,9 @@
 				<h3>{{ $product->name }}</h3>
 				<div class="rating d-flex">
 					<p class="text-left mr-4">
-						<a href="#" class="mr-2">0.0</a>
-						<a href="#"><span class="ion-ios-star-outline"></span></a>
-						<a href="#"><span class="ion-ios-star-outline"></span></a>
-						<a href="#"><span class="ion-ios-star-outline"></span></a>
-						<a href="#"><span class="ion-ios-star-outline"></span></a>
-						<a href="#"><span class="ion-ios-star-outline"></span></a>
+						<span class="text-muted">{{ number_format($product->brand->quality, 1, ".", ".") }}</span> <div class="ratings text-warning" data-rate-value="{{ number_format($product->brand->quality, 1, ".", ".") }}"></div>
 					</p>
-					<p class="text-left mr-4">
+					<p class="text-left mr-4 ml-2">
 						<a href="#" class="mr-2" style="color: #000;">0 <span style="color: #bbb;">Valoraciones</span></a>
 					</p>
 					<p class="text-left">
@@ -81,7 +76,6 @@
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
 			<div class="col-md-12 heading-section text-center ftco-animate">
-				<span class="subheading">Productos</span>
 				<h2 class="mb-4">Productos Relacionados</h2>
 			</div>
 		</div>   		
@@ -91,42 +85,7 @@
 
 			@foreach($relatedProducts as $product)
 			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod">
-						@if(count($product->images)>0)
-						<img class="img-fluid" src="{{ asset('/admins/img/products/'.$product->images[0]->image) }}" alt="{{ $product->name }}">
-						@else
-						<img class="img-fluid" src="{{ asset('/admins/img/products/imagen.jpg') }}" alt="{{ $product->name }}">
-						@endif
-
-						@if($product->ofert>0)
-						<span class="status">{{ $product->ofert." %" }}</span>
-						@endif
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">{{ $product->name }}</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								@if($product->ofert>0)
-								<p class="price"><span class="mr-2 price-dc">{{ "S/. ".number_format($product->price, 2, ',', '.') }}</span><span class="price-sale">{{ "S/. ".number_format($product->price-($product->price*$product->ofert/100), 2, ',', '.') }}</span></p>
-								@else
-								<p class="price"><span>{{ "S/. ".number_format($product->price, 2, ',', '.') }}</span></p>
-								@endif
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="{{ route('web.producto', ['slug' => $product->slug]) }}" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-menu"></i></span>
-								</a>
-								<a class="buy-now d-flex justify-content-center align-items-center mx-1 addCart" slug="{{ $product->slug }}">
-									<span><i class="ion-ios-cart"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
+				@include('web.partials.cardProduct')
 			</div>
 			@endforeach
 
@@ -137,6 +96,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('/admins/vendors/rater/rater.min.js') }}"></script>
 <script src="{{ asset('/web/vendors/lightslider/lightslider.js') }}"></script>
 <script src="{{ asset('/web/vendors/lightgallery/lightgallery.js') }}"></script>
 @endsection

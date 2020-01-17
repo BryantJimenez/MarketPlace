@@ -419,8 +419,6 @@ $(document).ready(function() {
 		var userLng=location.coords.longitude;
 		var userLat=location.coords.latitude;
 
-		// alert('Ubicación obtenida');
-
 		$.ajax({
 			url: '/agregar/ubicacion/'+userLat+'/'+userLng,
 			dataType: 'html'
@@ -432,24 +430,9 @@ $(document).ready(function() {
 	}
 	function  errorLocation (error) {
 		if (error.code==1 || error.code==2 || error.code==3) {
-			//alert('Ha habido un error');
-			// navigator.geolocation.getCurrentPosition(showLocation, errorLocation, { timeout: 0 });
+			navigator.geolocation.getCurrentPosition(showLocation, errorLocation, { timeout: 0 });
 		}
-
-		// switch (error.code) {
-		// 	case 3:
-  //     		// ... error del timeout
-  //     		alert('Error del timeout');
-  //     		break;
-  //     		case 2:
-  //     		alert('Dispositivo no puede acceder a la ubicación');
-  //     		// ... dispositivo no puede obtener la ubicación
-  //     		break;
-  //     		case 1:
-  //     		// ... no se tiene permisos :(
-  //     		alert('Permiso denegado');
-  //     	}
-      }
+	}
 
 	//multiselect
 	if ($('.multiselect').length) {
@@ -457,6 +440,11 @@ $(document).ready(function() {
 			theme: "bootstrap",
 			language: "es"
 		});
+	}
+
+	//Llamado para agregar touchspin a campos de cantidad
+	if ($('.qty').length) {
+		qtyProduct();
 	}
 
 	//Funcion para mostrar la distancia entre el producto o tienda y el usuario
@@ -481,6 +469,20 @@ $(document).ready(function() {
 	if ($('.ratings').length) {
 		$(".ratings").rate();
 	}
+
+	//Plugin para formulario step en checkout
+	if ($('#checkout').length) {
+		$("#checkout").steps({
+			headerTag: "h3",
+			bodyTag: "section",
+			transitionEffect: "slideLeft",
+			autoFocus: true
+		});
+
+		//Llave para conectarse a culqi e inicializador
+		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
+		Culqi.init();
+	}
 });
 
 //Funcion para agregar productos al carrito
@@ -499,6 +501,7 @@ $('.addCart').click(function(event) {
 	});
 });
 
+//Agregar productos al carrito
 $('.addCartList').click(function(event) {
 	var slug=$(this).attr('slug');
 	$(this).text('Agregado');
@@ -512,33 +515,51 @@ $('.addCartList').click(function(event) {
 	});
 });
 
-//Funcion para agregar productos a select del filtro de inicio
-$('#searchBrand').change(function(event) {
-	var slug=$(this).val();
+//Quitar producto del carrito
+$('.product-remove a').click(function() {
+	var slug=$(this).attr('slug');
 	$.ajax({
-		url: '/agregar/productos/' + slug,
+		url: '/carrito/quitar/' + slug,
 		dataType: 'html',
 	}).done(function(result) {
 		var obj=JSON.parse(result);
-		$('#searchField').select2("destroy");
-		$("#searchField option").remove();
-		$('#searchField').append($('<option>', {
-			value: "",
-			text: "Buscar"
-		}));
-		for (var i=obj.length-1; i>=0; i--) {
-			$('#searchField').append($('<option>', {
-				value: obj[i].slug,
-				text: obj[i].name
-			}));
+		if (obj.status=='ok') {
+			$(".cartProduct[slug='"+slug+"']").remove();
+			var count=$(".count-cart").text();
+			count=count-1;
+			$(".count-cart").text(count);	
 		}
-		$('#searchField').select2({
-			theme: "bootstrap",
-			language: "es"
-		});
 	});
 });
 
+//Funcion para agregar productos a select del filtro de inicio
+// $('#searchBrand').change(function(event) {
+// 	var slug=$(this).val();
+// 	$.ajax({
+// 		url: '/agregar/productos/' + slug,
+// 		dataType: 'html',
+// 	}).done(function(result) {
+// 		var obj=JSON.parse(result);
+// 		$('#searchField').select2("destroy");
+// 		$("#searchField option").remove();
+// 		$('#searchField').append($('<option>', {
+// 			value: "",
+// 			text: "Buscar"
+// 		}));
+// 		for (var i=obj.length-1; i>=0; i--) {
+// 			$('#searchField').append($('<option>', {
+// 				value: obj[i].slug,
+// 				text: obj[i].name
+// 			}));
+// 		}
+// 		$('#searchField').select2({
+// 			theme: "bootstrap",
+// 			language: "es"
+// 		});
+// 	});
+// });
+
+//Redireccionar en el filtro de la tienda con la opcion precio
 $('#filterPrice').change(function() {
 	if ($(this).val()!="") {
 		var url=window.location.href;
@@ -558,6 +579,14 @@ $('#filterPrice').change(function() {
 	}
 });
 
+//Al cambiar la cantidad de un producto en el carrito cambia el total
+$('.qty').change(function() {
+	var slug=$(this).attr('slug'), price=$(this).attr('price'), qty=$(this).val();
+	var total=price*qty;
+	total=new Intl.NumberFormat("de-DE").format(total);
+	$('.total[slug="'+slug+'"]').text("S/. "+total);
+});
+
 //Función para calcular las distancia entre 2 puntos en km
 function getDistance(lat1, lon1, lat2, lon2){
 	rad = function(x) {return x*Math.PI/180;}
@@ -569,3 +598,46 @@ function getDistance(lat1, lon1, lat2, lon2){
 	var d = R * c;
 	return d.toFixed(0); //Retorna cero decimales
 }
+
+//Funcion para colocar plugin de touchspin en todos los campos de cantidad validados
+function qtyProduct() {
+	$(".qty").each(function(){
+		var qtyMax=$(this).attr('max');
+		$(this).TouchSpin({
+			min: 1,
+			max: qtyMax,
+			buttondown_class: 'btn btn-primary px-2 py-1 rounded',
+			buttonup_class: 'btn btn-primary px-2 py-1 rounded'
+		});
+	});
+}
+
+$('#btn_pagar').on('click', function(e) {
+  	// Crea el objeto Token con Culqi JS
+  	Culqi.createToken();
+  	e.preventDefault();
+  });
+
+function culqi() {
+	if (Culqi.token) { // ¡Objeto Token creado exitosamente!
+		var token = Culqi.token.id;
+		console.log('Se ha creado un token:' + token);
+    	//En esta linea de codigo debemos enviar el "Culqi.token.id"
+
+    	$.post("../tarjeta", {token: Culqi.token.id}, function(data, status){
+    		console.log(data);
+    		data=JSON.parse(data);
+    		console.log(data);
+    		if(data.objeto=="cargo"){
+    			alert("Cargo realizado exitosamente");
+    		} else {
+    			console.log(data);
+    			alert(data.mensaje_usuario);
+    		}
+    	});
+	} else { // ¡Hubo algún problema!
+    	// Mostramos JSON de objeto error en consola
+    	console.log(Culqi.error);
+    	alert(Culqi.error.user_message);
+    }
+};

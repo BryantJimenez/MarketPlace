@@ -10,7 +10,7 @@ use App\Http\Requests\WebBlogUpdateRequest;
 
 class BlogController extends Controller
 {
-     public function __construct() {
+    public function __construct() {
         $this->middleware('auth');
     }
     /**

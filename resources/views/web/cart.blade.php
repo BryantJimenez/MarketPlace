@@ -2,6 +2,10 @@
 
 @section('title', 'Carrito')
 
+@section('links')
+<link rel="stylesheet" href="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.css') }}">
+@endsection
+
 @section('content')
 <div class="hero-wrap hero-bread" style="background-image: url('{{ asset('/web/images/bg_1.jpg') }}');">
 	<div class="overlay"></div>
@@ -32,8 +36,8 @@
 						</thead>
 						<tbody>
 							@forelse ($products as $product)
-							<tr class="text-center">
-								<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+							<tr class="text-center cartProduct" slug="{{ $product['slug'] }}">
+								<td class="product-remove"><a slug="{{ $product['slug'] }}"><span class="ion-ios-close"></span></a></td>
 								<td class="image-prod">
 									@isset($product->images[0])
 									<div class="img" style="background-image:url({{ asset('/admins/img/products/'.$product->images[0]->image) }});"></div>
@@ -47,10 +51,10 @@
 								<td class="price">{{ 'S/. '.number_format($product['price'], 2, ",", ".") }}</td>
 								<td class="quantity">
 									<div class="input-group mb-3">
-										<input type="text" name="quantity" class="quantity form-control input-number" value="{{ $product['cartQty'] }}" min="1" max="100">
+										<input type="text" name="qty" class="quantity qty form-control" value="{{ $product['cartQty'] }}" min="1" max="{{ $product->qty }}" slug="{{ $product['slug'] }}" price="{{ $product['price'] }}">
 									</div>
 								</td>
-								<td class="total">{{ 'S/. '.number_format($product['price']*$product['cartQty'], 2, ",", ".") }}</td>
+								<td class="total" slug="{{ $product['slug'] }}">{{ 'S/. '.number_format($product['price']*$product['cartQty'], 2, ",", ".") }}</td>
 							</tr>
 							@empty
 							<tr class="text-center">
@@ -142,4 +146,8 @@
 		</div>
 	</div>
 </section>
+@endsection
+
+@section('script')
+<script src="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 @endsection

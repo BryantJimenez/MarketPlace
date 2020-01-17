@@ -5883,3 +5883,9 @@ File: scss
     text-align: center;
     margin-top: 10px;
     overflow: hidden; } }
+
+/*Estilo de jquery validate*/
+
+label.error {
+  color: red;
+}

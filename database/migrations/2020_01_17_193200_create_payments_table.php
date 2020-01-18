@@ -15,7 +15,18 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('slug')->unique();
+            $table->enum('shape', [1, 2]);
+            $table->enum('type', [1, 2, 3]);
+            $table->float('total', 10, 2)->default(0.00);
+            $table->string('reference');
+            $table->text('description');
+            $table->enum('state', [1, 2, 3]);
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
+
+            #Relations
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

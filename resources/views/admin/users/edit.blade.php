@@ -33,12 +33,16 @@
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<div class="row">
 								<div class="form-group col-lg-12 col-md-12 col-12">
-									<label class="col-form-label">Nombre</label>
-									<input class="form-control" type="text" disabled value="{{ $user->name }}">
+									<label class="col-form-label">Nombre y Apellido</label>
+									<input class="form-control" type="text" disabled value="{{ $user->name.' '.$user->lastname }}">
 								</div>
 								<div class="form-group col-lg-12 col-md-12 col-12">
 									<label class="col-form-label">Correo Electrónico</label>
 									<input class="form-control" type="text" disabled value="{{ $user->email }}">
+								</div>
+								<div class="form-group col-lg-12 col-md-12 col-12">
+									<label class="col-form-label">Teléfono</label>
+									<input class="form-control" type="text" disabled value="{{ $user->phone }}">
 								</div>
 								<div class="form-group col-lg-12 col-md-12 col-12">
 									<label class="col-form-label">Tipo<b class="text-danger">*</b></label>

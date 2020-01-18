@@ -41,7 +41,12 @@
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Teléfono</label>
-											<input type="text" class="form-control" placeholder="">
+											@guest
+											<input type="text" class="form-control" name="phone" placeholder="Introduzca su teléfono" required>
+											@else
+											<input type="text" class="form-control" name="phone" placeholder="Introduzca su teléfono" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @else required @endif>
+											@endguest
+											
 										</div>
 									</div>
 									
@@ -148,8 +153,11 @@
 								<hr>
 								<p class="d-flex total-price">
 									<span>Total</span>
-									@if()
-									<span>$17.60</span>
+									@if($product->ofert>0)
+									<span>{{ "S/. ".productPrice($product, 1)-productPrice($product, 2) }}</span>
+									@else
+									<span>{{ "S/. ".productPrice($product, 1) }}</span>
+									@endif
 								</p>
 							</div>
 						</div>

@@ -14,7 +14,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [ 'name', 'lastname', 'photo', 'slug', 'email', 'password', 'state', 'type'];
+    protected $fillable = [ 'name', 'lastname', 'phone', 'photo', 'slug', 'email', 'password', 'state', 'type'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -44,5 +44,9 @@ class User extends Authenticatable
 
     public function stores() {
         return $this->belongsToMany(Store::class)->withTimestamps();
+    }
+
+    public function payments() {
+        return $this->hasMany(Payment::class);
     }
 }

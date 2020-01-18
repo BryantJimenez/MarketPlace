@@ -44,6 +44,12 @@ $(document).ready(function(){
 					maxlength: 191
 				},
 
+				lastname: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
 				email: {
 					required: true,
 					email: true,
@@ -70,6 +76,11 @@ $(document).ready(function(){
 			messages:
 			{
 				name: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				lastname: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
 				},
@@ -106,11 +117,23 @@ $(document).ready(function(){
 					maxlength: 191
 				},
 
+				lastname: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
 				email: {
 					required: true,
 					email: true,
 					minlength: 8,
 					maxlength: 191
+				},
+
+				phone: {
+					required: true,
+					minlength: 5,
+					maxlength: 15
 				},
 
 				password: {
@@ -132,8 +155,18 @@ $(document).ready(function(){
 					maxlength: 'Escribe máximo {0} caracteres.'
 				},
 
+				lastname: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
 				email: {
 					email: 'Introduce una dirección de correo valida.',
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				phone: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
 				},

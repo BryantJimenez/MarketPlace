@@ -53,6 +53,11 @@
                         <li><a href="{{ route('blog.index') }}">Lista</a></li>
                     </ul>
                 </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-bookmark"></i><span class="hide-menu">Ventas</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('ventas.index') }}">Lista</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

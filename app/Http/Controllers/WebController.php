@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Product;
 use App\Category;
 use App\District;
@@ -338,13 +337,10 @@ class WebController extends Controller
         return view('web.profile', compact("cart"));
     }
 
-    public function emailVerify(Request $request)
-    {
-        $count=User::where('email', request('email'))->count();
-        if ($count>0) {
-            return "false";
-        } else {
-            return "true";
-        }
+    public function order(Request $request) {
+
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+
+        return view('web.orders', compact("cart"));
     }
 }

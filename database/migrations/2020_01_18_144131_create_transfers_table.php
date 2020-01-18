@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDeliveriesTable extends Migration
+class CreateTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateDeliveriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliveries', function (Blueprint $table) {
+        Schema::create('transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('payment_id')->unsigned()->nullable();
+            $table->bigInteger('user_bank_id')->unsigned()->nullable();
+            $table->bigInteger('destiny_bank_id')->unsigned()->nullable();
             $table->timestamps();
 
             #Relations
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('destiny_bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +34,6 @@ class CreateDeliveriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliveries');
+        Schema::dropIfExists('transfers');
     }
 }

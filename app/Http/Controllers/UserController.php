@@ -14,7 +14,7 @@ use App\Http\Requests\UserUpdateRequest;
 class UserController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index', 'create', 'store', 'show', 'edit', 'update', 'destroy', 'profile');
     }
     /**
      * Display a listing of the resource.
@@ -44,8 +44,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserStoreRequest $request) {
-        $count=User::where('name', request('name'))->count();
-        $slug=Str::slug(request('name'), '-');
+        $count=User::where('name', request('name'))->where('lastname', request('lastname'))->count();
+        $slug=Str::slug(request('name')." ".request('lastname'), '-');
         if ($count>0) {
             $slug=$slug."-".$count;
         }
@@ -58,7 +58,7 @@ class UserController extends Controller
                 $slug=$slug."-".$num;
                 $num++;
             } else {
-                $data=array('name' => request('name'), 'slug' => $slug, 'email' => request('email'), 'type' => request('type'), 'password' => Hash::make(request('password')));
+                $data=array('name' => request('name'), 'lastname' => request('lastname'), 'phone' => request('phone'), 'slug' => $slug, 'email' => request('email'), 'type' => request('type'), 'password' => Hash::make(request('password')));
                 break;
             }
         }
@@ -161,5 +161,15 @@ class UserController extends Controller
 
     public function profile(Request $request) {
         return view('admin.users.profile');
+    }
+
+    public function emailVerify(Request $request)
+    {
+        $count=User::where('email', request('email'))->count();
+        if ($count>0) {
+            return "false";
+        } else {
+            return "true";
+        }
     }
 }

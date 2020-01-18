@@ -50,7 +50,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'lastname' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +65,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $count=User::where('name', $data['name'])->count();
-        $slug=Str::slug($data['name'], '-');
+        $count=User::where('name', $data['name'])->where('lastname', $data['lastname'])->count();
+        $slug=Str::slug($data['name']." ".$data['lastname'], '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -75,7 +76,7 @@ class RegisterController extends Controller
         while (true) {
             $count2=User::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 break;
@@ -84,6 +85,7 @@ class RegisterController extends Controller
 
         return User::create([
             'name' => $data['name'],
+            'lastname' => $data['lastname'],
             'slug' => $slug,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

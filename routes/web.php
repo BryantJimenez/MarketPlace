@@ -25,6 +25,7 @@ Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.product
 Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
 Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
+Route::get('/pedidos', 'WebController@order')->name('web.order');
 
 ///// ADMIN /////
 // Inicio
@@ -96,3 +97,7 @@ Route::post('/misterfix/blog', 'BlogController@store')->name('blog.store');
 Route::get('/misterfix/blog/{slug}/editar', 'BlogController@edit')->name('blog.edit');
 Route::put('/misterfix/blog/{slug}', 'BlogController@update')->name('blog.update');
 Route::delete('/misterfix/blog/{slug}', 'BlogController@destroy')->name('blog.destroy');
+
+// Ventas
+Route::get('/misterfix/ventas', 'SaleController@index')->name('ventas.index');
+Route::get('/misterfix/ventas/{slug}', 'SaleController@show')->name('ventas.show');

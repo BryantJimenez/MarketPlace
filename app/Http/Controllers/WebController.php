@@ -178,4 +178,11 @@ class WebController extends Controller
 
         return view('web.profile', compact("cart"));
     }
+
+     public function order(Request $request) {
+
+        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
+
+        return view('web.orders', compact("cart"));
+    }
 }

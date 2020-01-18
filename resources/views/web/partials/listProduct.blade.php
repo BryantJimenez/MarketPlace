@@ -17,7 +17,7 @@
 		<div class="col-lg-2 col-md-3 col-12">
 			<div class="card-body">
 				{!! productPrice($product) !!}
-				<a href="{{ route('comprar') }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
+				<a href="{{ route('comprar', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
 				<button type="button" class="btn btn-primary btn-sm mb-lg-2 mb-md-2 addCartList" slug="{{ $product->slug }}">Carrito</button>
 				<a href="#" class="btn btn-primary btn-sm">Entrega</a>
 			</div>

@@ -13,6 +13,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Culqi\Culqi;
+use Culqi\CulqiException;
 
 class WebController extends Controller
 {
@@ -187,45 +189,51 @@ class WebController extends Controller
     }
 
     public function buy(Request $request, $slug=null) {
-
+        $product=Product::where('slug', $slug)->firstOrFail();
         $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        return view('web.checkout', compact("cart"));
+        return view('web.checkout', compact("cart", "product"));
     }
 
     public function pay(Request $request) {
-        $SECRET_KEY = "vk9Xjpe2YZMEOSBzEwiRcPDibnx2NlPBYsusKbDobAk";
-        $culqi = new Culqi\Culqi(array('api_key' => $SECRET_KEY));
+        $SECRET_KEY = "sk_test_FsqzQFJOUgoyTIiM";
+        $culqi = new Culqi(array('api_key' => $SECRET_KEY));
+
+        // dd($culqi);
 
         try{
             // Creamos Cargo a una tarjeta
-            $charge = $culqi->Charges->create(
+            $charge=$culqi->Charges->create(
                 array(
                   "amount" => 1000,
                   "capture" => true,
                   "currency_code" => "PEN",
                   "description" => "Venta de prueba",
-                  "email" => "test@culqi.com",
+                  "email" => request('email'),
                   "installments" => 0,
                   "antifraud_details" => array(
-                      "address" => "Av. Lima 123",
+                      "address" => request("address"),
                       "address_city" => "LIMA",
                       "country_code" => "PE",
-                      "first_name" => "Will",
+                      "first_name" => request("name"),
                       "last_name" => "Muro",
                       "phone_number" => "9889678986",
                   ),
-                  "source_id" => "{token_id o card_id}"
+                  "source_id" => request('culqi')
               )
             );
 
-            return json_encode($cargo);
+            dd($charge);
+
+            // return json_encode($charge);
             
         } catch(Exception $e){
 
-            $cargo2= $e->getMessage();
+            $charge= $e->getMessage();
 
-            return $cargo2;
+            dd('$charge');
+
+            // return $cargo2;
 
         }
     }

@@ -2021,7 +2021,7 @@
     opacity: 1; 
   }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #e9ecef;
+    background-color: #e9ecef !important;
     opacity: 1; 
   }
 
@@ -11346,7 +11346,7 @@
     /*height: 58px !important;*/
     padding-left: 15px;
     padding-right: 15px;
-    background: #fff !important;
+    background: #fff;
     color: rgba(0, 0, 0, 0.9) !important;
     font-size: 14px;
     border-radius: 0px;

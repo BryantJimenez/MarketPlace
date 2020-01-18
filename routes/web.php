@@ -27,7 +27,7 @@ Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
 Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
 Route::get('/comprar/{slug?}', 'WebController@buy')->name('comprar');
-Route::post('/comprar', 'WebController@payProduct')->name('pagar');
+Route::post('/comprar', 'WebController@pay')->name('pagar');
 // Route::get('/agregar/productos/{slug?}', 'WebController@addProducts')->name('web.add.products');
 Route::get('/agregar/ubicacion/{lat}/{lng}', 'WebController@addLocation')->name('web.add.location');
 

@@ -110,6 +110,7 @@
     background: #eee;
     color: #aaa;
     cursor: default;
+    line-height: 18px;
 }
 
 .wizard > .steps .current a,
@@ -119,6 +120,7 @@
     background: #2184be;
     color: #fff;
     cursor: default;
+    line-height: 18px;
 }
 
 .wizard > .steps .done a,
@@ -127,6 +129,7 @@
 {
     background: #9dc8e2;
     color: #fff;
+    line-height: 18px
 }
 
 .wizard > .steps .error a,

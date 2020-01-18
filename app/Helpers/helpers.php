@@ -28,12 +28,19 @@ function imageCardProduct($product, $type=0) {
 	}
 }
 
-function productPrice($product) {
-	if($product->ofert>0) {
+function productPrice($product, $type=0) {
+	if ($type==0) {
+		if($product->ofert>0) {
+			$ofert=$product->price-($product->price*$product->ofert/100);
+			return '<p class="price"><span class="mr-2 price-dc">S/. '.number_format($product->price, 2, ",", ".").'</span><span class="price-sale">S/. '.number_format($ofert, 2, ",", ".").'</span></p>';
+		} else {
+			return '<p class="price"><span>S/. '.number_format($product->price, 2, ",", ".").'</span></p>';
+		}
+	} elseif ($type==1) {
+		return number_format($product->price, 2, ",", ".");
+	} elseif ($type==2) {
 		$ofert=$product->price-($product->price*$product->ofert/100);
-		return '<p class="price"><span class="mr-2 price-dc">S/. '.number_format($product->price, 2, ",", ".").'</span><span class="price-sale">S/. '.number_format($ofert, 2, ",", ".").'</span></p>';
-	} else {
-		return '<p class="price"><span>S/. '.number_format($product->price, 2, ",", ".").'</span></p>';
+		return number_format($ofert, 2, ",", ".");
 	}
 }
 

@@ -472,16 +472,77 @@ $(document).ready(function() {
 
 	//Plugin para formulario step en checkout
 	if ($('#checkout').length) {
+		//Llave para conectarse a culqi e inicializador
+		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
+		Culqi.init();
+
 		$("#checkout").steps({
 			headerTag: "h3",
 			bodyTag: "section",
 			transitionEffect: "slideLeft",
-			autoFocus: true
-		});
+			autoFocus: true,
+			onStepChanging: function (event, currentIndex, newIndex)
+			{
+				$(".billing-form").validate().settings.ignore = ":disabled,:hidden";
+				return $(".billing-form").valid();
+			},
+			onFinishing: function (event, currentIndex)
+			{
+				$(".billing-form").validate().settings.ignore = ":disabled";
+				return $(".billing-form").valid();
+			},
+			onFinished: function (event, currentIndex)
+			{
+				// Crea el objeto Token con Culqi JS
+				Culqi.createToken();
+				e.preventDefault();
+			}
+		}).validate({
+			errorPlacement: function errorPlacement(error, element) { element.before(error); },
+			rules:
+			{
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
 
-		//Llave para conectarse a culqi e inicializador
-		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
-		Culqi.init();
+				email: {
+					required: true,
+					email: true,
+					minlength: 8,
+					maxlength: 191
+				},
+
+				address: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				pay: {
+					required: true
+				},
+			},
+			messages:
+			{
+				name: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				email: {
+					email: 'Introduce una dirección de correo valida.',
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				address: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				}
+			}
+		});
 	}
 });
 
@@ -612,30 +673,13 @@ function qtyProduct() {
 	});
 }
 
-$('#btn_pagar').on('click', function(e) {
-  	// Crea el objeto Token con Culqi JS
-  	Culqi.createToken();
-  	e.preventDefault();
-  });
-
 function culqi() {
-	if (Culqi.token) { // ¡Objeto Token creado exitosamente!
+	if (Culqi.token) {
 		var token = Culqi.token.id;
 		console.log('Se ha creado un token:' + token);
-    	//En esta linea de codigo debemos enviar el "Culqi.token.id"
-
-    	$.post("../tarjeta", {token: Culqi.token.id}, function(data, status){
-    		console.log(data);
-    		data=JSON.parse(data);
-    		console.log(data);
-    		if(data.objeto=="cargo"){
-    			alert("Cargo realizado exitosamente");
-    		} else {
-    			console.log(data);
-    			alert(data.mensaje_usuario);
-    		}
-    	});
-	} else { // ¡Hubo algún problema!
+		$('#culqi').val(token);
+		$(".billing-form").submit();
+	} else {
     	// Mostramos JSON de objeto error en consola
     	console.log(Culqi.error);
     	alert(Culqi.error.user_message);

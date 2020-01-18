@@ -7,7 +7,7 @@
 <section id="wrapper" class="login-register login-sidebar login-image">
   <div class="login-box card">
     <div class="card-body">
-      <form class="form-horizontal form-material mt-md-5 mt-4" action="{{ route('login') }}" method="POST">
+      <form class="form-horizontal form-material mt-md-5 mt-4" action="{{ route('login') }}" method="POST" id="formLogin">
         {{ csrf_field() }}
         <p class="h2 text-center db">INICIA SESSIÓN</p>
         <div class="form-group m-t-40">
@@ -44,7 +44,7 @@
         </div>
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
-            <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Ingresar</button>
+            <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit" action="login">Ingresar</button>
           </div>
         </div>
         <div class="form-group m-b-0">

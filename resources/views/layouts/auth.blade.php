@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<link rel="icon" href="{{ asset('/auth/images/icons/favicon.ico') }}" type="image/x-icon" />
-	<title>@yield('title')</title>
+    <link rel="icon" href="{{ asset('/auth/images/icons/favicon.ico') }}" type="image/x-icon" />
+    <title>@yield('title')</title>
 
     <meta name="description" content="Inicia sección en esta app para el control del inventario de activos.">
     <meta name="author" content="">
@@ -18,11 +18,15 @@
 </head>
 <body>
     @include('auth.partials.loader')
-	@yield('content')
+    @yield('content')
 
     <script src="{{ asset('/auth/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('/auth/vendor/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('/auth/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/auth/js/main.js') }}"></script>
+    <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
+    <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
+    <script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
+    <script src="{{ asset('/admins/js/validate.js') }}"></script>
 </body>
 </html>

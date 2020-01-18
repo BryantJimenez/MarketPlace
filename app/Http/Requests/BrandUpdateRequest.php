@@ -24,7 +24,8 @@ class BrandUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:2|max:191'
+            'name' => 'required|string|min:2|max:191',
+            'quality' => 'required|min:1|max:5'
         ];
     }
 }

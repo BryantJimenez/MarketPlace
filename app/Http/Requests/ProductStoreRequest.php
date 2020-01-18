@@ -31,7 +31,6 @@ class ProductStoreRequest extends FormRequest
             'qty' => 'required|number|min:0|max:10000',
             'price' => 'required|number|min:0|max:10000000',
             'ofert' => 'required|number|min:0|max:100',
-            'quality' => 'required',
             'description' => 'required|string|min:0|max:64000'
         ];
     }

@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SaleController extends Model
+class Sale extends Model
+
 {
     //
 }

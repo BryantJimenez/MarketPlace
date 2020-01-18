@@ -53,7 +53,7 @@ class ProductController extends Controller
         $count=Product::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -61,13 +61,13 @@ class ProductController extends Controller
         while (true) {
             $count2=Product::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 $brand=Brand::where('slug', request('brand_id'))->firstOrFail();
                 $subcategory=Subcategory::where('slug', request('subcategory_id'))->firstOrFail();
                 $store=Store::where('slug', request('store_id'))->firstOrFail();
-                $data=array('name' => request('name'), 'slug' => $slug, 'qty' => request('qty'), 'ofert' => request('ofert'), 'price' => request('price'), 'quality' => request('quality'), 'description' => request('description'), 'subcategory_id' => $subcategory->id, 'brand_id' => $brand->id);
+                $data=array('name' => request('name'), 'slug' => $slug, 'qty' => request('qty'), 'ofert' => request('ofert'), 'price' => request('price'), 'description' => request('description'), 'subcategory_id' => $subcategory->id, 'brand_id' => $brand->id);
                 break;
             }
         }
@@ -140,7 +140,7 @@ class ProductController extends Controller
             $productStore->fill($data)->save();
         }
 
-        $data=array('name' => request('name'), 'qty' => request('qty'), 'ofert' => request('ofert'), 'price' => request('price'), 'quality' => request('quality'), 'description' => request('description'), 'subcategory_id' => $subcategory->id, 'brand_id' => $brand->id);
+        $data=array('name' => request('name'), 'qty' => request('qty'), 'ofert' => request('ofert'), 'price' => request('price'), 'description' => request('description'), 'subcategory_id' => $subcategory->id, 'brand_id' => $brand->id);
         $product->fill($data)->save();
 
         if ($product) {

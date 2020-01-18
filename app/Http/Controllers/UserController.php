@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Store;
+use App\StoreUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +33,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('admin.users.create');
+        $stores=Store::all();
+        return view('admin.users.create', compact('stores'));
     }
 
     /**
@@ -44,7 +47,7 @@ class UserController extends Controller
         $count=User::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -52,7 +55,7 @@ class UserController extends Controller
         while (true) {
             $count2=User::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 $data=array('name' => request('name'), 'slug' => $slug, 'email' => request('email'), 'type' => request('type'), 'password' => Hash::make(request('password')));
@@ -68,7 +71,12 @@ class UserController extends Controller
             $data['photo']=$photo;
         }
 
-        $user=User::create($data)->save();
+        $user=User::create($data);
+        if (request('type')==2) {
+            $store=Store::where('slug', request('store_id'))->firstOrFail();
+            StoreUser::create(['user_id' => $user->id, 'store_id' => $store->id]);
+        }
+
         if ($user) {
             return redirect()->route('usuarios.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El usuario ha sido registrado exitosamente.']);
         } else {
@@ -100,7 +108,8 @@ class UserController extends Controller
      */
     public function edit($slug) {
         $user=User::where('slug', $slug)->firstOrFail();
-        return view('admin.users.edit', compact("user"));
+        $stores=Store::all();
+        return view('admin.users.edit', compact("user", "stores"));
     }
 
     /**
@@ -112,6 +121,18 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $slug) {
         $user=User::where('slug', $slug)->firstOrFail();
+        if (request('type')==2) {
+            $storeUserCount=StoreUser::where('user_id', $user->id)->count();
+            if ($storeUserCount>0) {
+                $storeUser=StoreUser::where('user_id', $user->id)->firstOrFail();
+                $storeUser->delete();
+            }
+            $store=Store::where('slug', request('store_id'))->firstOrFail();
+            StoreUser::create(['user_id' => $user->id, 'store_id' => $store->id]);
+        } else {
+            $storeUser=StoreUser::where('user_id', $user->id)->firstOrFail();
+            $storeUser->delete();
+        }
         $user->fill($request->all())->save();
 
         if ($user) {

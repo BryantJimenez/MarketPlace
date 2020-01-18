@@ -76,15 +76,6 @@
 							<label class="col-form-label">Descuento (%)<b class="text-danger">*</b></label>
 							<input class="form-control ofert" type="text" name="ofert" required placeholder="Introduzca el descuento" value="0">
 						</div>
-						<div class="form-group col-lg-6 col-md-6 col-12">
-							<label class="col-form-label">Calidad<b class="text-danger">*</b></label>
-							<select class="form-control" required name="quality">
-								<option value="">Seleccione</option>
-								<option value="1" @if(old('quality')==1) selected @endif>Baja</option>
-								<option value="2" @if(old('quality')==2) selected @endif>Media</option>
-								<option value="3" @if(old('quality')==3) selected @endif>Alta</option>
-							</select>
-						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Descripción<b class="text-danger">*</b></label>
 							<textarea class="form-control" rows="4" name="description" required placeholder="Introduzca una descripción">{{ old('description') }}</textarea>

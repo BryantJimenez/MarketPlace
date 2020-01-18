@@ -46,7 +46,7 @@ class BrandController extends Controller
         $count=Brand::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -54,10 +54,10 @@ class BrandController extends Controller
         while (true) {
             $count2=Brand::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
-                $data=array('name' => request('name'), 'slug' => $slug, );
+                $data=array('name' => request('name'), 'slug' => $slug, 'quality' => request('quality'));
                 break;
             }
         }
@@ -111,7 +111,7 @@ class BrandController extends Controller
     public function update(BrandUpdateRequest $request, $slug)
     {
         $brand=Brand::where('slug', $slug)->firstOrFail();
-        $data=array('name' => request('name'));
+        $data=array('name' => request('name'), 'quality' => request('quality'));
 
         // Mover imagen a carpeta brands y extraer nombre
         if ($request->hasFile('image')) {

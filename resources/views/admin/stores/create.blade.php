@@ -5,6 +5,7 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/multiselect/bootstrap.multiselect.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -46,6 +47,12 @@
 							<label class="col-form-label">Teléfono<b class="text-danger">*</b></label>
 							<input class="form-control" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ old('phone') }}">
 						</div>
+						<div class="form-group col-lg-12 col-md-12 col-12">
+							<label class="col-form-label">Busca la ubicación de tu tienda y da click en ese lugar<b class="text-danger">*</b></label>
+							<div id="map" style="height: 300px;"></div>
+							<input type="hidden" name="lat" id="lat">
+							<input type="hidden" name="lng" id="lng">
+						</div>
 						<div class="form-group col-12">
 							<div class="btn-group" role="group">
 								<button type="submit" class="btn btn-primary" action="store">Guardar</button>
@@ -62,6 +69,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
 <script src="{{ asset('/admins/vendors/multiselect/bootstrap-multiselect.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>

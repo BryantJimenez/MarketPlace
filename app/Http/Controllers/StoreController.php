@@ -48,7 +48,7 @@ class StoreController extends Controller
         $count=Store::where('name', request('name'))->count();
         $slug=Str::slug(request('name'), '-');
         if ($count>0) {
-            $slug=$slug.$count;
+            $slug=$slug."-".$count;
         }
 
         // Validación para que no se repita el slug
@@ -56,11 +56,11 @@ class StoreController extends Controller
         while (true) {
             $count2=Store::where('slug', $slug)->count();
             if ($count2>0) {
-                $slug=$slug.$num;
+                $slug=$slug."-".$num;
                 $num++;
             } else {
                 $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();
-                $data=array('name' => request('name'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'));
+                $data=array('name' => request('name'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'lat' => request('lat'), 'lng' => request('lng'));
                 break;
             }
         }
@@ -108,7 +108,7 @@ class StoreController extends Controller
     {
         $store=Store::where('slug', $slug)->firstOrFail();
         $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();
-        $data=array('name' => request('name'), 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'));
+        $data=array('name' => request('name'), 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'lat' => request('lat'), 'lng' => request('lng'));
         $store->fill($data)->save();
 
         if ($store) {

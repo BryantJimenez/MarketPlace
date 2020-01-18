@@ -1,4 +1,100 @@
 $(document).ready(function(){
+	//Usuarios register
+	$("button[action='login']").on("click",function(){
+		$("#formLogin").validate({
+			rules:
+			{
+				email: {
+					required: true,
+					email: true,
+					minlength: 8,
+					maxlength: 191
+				},
+
+				password: {
+					required: true,
+					minlength: 8,
+					maxlength: 40
+				}
+			},
+			messages:
+			{
+				email: {
+					email: 'Introduce una dirección de correo valida.',
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				password: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				}
+			}
+		});
+	});
+
+	//Usuarios register
+	$("button[action='register']").on("click",function(){
+		$("#formRegister").validate({
+			rules:
+			{
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				email: {
+					required: true,
+					email: true,
+					minlength: 8,
+					maxlength: 191,
+					remote: {
+						url: "/registro/email",
+						type: "get"
+					}
+				},
+
+				password: {
+					required: true,
+					minlength: 8,
+					maxlength: 40
+				},
+
+				password_confirmation: { 
+					equalTo: "#password",
+					minlength: 8,
+					maxlength: 40
+				}
+			},
+			messages:
+			{
+				name: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				email: {
+					email: 'Introduce una dirección de correo valida.',
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.',
+					remote: "El correo ya esta en uso"
+				},
+
+				password: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				password_confirmation: { 
+					equalTo: 'Los datos ingresados no coinciden.',
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				}
+			}
+		});
+	});
+
 	//Usuarios
 	$("button[action='user']").on("click",function(){
 		$("#formUser").validate({
@@ -86,6 +182,12 @@ $(document).ready(function(){
 					required: true,
 					minlength: 2,
 					maxlength: 191
+				},
+
+				quality: {
+					required: true,
+					min: 1,
+					max: 5
 				}
 			},
 			messages:
@@ -93,6 +195,11 @@ $(document).ready(function(){
 				name: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				quality: {
+					min: 'Escribe un valor mayor o igual a {0}.',
+					max: 'Escribe un valor menor o igual a {0}.'
 				}
 			}
 		});
@@ -212,10 +319,6 @@ $(document).ready(function(){
 					max: 100
 				},
 
-				quality: { 
-					required: true
-				},
-
 				description: { 
 					required: true,
 					minlength: 10,
@@ -254,10 +357,6 @@ $(document).ready(function(){
 				ofert: {
 					min: 'Escribe un valor mayor o igual a {0}.',
 					max: 'Escribe un valor menor o igual a {0}.'
-				},
-
-				quality: {
-					required: 'Seleccione una opción.'
 				},
 
 				description: {

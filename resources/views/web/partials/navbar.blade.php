@@ -11,7 +11,6 @@
 				<li class="nav-item"><a class="nav-link" href="{{ route('tienda') }}">Tienda</a></li>
 				<li class="nav-item"><a href="{{ route('categorias') }}" class="nav-link">Categorías</a></li>
 				<li class="nav-item"><a href="{{ route('web.blog.index') }}" class="nav-link">Blog</a></li>
-				<li class="nav-item cta cta-colored"><a href="{{ route('carrito') }}" class="nav-link"><span class="icon-shopping_cart"></span>[<span class="count-cart">{{ $cart }}</span>]</a></li>
 				@guest
 				<li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Ingresar</a></li>
 				<li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Registrarse</a></li>
@@ -21,7 +20,12 @@
 					<div class="dropdown-menu" aria-labelledby="dropdown05">
 						<a class="dropdown-item" href="{{ route('admin') }}">Panel Administrativo</a>
 						<a class="dropdown-item" href="{{ route('web.profile') }}">Perfil</a>
-						<a class="dropdown-item" href="{{ route('web.order') }}">Pedidos</a>
+						<a class="dropdown-item" href="{{ route('web.sales') }}">Mis Compras</a>
+						<hr class="w-75 my-0">
+						<p class="dropdown-item my-0"><b>Blog</b></p>
+						<a class="dropdown-item" href="#">Nueva Entrada</a>
+						<a class="dropdown-item" href="#">Mis Entradas</a>
+						<hr class="w-75 my-0">
 						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf

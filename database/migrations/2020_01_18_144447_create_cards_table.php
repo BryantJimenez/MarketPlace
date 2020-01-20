@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCulqisTable extends Migration
+class CreateCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCulqisTable extends Migration
      */
     public function up()
     {
-        Schema::create('culqis', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('payment_id')->unsigned()->nullable();
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateCulqisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('culqis');
+        Schema::dropIfExists('cards');
     }
 }

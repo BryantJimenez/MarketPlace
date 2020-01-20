@@ -68,12 +68,6 @@
                         <label>Confirmar Contraseña</label>
                         <input class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="********">
                     </div>
-
-                    @error('password')
-                    <span class="invalid-feedback text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
 
                 <div class="form-group text-center m-t-20">

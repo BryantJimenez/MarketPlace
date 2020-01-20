@@ -22,8 +22,6 @@ class CreateTransfersTable extends Migration
 
             #Relations
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('destiny_bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

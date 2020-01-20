@@ -23,10 +23,7 @@ class CreateBlogsTable extends Migration
             $table->timestamps();
 
             #Relations
-            $table->foreign('user_id')->references('id')
-                                      ->on('users')
-                                      ->onDelete('cascade')
-                                      ->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

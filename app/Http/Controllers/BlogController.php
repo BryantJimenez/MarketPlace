@@ -43,6 +43,7 @@ class BlogController extends Controller
      */
     public function store(WebBlogStoreRequest $request)
     {
+        dd($request);
         $count=Blog::where('title', request('title'))->count();
         $slug=Str::slug(request('title'), '-');
         if ($count>0) {

@@ -28,8 +28,8 @@
 				<a href="{{ route('web.producto', ['slug' => $product->slug]) }}" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 					<span><i class="ion-ios-menu"></i></span>
 				</a>
-				<a class="buy-now d-flex justify-content-center align-items-center mx-1 addCart" slug="{{ $product->slug }}">
-					<span><i class="ion-ios-cart"></i></span>
+				<a href="{{ route('comprar.product', ['slug' => $product->slug]) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+					<span><i class="icon-shopping-bag"></i></span>
 				</a>
 			</div>
 		</div>

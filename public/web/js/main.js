@@ -7,6 +7,8 @@
 
  	"use strict";
 
+ 	$('[data-toggle="tooltip"]').tooltip();
+
  	var isMobile = {
  		Android: function() {
  			return navigator.userAgent.match(/Android/i);
@@ -63,29 +65,6 @@
 	$.Scrollax();
 
 	var carousel = function() {
-		// $('.home-slider').owlCarousel({
-		// 	loop:true,
-		// 	autoplay: true,
-		// 	margin:0,
-		// 	animateOut: 'fadeOut',
-		// 	animateIn: 'fadeIn',
-		// 	nav:false,
-		// 	autoplayHoverPause: false,
-		// 	items: 1,
-		// 	navText : ["<span class='ion-md-arrow-back'></span>","<span class='ion-chevron-right'></span>"],
-		// 	responsive:{
-		// 		0:{
-		// 			items:1
-		// 		},
-		// 		600:{
-		// 			items:1
-		// 		},
-		// 		1000:{
-		// 			items:1
-		// 		}
-		// 	}
-		// });
-
 		$('.carousel-category').owlCarousel({
 			center: true,
 			loop: true,
@@ -126,28 +105,6 @@
 				},
 				1000:{
 					items: 5
-				}
-			}
-		});
-
-		$('.carousel-store').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			autoplay:true,
-			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 3
 				}
 			}
 		});
@@ -420,8 +377,13 @@ $(document).ready(function() {
 		var userLat=location.coords.latitude;
 
 		$.ajax({
-			url: '/agregar/ubicacion/'+userLat+'/'+userLng,
-			dataType: 'html'
+			url: '/agregar/ubicacion',
+			type: 'POST',
+			dataType: 'html',
+			data: {lat: userLat, lng: userLng},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
 		});
 
 		if (typeof(userLat)!="undefined" && typeof(userLng)!="undefined") {
@@ -439,6 +401,39 @@ $(document).ready(function() {
 		$('.multiselect').select2({
 			theme: "bootstrap",
 			language: "es"
+		});
+	}
+
+	//datatable español
+	var español = {
+		"sProcessing":     "Procesando...",
+		"sLengthMenu":     "Mostrar _MENU_ registros",
+		"sZeroRecords":    "No se encontraron resultados",
+		"sEmptyTable":     "Ningún resultado disponible en esta tabla",
+		"sInfo":           "Resultados del _START_ al _END_ de un total de _TOTAL_ registros",
+		"sInfoEmpty":      "No hay resultados",
+		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix":    "",
+		"sSearch":         "Buscar :",
+		"sUrl":            "",
+		"sInfoThousands":  ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+	}
+
+	//datatable normal
+	if ($('#tabla').length) {
+		$('#tabla').DataTable({
+			"language": español
 		});
 	}
 
@@ -483,6 +478,21 @@ $(document).ready(function() {
 			autoFocus: true,
 			onStepChanging: function (event, currentIndex, newIndex)
 			{
+				//Cambiar opciones de pago entre tarjeta y transferencia
+				$('#selectPay').change(function() {
+					if ($(this).val()=="1") {
+						$('#transferFields').addClass('d-none');
+						$('#transferFields input, #transferFields select').attr('disabled', true);
+						$('#cardFields').removeClass('d-none');
+						$('#cardFields input').attr('disabled', false);
+					} else {
+						$('#cardFields').addClass('d-none');
+						$('#cardFields input').attr('disabled', true);
+						$('#transferFields').removeClass('d-none');
+						$('#transferFields input, #transferFields select').attr('disabled', false);
+					}
+				});
+
 				$(".billing-form").validate().settings.ignore = ":disabled,:hidden";
 				return $(".billing-form").valid();
 			},
@@ -498,10 +508,15 @@ $(document).ready(function() {
 				e.preventDefault();
 			}
 		}).validate({
-			errorPlacement: function errorPlacement(error, element) { element.before(error); },
 			rules:
 			{
 				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				lastname: {
 					required: true,
 					minlength: 2,
 					maxlength: 191
@@ -514,6 +529,12 @@ $(document).ready(function() {
 					maxlength: 191
 				},
 
+				phone: {
+					required: true,
+					minlength: 5,
+					maxlength: 15
+				},
+
 				address: {
 					required: true,
 					minlength: 2,
@@ -523,10 +544,45 @@ $(document).ready(function() {
 				pay: {
 					required: true
 				},
+
+				card: {
+					required: true,
+					minlength: 16,
+					maxlength: 16
+				},
+
+				code: {
+					required: true,
+					minlength: 3,
+					maxlength: 3
+				},
+
+				month: {
+					required: true,
+					minlength: 2,
+					maxlength: 2
+				},
+
+				year: {
+					required: true,
+					minlength: 4,
+					maxlength: 4
+				},
+
+				reference: {
+					required: true,
+					minlength: 5,
+					maxlength: 25
+				}
 			},
 			messages:
 			{
 				name: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				lastname: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
 				},
@@ -537,7 +593,37 @@ $(document).ready(function() {
 					maxlength: 'Escribe máximo {0} caracteres.'
 				},
 
+				phone: {
+					minlength: 'Escribe mínimo {0} números.',
+					maxlength: 'Escribe máximo {0} números.'
+				},
+
 				address: {
+					minlength: 'Escribe mínimo {0} caracteres.',
+					maxlength: 'Escribe máximo {0} caracteres.'
+				},
+
+				card: {
+					minlength: 'Escribe mínimo {0} números.',
+					maxlength: 'Escribe máximo {0} números.'
+				},
+
+				code: {
+					minlength: 'Escribe mínimo {0} números.',
+					maxlength: 'Escribe máximo {0} números.'
+				},
+
+				month: {
+					minlength: 'Escribe mínimo {0} números.',
+					maxlength: 'Escribe máximo {0} números.'
+				},
+
+				year: {
+					minlength: 'Escribe mínimo {0} números.',
+					maxlength: 'Escribe máximo {0} números.'
+				},
+
+				reference: {
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.'
 				}
@@ -545,80 +631,6 @@ $(document).ready(function() {
 		});
 	}
 });
-
-//Funcion para agregar productos al carrito
-$('.addCart').click(function(event) {
-	var slug=$(this).attr('slug');
-	$(event.currentTarget.childNodes[1].childNodes[0]).removeClass('ion-ios-cart');
-	$(event.currentTarget.childNodes[1].childNodes[0]).addClass('spinner-border spinner-border-sm');
-	$.ajax({
-		url: '/carrito/' + slug,
-		dataType: 'html',
-	}).done(function(result) {
-		var obj=JSON.parse(result);
-		$(".count-cart").text(obj.length);
-		$(event.currentTarget.childNodes[1].childNodes[0]).removeClass('spinner-border spinner-border-sm');
-		$(event.currentTarget.childNodes[1].childNodes[0]).addClass('ion-ios-cart');
-	});
-});
-
-//Agregar productos al carrito
-$('.addCartList').click(function(event) {
-	var slug=$(this).attr('slug');
-	$(this).text('Agregado');
-	$.ajax({
-		url: '/carrito/' + slug,
-		dataType: 'html',
-	}).done(function(result) {
-		var obj=JSON.parse(result);
-		$(".count-cart").text(obj.length);
-		// $('.addCartList[slug="'+obj.product+'"]').text('Agregado');
-	});
-});
-
-//Quitar producto del carrito
-$('.product-remove a').click(function() {
-	var slug=$(this).attr('slug');
-	$.ajax({
-		url: '/carrito/quitar/' + slug,
-		dataType: 'html',
-	}).done(function(result) {
-		var obj=JSON.parse(result);
-		if (obj.status=='ok') {
-			$(".cartProduct[slug='"+slug+"']").remove();
-			var count=$(".count-cart").text();
-			count=count-1;
-			$(".count-cart").text(count);	
-		}
-	});
-});
-
-//Funcion para agregar productos a select del filtro de inicio
-// $('#searchBrand').change(function(event) {
-// 	var slug=$(this).val();
-// 	$.ajax({
-// 		url: '/agregar/productos/' + slug,
-// 		dataType: 'html',
-// 	}).done(function(result) {
-// 		var obj=JSON.parse(result);
-// 		$('#searchField').select2("destroy");
-// 		$("#searchField option").remove();
-// 		$('#searchField').append($('<option>', {
-// 			value: "",
-// 			text: "Buscar"
-// 		}));
-// 		for (var i=obj.length-1; i>=0; i--) {
-// 			$('#searchField').append($('<option>', {
-// 				value: obj[i].slug,
-// 				text: obj[i].name
-// 			}));
-// 		}
-// 		$('#searchField').select2({
-// 			theme: "bootstrap",
-// 			language: "es"
-// 		});
-// 	});
-// });
 
 //Redireccionar en el filtro de la tienda con la opcion precio
 $('#filterPrice').change(function() {
@@ -640,12 +652,22 @@ $('#filterPrice').change(function() {
 	}
 });
 
-//Al cambiar la cantidad de un producto en el carrito cambia el total
+//Al cambiar la cantidad de un producto cambia el total
 $('.qty').change(function() {
-	var slug=$(this).attr('slug'), price=$(this).attr('price'), qty=$(this).val();
-	var total=price*qty;
-	total=new Intl.NumberFormat("de-DE").format(total);
-	$('.total[slug="'+slug+'"]').text("S/. "+total);
+	var slug=$(this).attr('slug'), qty=$(this).val();
+	$("#qtySale").val(qty);
+	$.ajax({
+		url: '/calcular/precio',
+		type: 'POST',
+		dataType: 'html',
+		data: {qty: qty, delivery: 0.00, slug: slug},
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	}).done(function(resultado) {
+		var obj=JSON.parse(resultado);
+		$('.total').text("S/. "+obj.total);
+	});
 });
 
 //Función para calcular las distancia entre 2 puntos en km
@@ -673,6 +695,7 @@ function qtyProduct() {
 	});
 }
 
+//Función para crear token de culqi y enviar formulario de pago
 function culqi() {
 	if (Culqi.token) {
 		var token = Culqi.token.id;

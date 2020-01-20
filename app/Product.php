@@ -23,4 +23,8 @@ class Product extends Model
 	public function images() {
 		return $this->hasMany(ImageProduct::class);
 	}
+
+	public function payments() {
+		return $this->belongsToMany(Payments::class)->withPivot('qty', 'price')->withTimestamps();
+	}
 }

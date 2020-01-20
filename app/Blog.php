@@ -6,12 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    protected $fillable = [
-    	'title',
-    	 'slug', 
-    	 'content', 
-    	 'state', 
-    	 'user_id'];
+    protected $fillable = ['title', 'slug', 'content', 'state', 'user_id'];
 
     public function user() {
 		return $this->belongsTo(User::class);

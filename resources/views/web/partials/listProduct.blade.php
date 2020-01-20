@@ -1,8 +1,12 @@
-<div class="card mb-3">
+<div class="card mb-3 list-product">
 	<div class="row no-gutters">
 		<div class="col-lg-3 col-md-3 col-12">
 			<a href="{{ route('web.producto', ['slug' => $product->slug]) }}">
 				{!! imageCardProduct($product, 1) !!}
+				@if($product->ofert>0)
+				<span class="status">{{ $product->ofert." %" }}</span>
+				@endif
+				<div class="overlay"></div>
 			</a>
 		</div>
 		<div class="col-lg-7 col-md-6 col-12">
@@ -16,9 +20,12 @@
 		</div>
 		<div class="col-lg-2 col-md-3 col-12">
 			<div class="card-body">
-				{!! productPrice($product) !!}
-				<a href="{{ route('comprar', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
-				<button type="button" class="btn btn-primary btn-sm mb-lg-2 mb-md-2 addCartList" slug="{{ $product->slug }}">Carrito</button>
+				<span class="text-primary @if($product->ofert>0) line-through @endif">{{ "S/. ".productPrice($product, 1) }}</span>
+				@if($product->ofert>0)
+				<br>
+				<span class="text-primary">{{ "S/. ".productPrice($product, 2) }}</span>
+				@endif
+				<a href="{{ route('comprar.product', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
 				<a href="#" class="btn btn-primary btn-sm">Entrega</a>
 			</div>
 		</div>

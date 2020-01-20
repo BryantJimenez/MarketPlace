@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Culqi extends Model
+class Card extends Model
 {
-    //
+    protected $fillable = ['payment_id'];
 }

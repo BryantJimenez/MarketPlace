@@ -12,6 +12,28 @@ function userState($state) {
 	}
 }
 
+function saleState($state) {
+	if ($state==1) {
+		return '<span class="badge badge-success">Aprobado</span>';
+	} elseif ($state==2) {
+		return '<span class="badge badge-warning">Pendiente</span>';
+	} elseif ($state==3) {
+		return '<span class="badge badge-danger">Rechazado</span>';
+	} else {
+		return '<span class="badge badge-primary">Desconocido</span>';
+	}
+}
+
+function saleShape($shape) {
+	if ($shape==1) {
+		return '<span class="badge badge-primary">Tarjeta</span>';
+	} elseif ($shape==2) {
+		return '<span class="badge badge-primary">Transferencia</span>';
+	} else {
+		return '<span class="badge badge-primary">Desconocido</span>';
+	}
+}
+
 function imageCardProduct($product, $type=0) {
 	if ($type==0) {
 		if(count($product->images)>0) {
@@ -32,15 +54,15 @@ function productPrice($product, $type=0) {
 	if ($type==0) {
 		if($product->ofert>0) {
 			$ofert=$product->price-($product->price*$product->ofert/100);
-			return '<p class="price"><span class="mr-2 price-dc">S/. '.number_format($product->price, 2, ",", ".").'</span><span class="price-sale">S/. '.number_format($ofert, 2, ",", ".").'</span></p>';
+			return '<p class="price"><span class="mr-2 price-dc">S/. '.number_format($product->price, 2, ".", "").'</span><span class="price-sale">S/. '.number_format($ofert, 2, ".", "").'</span></p>';
 		} else {
-			return '<p class="price"><span>S/. '.number_format($product->price, 2, ",", ".").'</span></p>';
+			return '<p class="price"><span>S/. '.number_format($product->price, 2, ".", "").'</span></p>';
 		}
 	} elseif ($type==1) {
-		return number_format($product->price, 2, ",", ".");
+		return number_format($product->price, 2, ".", "");
 	} elseif ($type==2) {
 		$ofert=$product->price-($product->price*$product->ofert/100);
-		return number_format($ofert, 2, ",", ".");
+		return number_format($ofert, 2, ".", "");
 	}
 }
 

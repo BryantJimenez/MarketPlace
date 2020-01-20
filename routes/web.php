@@ -16,21 +16,25 @@ Auth::routes();
 Route::get('/registro/email', 'UserController@emailVerify');
 
 ///// WEB /////
+// Inicio
 Route::get('/', 'WebController@index')->name('home');
+
+// Tienda
 Route::get('/tienda', 'WebController@shop')->name('tienda');
 Route::get('/categorias', 'WebController@categories')->name('categorias');
-Route::get('/carrito', 'WebController@cart')->name('carrito');
-Route::get('/carrito/{slug}', 'WebController@addCart')->name('carrito.add');
-Route::get('/carrito/quitar/{slug}', 'WebController@removeCart')->name('carrito.remove');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
+Route::get('/comprar/producto/{slug?}', 'WebController@buy')->name('comprar.product');
+Route::get('/perfil', 'WebController@profile')->name('web.profile');
+Route::post('/agregar/ubicacion', 'WebController@addLocation')->name('web.add.location');
+
+// Blog
 Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
 Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
-Route::get('/perfil', 'WebController@profile')->name('web.profile');
-Route::get('/pedidos', 'WebController@order')->name('web.order');
-Route::get('/comprar/{slug?}', 'WebController@buy')->name('comprar');
-Route::post('/comprar', 'WebController@pay')->name('pagar');
-// Route::get('/agregar/productos/{slug?}', 'WebController@addProducts')->name('web.add.products');
-Route::get('/agregar/ubicacion/{lat}/{lng}', 'WebController@addLocation')->name('web.add.location');
+
+// Compras
+Route::get('/compras', 'WebController@sales')->name('web.sales');
+Route::post('/comprar', 'PaymentController@payProduct')->name('pagar.product');
+Route::post('/calcular/precio', 'PaymentController@calculator')->name('calcular.price');
 
 ///// ADMIN /////
 // Inicio
@@ -104,5 +108,7 @@ Route::put('/misterfix/blog/{slug}', 'BlogController@update')->name('blog.update
 Route::delete('/misterfix/blog/{slug}', 'BlogController@destroy')->name('blog.destroy');
 
 // Ventas
-Route::get('/misterfix/ventas', 'SaleController@index')->name('ventas.index');
-Route::get('/misterfix/ventas/{slug}', 'SaleController@show')->name('ventas.show');
+Route::get('/misterfix/ventas', 'PaymentController@index')->name('ventas.index');
+Route::get('/misterfix/ventas/{slug}', 'PaymentController@show')->name('ventas.show');
+Route::put('/misterfix/ventas/confirmar/{slug}', 'PaymentController@confirm')->name('ventas.confirm');
+Route::put('/misterfix/ventas/rechazar/{slug}', 'PaymentController@refuse')->name('ventas.refuse');

@@ -20,8 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->enum('type', [1, 2, 3]);
             $table->float('total', 10, 2)->default(0.00);
             $table->string('reference');
-            $table->text('description');
+            $table->mediumText('description');
             $table->enum('state', [1, 2, 3]);
+            $table->text('explanation')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
 

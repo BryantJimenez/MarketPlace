@@ -5,6 +5,7 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/summernote/dist/summernote.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -27,12 +28,15 @@
 					<div class="row">
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Título<b class="text-danger">*</b></label>
-							<input class="form-control" type="text" name="title" required placeholder="Introduzca un nombre" value="{{ old('title') }}">
+							<input class="form-control" type="text" name="title" required placeholder="Introduzca el título" value="{{ old('title') }}">
 						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Cuerpo del Artículo<b class="text-danger">*</b></label>
-							<textarea class="form-control" type="text" name="content" required placeholder="Introduzca la temática del artículo" value="{{ old('content') }}"></textarea>
+							<textarea class="form-control summernote" type="text" name="content" required placeholder="Introduzca el contenido del artículo" value="{{ old('content') }}"></textarea>
 						</div>
+
+
+						
 						<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 						<div class="form-group col-12">
 							<div class="btn-group" role="group">
@@ -55,5 +59,5 @@
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
 <script src="{{ asset('/admins/js/validate.js') }}"></script>
-<script src="{{ asset('/admins/js/summernote.min.js') }}"></script>
+<script src="{{ asset('/admins/vendors/summernote/dist/summernote.min.js') }}"></script>
 @endsection

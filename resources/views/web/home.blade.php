@@ -15,11 +15,11 @@
 			<div class="container">
 				<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
-					<div class="col-md-12 ftco-animate text-center">
+					<div class="col-md-12 py-4 bg-dark-opacity ftco-animate text-center">
 						<p class="mb-2 h1 text-white">Encuentra el repuesto que tanto necesitas</p>
 						<form method="GET" action="{{ route('tienda') }}">
 							<div class="row">
-								<div class="input-group col-8">
+								<div class="input-group col-xl-8 col-lg-8 col-md-8 col-12 mb-2">
 									<select class="multiselect form-control" name="buscar" id="searchField">
 										<option value="">Buscar</option>
 										@foreach($productsSelect as $product)
@@ -27,7 +27,7 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="input-group col-4">
+								<div class="input-group col-xl-4 col-lg-4 col-md-4 col-12">
 									<select class="multiselect form-control" name="marca">
 										<option value="">Marcas</option>
 										@foreach($brands as $brand)

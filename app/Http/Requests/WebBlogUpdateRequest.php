@@ -25,7 +25,7 @@ class WebBlogUpdateRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:2|max:191',
-            'content' => 'required|string|min:2|max:191'
+            'content' => 'required|string|min:2|max:16000000'
         ];
     }
 }

@@ -54,9 +54,8 @@
 	{{-- <script src="{{ asset('/web/js/jquery.animateNumber.min.js') }}"></script> --}}
 	{{-- <script src="{{ asset('/web/js/bootstrap-datepicker.js') }}"></script> --}}
 	<script src="{{ asset('/web/js/scrollax.min.js') }}"></script>
-	{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzujSr4WdztsGITPfp18IXzJHmzQO8He8"></script> --}}
-	{{-- <script src="{{ asset('/web/js/google-map.js') }}"></script> --}}
 	@yield('script')
 	<script src="{{ asset('/web/js/main.js') }}"></script>
+	@include('admin.partials.notifications')
 </body>
 </html>

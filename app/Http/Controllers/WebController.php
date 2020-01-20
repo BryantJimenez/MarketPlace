@@ -7,13 +7,14 @@ use App\Category;
 use App\District;
 use App\Store;
 use App\Brand;
+use App\Bank;
+use App\Payment;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Culqi\Culqi;
-use Culqi\CulqiException;
+use Auth;
 
 class WebController extends Controller
 {
@@ -22,7 +23,7 @@ class WebController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request) {
+    public function index() {
     	$products=Product::limit(8)->get();
         $brands=Brand::all();
         $categories=Category::all();
@@ -51,9 +52,8 @@ class WebController extends Controller
                 $num++;
             }
         }
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        return view('web.home', compact("categories", "productsSelect", "brands", "stores", "products", "districts", "cart"));
+        return view('web.home', compact("categories", "productsSelect", "brands", "stores", "products", "districts"));
     }
 
     public function shop(Request $request) {
@@ -69,7 +69,6 @@ class WebController extends Controller
             }
         }
         // $districts=(object) $districts;
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
         $products=Product::where('qty', '>', 0);
         if (($request->has('buscar') && !empty(request('buscar'))) || ($request->has('precio') && !empty(request('precio'))) || ($request->has('marca') && !empty(request('marca'))) || ($request->has('provincia') && !empty(request('provincia')))) {
@@ -149,198 +148,39 @@ class WebController extends Controller
 
         $search=$request->all();
 
-        return view('web.shop', compact("productsSelect", "categories", "brands", "products", "districts", "cart", "pagination", "offset", "search"));
+        return view('web.shop', compact("productsSelect", "categories", "brands", "products", "districts", "pagination", "offset", "search"));
     }
 
-    public function categories(Request $request) {
+    public function categories() {
         $categories=Category::all();
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-
-        return view('web.categories', compact("categories", "cart"));
+        return view('web.categories', compact("categories"));
     }
 
-    public function cart(Request $request) {
-
-        if ($request->session()->has('cart')) {
-            $cart=session('cart');
-            $num=0;
-            foreach ($cart as $cartProduct) {
-                $product=Product::where('slug', $cartProduct['product'])->first();
-                $products[$num]=$product;
-                $products[$num]['cartQty']=$cartProduct['qty'];
-                $num++;
-            }
-
-        } else {
-            $products=[];
-        }
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-
-        return view('web.cart', compact("products", "cart"));
-    }
-
-    public function productSingle(Request $request, $slug) {
+    public function productSingle($slug) {
         $product=Product::where('slug', $slug)->firstOrFail();
         $relatedProducts=Product::where('subcategory_id', $product->subcategory_id)->limit(4)->inRandomOrder()->get();
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
 
-        return view('web.product', compact("product", "cart", "relatedProducts"));
+        return view('web.product', compact("product", "relatedProducts"));
     }
 
-    public function buy(Request $request, $slug=null) {
+    public function buy($slug) {
         $product=Product::where('slug', $slug)->firstOrFail();
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-
-        return view('web.checkout', compact("cart", "product"));
+        $banks=Bank::all();
+        return view('web.checkout', compact("product", "banks"));
     }
 
-    public function pay(Request $request) {
-        $SECRET_KEY = "sk_test_FsqzQFJOUgoyTIiM";
-        $culqi = new Culqi(array('api_key' => $SECRET_KEY));
-
-        // dd($culqi);
-
-        try{
-            // Creamos Cargo a una tarjeta
-            $charge=$culqi->Charges->create(
-                array(
-                  "amount" => 1000,
-                  "capture" => true,
-                  "currency_code" => "PEN",
-                  "description" => "Venta de prueba",
-                  "email" => request('email'),
-                  "installments" => 0,
-                  "antifraud_details" => array(
-                      "address" => request("address"),
-                      "address_city" => "LIMA",
-                      "country_code" => "PE",
-                      "first_name" => request("name"),
-                      "last_name" => "Muro",
-                      "phone_number" => "9889678986",
-                  ),
-                  "source_id" => request('culqi')
-              )
-            );
-
-            dd($charge);
-
-            // return json_encode($charge);
-            
-        } catch(Exception $e){
-
-            $charge= $e->getMessage();
-
-            dd('$charge');
-
-            // return $cargo2;
-
-        }
+    public function addLocation(Request $request) {
+        $request->session()->put('lat', request('lat'));
+        $request->session()->put('lng', request('lng'));
     }
 
-    public function addCart($slug, Request $request) {
-
-        if ($request->session()->has('cart')) {
-            $cart=session('cart');
-
-            if (array_search($slug, array_column($cart, 'product'))!==false) {
-                $product=Product::where('slug', $slug)->firstOrFail();
-                $clave=array_search($slug, array_column($cart, 'product'));
-                if ($product->qty>$cart[$clave]['qty']) {
-                    $cart[$clave]['qty']=$cart[$clave]['qty']+1;
-                    $request->session()->put('cart', $cart);
-                }
-
-            } else {
-                $request->session()->push('cart', array('product' => $slug, 'qty' => 1));
-            }
-        } else {
-            $request->session()->put('cart', array(0 => ['product' => $slug, 'qty' => 1]));
-        }
-
-        return response()->json(session('cart'));
-    }
-
-    public function removeCart($slug, Request $request) {
-
-        if ($request->session()->has('cart')) {
-            $cart=session('cart');
-
-            if (array_search($slug, array_column($cart, 'product'))!==false) {
-                $request->session()->forget('cart');
-                $num=0;
-                foreach ($cart as $product) {
-                    if ($slug!=$product['product']) {
-                        if ($num==0) {
-                            $request->session()->put('cart', array(0 => ['product' => $product['product'], 'qty' => $product['qty']]));
-                        } else {
-                            $request->session()->push('cart', array('product' => $product['product'], 'qty' => $product['qty']));
-                        }
-                        $num++;
-                    }
-                }
-                return response()->json(['status' => 'ok']);
-            } else {
-                return response()->json(['status' => 'fail']);
-            }
-        } else {
-            return response()->json(['status' => 'fail']);
-        }
-    }
-
-    public function addLocation($lat, $lng, Request $request) {
-        $request->session()->put('lat', $lat);
-        $request->session()->put('lng', $lng);
-    }
-
-    // public function addProducts($slug=null) {
-
-    //     $num=0;
-    //     $productsSelect=[];
-    //     $productsSelectAll=Product::all();
-    //     if ($slug!=null) {
-    //         $brand=Brand::where('slug', $slug)->firstOrFail();   
-    //     }
-    //     foreach ($productsSelectAll as $product) {
-    //         if ($slug==null) {
-    //             if (count($productsSelect)>0) {
-    //                 $name=Str::slug($product->name);
-    //                 if (array_search($name, array_column($productsSelect, 'slug'))===false) {
-    //                     $productsSelect[$num]=['slug' => $product->slug, 'name' => $product->name];
-    //                     $num++;
-    //                 }
-    //             } else {
-    //                 $productsSelect[$num]=['slug' => $product->slug, 'name' => $product->name];
-    //                 $num++;
-    //             }
-
-    //         } elseif ($brand->id==$product->brand_id) {
-    //             if (count($productsSelect)>0) {
-    //                 $name=Str::slug($product->name);
-    //                 if (array_search($name, array_column($productsSelect, 'slug'))===false) {
-    //                     $productsSelect[$num]=['slug' => $product->slug, 'name' => $product->name];
-    //                     $num++;
-    //                 }
-    //             } else {
-    //                 $productsSelect[$num]=['slug' => $product->slug, 'name' => $product->name];
-    //                 $num++;
-    //             }
-    //         }
-    //     }
-
-    //     return response()->json($productsSelect);
-    // }
-
-    public function profile(Request $request) {
-
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-
+    public function profile() {
         return view('web.profile', compact("cart"));
     }
 
-    public function order(Request $request) {
-
-        $cart=($request->session()->has('cart')) ? count(session('cart')) : 0 ;
-
-        return view('web.orders', compact("cart"));
+    public function sales() {
+        $payments=Payment::where('user_id', Auth::user()->id)->get();
+        $num=1;
+        return view('web.sales', compact("payments","num"));
     }
 }

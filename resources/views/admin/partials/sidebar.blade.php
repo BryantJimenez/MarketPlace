@@ -17,7 +17,7 @@
                         <li><a href="{{ route('usuarios.index') }}">Lista</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-briefcase"></i><span class="hide-menu">Categorias</span></a>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa  fa-sort-alpha-asc"></i><span class="hide-menu">Categorias</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('categorias.create') }}">Registrar</a></li>
                         <li><a href="{{ route('categorias.index') }}">Lista</a></li>
@@ -35,7 +35,7 @@
                         <li><a href="{{ route('tiendas.index') }}">Lista</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-briefcase"></i><span class="hide-menu">Productos</span></a>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-automobile (alias)"></i><span class="hide-menu">Productos</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('productos.create') }}">Registrar</a></li>
                         <li><a href="{{ route('productos.index') }}">Lista</a></li>
@@ -47,13 +47,13 @@
                         <li><a href="{{ route('marcas.index') }}">Lista</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-bookmark"></i><span class="hide-menu">Blog</span></a>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Blog</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('blog.create') }}">Registrar</a></li>
                         <li><a href="{{ route('blog.index') }}">Lista</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-bookmark"></i><span class="hide-menu">Ventas</span></a>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-shopping-cart"></i><span class="hide-menu">Ventas</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('ventas.index') }}">Lista</a></li>
                     </ul>

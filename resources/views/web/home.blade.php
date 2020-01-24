@@ -52,19 +52,38 @@
 <section class="ftco-section ftco-no-pt ftco-no-pb mt-5">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-lg-6 col-12 mb-4">
-				<div class="ftco-animate img d-flex align-items-end shadow rounded bg-primary">
+			<div class="col-md-6 col-lg-6 col-12 mb-4" style="background-image: url(/web/images/bg_2.jpg);">
+				{{-- obviamente le vas a cambiar la imagen xdxdxd --}}
+				<div class="">
 					<div class="text text-center px-3 py-4">
-						<h2 class="mb-2 text-white">¿Quieres ofrecer los productos y servicios de tu tienda o taller?</h2>
+						<h2 class="mb-2 text-gray">¿Quieres ofrecer los productos y servicios de tu tienda o taller?</h2>
 						<a href="#" class="btn btn-white">Ofrece</a>
 					</div>
 				</div>
 			</div>
 
 			<div class="col-md-6 col-lg-6 col-12 mb-4">
-				<div class="ftco-animate img mb-4 d-flex align-items-end shadow rounded bg-primary">
+				<div class="bg-dark-opacity" style="background-image: url(/web/images/bg_2.jpg);">
 					<div class="text text-center px-3 py-4">
-						<h2 class="mb-2 text-white">Encuentra profesionales listos para atender tus necesidades</h2>
+						<h2 class="mb-2 text-gray">¿Quieres ofrecer los productos y servicios de tu tienda o taller?</h2>
+						<a href="#" class="btn btn-white">Encuentra</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-6 col-12 mb-4">
+				<div class="" style="background-image: url(/web/images/bg_2.jpg);">
+					<div class="text text-center px-3 py-4">
+						<h2 class="mb-2 text-gray">Encuentra profesionales listos para atender tus necesidades</h2>
+						<a href="#" class="btn btn-white">Encuentra</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-6 col-12 mb-4">
+				<div class="" style="background-image: url(/web/images/bg_2.jpg);">
+					<div class="text text-center px-3 py-4">
+						<h2 class="mb-2 text-gray">Encuentra profesionales listos para atender tus necesidades</h2>
 						<a href="#" class="btn btn-white">Encuentra</a>
 					</div>
 				</div>
@@ -172,7 +191,7 @@
 									</div>
 									@endforelse
 								</div>
-								<a href="#" class="btn btn-primary">Ver Más</a>
+								<a href=" {{ route('ver.tienda', ['slug' => $store->slug]) }} " class="btn btn-primary">Ver Más</a>
 							</div>
 						</div>
 					</div>

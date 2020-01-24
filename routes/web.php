@@ -26,6 +26,7 @@ Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.product
 Route::get('/comprar/producto/{slug?}', 'WebController@buy')->name('comprar.product');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
 Route::post('/agregar/ubicacion', 'WebController@addLocation')->name('web.add.location');
+Route::get('/ver/tienda/{slug}', 'WebController@shopSingle')->name('ver.tienda');
 
 // Blog
 Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
@@ -106,6 +107,8 @@ Route::post('/misterfix/blog', 'BlogController@store')->name('blog.store');
 Route::get('/misterfix/blog/{slug}/editar', 'BlogController@edit')->name('blog.edit');
 Route::put('/misterfix/blog/{slug}', 'BlogController@update')->name('blog.update');
 Route::delete('/misterfix/blog/{slug}', 'BlogController@destroy')->name('blog.destroy');
+Route::get('/misterfix/blog/mis/entradas', 'BlogController@myArticles')->name('blog.my.article');
+Route::get('/misterfix/blog/entrada/registrar', 'BlogController@articleCreate')->name('blog.article');
 
 // Ventas
 Route::get('/misterfix/ventas', 'PaymentController@index')->name('ventas.index');

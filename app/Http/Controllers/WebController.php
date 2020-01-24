@@ -183,4 +183,10 @@ class WebController extends Controller
         $num=1;
         return view('web.sales', compact("payments","num"));
     }
+
+    public function shopSingle($slug){
+        $store=Store::where('slug', $slug)->firstOrFail();
+
+        return view('web.store', compact("store"));
+    }
 }

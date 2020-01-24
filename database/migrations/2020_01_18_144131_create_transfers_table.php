@@ -16,8 +16,7 @@ class CreateTransfersTable extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('payment_id')->unsigned()->nullable();
-            $table->bigInteger('user_bank_id')->unsigned()->nullable();
-            $table->bigInteger('destiny_bank_id')->unsigned()->nullable();
+            $table->string('bank');
             $table->timestamps();
 
             #Relations

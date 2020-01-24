@@ -11,6 +11,9 @@
         {{ csrf_field() }}
         <p class="h2 text-center db">INICIA SESSIÓN</p>
         <div class="form-group m-t-40">
+
+          @include('admin.partials.errors')
+          
           <div class="col-xs-12">
             <label>Correo Electrónico</label>
             <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">

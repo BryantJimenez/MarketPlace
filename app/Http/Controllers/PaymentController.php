@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bank;
+use App\Country;
 use App\Payment;
 use App\Product;
 use App\PaymentProduct;
@@ -12,6 +13,7 @@ use App\Delivery;
 use Culqi\Culqi;
 use Culqi\CulqiException;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 use Auth;
 
 class PaymentController extends Controller
@@ -30,9 +32,6 @@ class PaymentController extends Controller
 
     public function payProduct(Request $request)
     {
-
-        // dd($request);
-
         $paymentCount=Payment::all()->count();
         if ($paymentCount>0) {
             $count=Payment::orderBy('id', 'DESC')->first();
@@ -64,7 +63,7 @@ class PaymentController extends Controller
                     "installments" => 0,
                     "antifraud_details" => array(
                         "address" => request("address"),
-                        "address_city" => "LIMA",
+                        "address_city" => null,
                         "country_code" => "PE",
                         "first_name" => request("name"),
                         "last_name" => request("lastname"),
@@ -82,21 +81,45 @@ class PaymentController extends Controller
                 }
             }
 
-            $payment=Payment::create(['slug' => $slug, 'shape' => request('pay'), 'type' => 1, 'total' => $total, 'reference' => $charge->reference_code, 'description' => $description, 'state' => 1, 'user_id' => Auth::user()->id]);
-            $card=Card::create(['payment_id' => $payment->id])->save();
+            $countryUser=Country::where('code', $charge->source->client->ip_country_code)->first();
+            $countryCard=Country::where('code', $charge->source->iin->issuer->country_code)->first();
+            $total_fee=$charge->total_fee/100;
+            $transfer_amount=$charge->transfer_amount/100;
+
+            $payment=Payment::create(['slug' => $slug, 'shape' => request('pay'), 'type' => 1, 'total' => $total, 'reference' => $charge->reference_code, 'currency' => 'PEN', 'device' => $charge->source->client->device_type, 'description' => $description, 'state' => 1, 'ip_country_id' => $countryUser->id, 'user_id' => Auth::user()->id]);
+            $card=Card::create(['bank' => $charge->source->iin->issuer->name, 'brand' => $charge->source->iin->card_brand, 'fraud_score' => $charge->fraud_score, 'total_fee' => $total_fee, 'transfer_amount' => $transfer_amount, 'type' => $charge->source->iin->card_type, 'country_id' => $countryCard->id, 'payment_id' => $payment->id])->save();
+
+            PaymentProduct::create(['payment_id' => $payment->id, 'product_id' => $product->id, 'qty' => request('qty'), 'ofert' => $product->ofert, 'price' => $product->price]);
+
+            $qty=$product->qty-$payment->products[0]->pivot->qty;
+            $product->fill(['qty' => $qty])->save();
 
         } elseif (request('pay')==2) {
-            $payment=Payment::create(['slug' => $slug, 'shape' => request('pay'), 'type' => 1, 'total' => $total, 'reference' => request('reference'), 'description' => $description, 'state' => 2, 'user_id' => Auth::user()->id]);
-
             $userBank=Bank::where('slug', request('user_bank'))->firstOrFail();
             $destinyBank=Bank::where('slug', request('destiny_bank'))->firstOrFail();
+            
+            $ipInfo=file_get_contents("http://www.geoplugin.net/json.gp?ip=74.125.224.72");
+            $ip=json_decode($ipInfo);
+            $countryUser=Country::where('code', $ip->geoplugin_countryCode)->first();
+            $agent=new Agent();
+            if ($agent->isDesktop()) {
+                $device="Escritorio";
+            } elseif ($agent->isMobile()) {
+                if ($agent->isPhone()) {
+                    $device="Teléfono";
+                } elseif ($agent->isTablet()) {
+                    $device="Tablet";
+                }
+            }
 
-            $transfer=Transfer::create(['payment_id' => $payment->id, 'user_bank_id' => $userBank->id, 'destiny_bank_id' => $destinyBank->id])->save();
+            $payment=Payment::create(['slug' => $slug, 'shape' => request('pay'), 'type' => 1, 'total' => $total, 'reference' => request('reference'), 'currency' => 'PEN', 'device' => $device, 'description' => $description, 'state' => 2, 'ip_country_id' => $countryUser->id, 'user_id' => Auth::user()->id]);
+
+            $transfer=Transfer::create(['payment_id' => $payment->id, 'bank' => $userBank->name])->save();
+
+            PaymentProduct::create(['payment_id' => $payment->id, 'product_id' => $product->id, 'bank' => $destinyBank->name, 'qty' => request('qty'), 'ofert' => $product->ofert, 'price' => $product->price]);
         } else {
             return redirect()->back()->with(['type' => 'error', 'title' => 'Compra fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
-
-        PaymentProduct::create(['payment_id' => $payment->id, 'product_id' => $product->id, 'qty' => request('qty'), 'price' => $product->price]);
 
         if (request('delivery')=='yes') {
             Delivery::create(['payment_id' => $payment->id]);

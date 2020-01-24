@@ -20,13 +20,17 @@ class CreatePaymentsTable extends Migration
             $table->enum('type', [1, 2, 3]);
             $table->float('total', 10, 2)->default(0.00);
             $table->string('reference');
-            $table->mediumText('description');
+            $table->string('currency');
+            $table->string('device')->nullable();
+            $table->text('description');
             $table->enum('state', [1, 2, 3]);
             $table->text('explanation')->nullable();
+            $table->bigInteger('ip_country_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
 
             #Relations
+            $table->foreign('ip_country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -64,75 +64,6 @@
 	// Scrollax
 	$.Scrollax();
 
-	var carousel = function() {
-		$('.carousel-category').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			autoplay:true,
-			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 3
-				},
-				1000:{
-					items: 4
-				}
-			}
-		});
-
-		$('.carousel-brand').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			autoplay:true,
-			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 3
-				},
-				1000:{
-					items: 5
-				}
-			}
-		});
-
-		$('.carousel-product').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			autoplay:true,
-			navText: ['<span class="ion-ios-arrow-back text-primary">', '<span class="ion-ios-arrow-forward  text-primary">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 4
-				}
-			}
-		});
-	};
-	carousel();
-
 	$('nav .dropdown').hover(function(){
 		var $this = $(this);
 		// 	 timer;
@@ -334,35 +265,6 @@
 	};
 	goHere();
 
-
-	function makeTimer() {
-
-		var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");			
-		endTime = (Date.parse(endTime) / 1000);
-
-		var now = new Date();
-		now = (Date.parse(now) / 1000);
-
-		var timeLeft = endTime - now;
-
-		var days = Math.floor(timeLeft / 86400); 
-		var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-		var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-		var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-
-		if (hours < "10") { hours = "0" + hours; }
-		if (minutes < "10") { minutes = "0" + minutes; }
-		if (seconds < "10") { seconds = "0" + seconds; }
-
-		$("#days").html(days + "<span>Days</span>");
-		$("#hours").html(hours + "<span>Hours</span>");
-		$("#minutes").html(minutes + "<span>Minutes</span>");
-		$("#seconds").html(seconds + "<span>Seconds</span>");		
-
-	}
-
-	setInterval(function() { makeTimer(); }, 1000);
-
 })(jQuery);
 
 $(document).ready(function() {
@@ -467,10 +369,6 @@ $(document).ready(function() {
 
 	//Plugin para formulario step en checkout
 	if ($('#checkout').length) {
-		//Llave para conectarse a culqi e inicializador
-		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
-		Culqi.init();
-
 		$("#checkout").steps({
 			headerTag: "h3",
 			bodyTag: "section",
@@ -629,26 +527,42 @@ $(document).ready(function() {
 				}
 			}
 		});
+
+		//Llave para conectarse a culqi e inicializador
+		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
+		Culqi.init();
 	}
 });
 
 //Redireccionar en el filtro de la tienda con la opcion precio
 $('#filterPrice').change(function() {
 	if ($(this).val()!="") {
-		var url=window.location.href;
-		if (url.indexOf('?')!=-1) {
-			if (url.indexOf('precio=alto')!=-1) {
-				url.replace(/precio=alto/g, 'precio='+$(this).val());
-				location.href=url
-			} else if(url.indexOf('precio=bajo')!=-1) {
-				url.replace(/precio=bajo/g, 'precio='+$(this).val());
-				location.href=url
-			} else {
-				location.href=url+'&precio='+$(this).val();	
-			}
-		} else {
-			location.href=url+'?precio='+$(this).val();
-		}
+		var url=$('#filterPrice option:selected').attr('url');
+		location.href=url;
+	}
+});
+
+//Redireccionar en el filtro de la tienda con la opcion marca
+$('#filterBrand').change(function() {
+	if ($(this).val()!="") {
+		var url=$('#filterBrand option:selected').attr('url');
+		location.href=url;
+	}
+});
+
+//Redireccionar en el filtro de la tienda con la opcion categoria
+$('#filterCategory').change(function() {
+	if ($(this).val()!="") {
+		var url=$('#filterCategory option:selected').attr('url');
+		location.href=url;
+	}
+});
+
+//Redireccionar en el filtro de la tienda con la opcion distrito
+$('#filterDistrict').change(function() {
+	if ($(this).val()!="") {
+		var url=$('#filterDistrict option:selected').attr('url');
+		location.href=url;
 	}
 });
 

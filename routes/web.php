@@ -33,6 +33,7 @@ Route::get('/blog/{slug}', 'WebBlogController@show')->name('web.blog.show');
 
 // Compras
 Route::get('/compras', 'WebController@sales')->name('web.sales');
+Route::get('/compras/{slug}', 'WebController@saleShow')->name('web.sales.show');
 Route::post('/comprar', 'PaymentController@payProduct')->name('pagar.product');
 Route::post('/calcular/precio', 'PaymentController@calculator')->name('calcular.price');
 

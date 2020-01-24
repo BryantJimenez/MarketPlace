@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class WebBlogStoreRequest extends FormRequest
 {
@@ -25,7 +27,9 @@ class WebBlogStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:2|max:191',
-            'content' => 'required|string|min:2|max:16000000'
+            'image' => 'required',
+            'content' => 'required|string|min:2|max:16000000',
+            'state' => 'required|'.Rule::in([1, 2])
         ];
     }
 }

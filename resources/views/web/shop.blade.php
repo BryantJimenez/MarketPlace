@@ -11,7 +11,7 @@
 <section class="ftco-section ftco-no-pt bg-light">
 	<div class="container">
 		<div class="row">
-			@if(count($products)>0 && strpos(url()->full(), '?')===true)
+			@if(count($products)>0 && strpos(url()->full(), '?') && isset($search['buscar']))
 			<div class="col-12 mt-5">
 				<p class="h5">La tienda más cercana para encontrar el respuesto que busca es: <a href="#" class="text-primary">{{ $products[0]->stores[0]->name }}</a></p>
 			</div>

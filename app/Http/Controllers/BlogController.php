@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\WebBlogStoreRequest;
 use App\Http\Requests\WebBlogUpdateRequest;
+use Auth;
 
 class BlogController extends Controller
 {
@@ -20,10 +21,10 @@ class BlogController extends Controller
      */
     public function index()
     {
-         $blog=Blog::orderBy('id', 'DESC')->get();
-         $num=1;
-        return view('admin.blogs.index', compact('blog', 'num'));
-    }
+     $blogs=Blog::orderBy('id', 'DESC')->get();
+     $num=1;
+     return view('admin.blogs.index', compact('blogs', 'num'));
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -43,7 +44,6 @@ class BlogController extends Controller
      */
     public function store(WebBlogStoreRequest $request)
     {
-        dd($request);
         $count=Blog::where('title', request('title'))->count();
         $slug=Str::slug(request('title'), '-');
         if ($count>0) {
@@ -58,11 +58,36 @@ class BlogController extends Controller
                 $slug=$slug."-".$num;
                 $num++;
             } else {
-                $data=array('title' => request('title'), 'slug' => $slug, 'content' => request('content'), 'user_id' => request('user_id'));
                 break;
             }
         }
 
+        $dom=new \DomDocument();
+        $dom->loadHtml(request('content'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+        $images=$dom->getElementsByTagName('img');
+
+        foreach($images as $key => $img){
+            $data=$img->getAttribute('src');
+            list($type, $data)=explode(';', $data);
+            list(, $data)=explode(',', $data);
+            $data=base64_decode($data);
+            $image_name='/admins/img/blogs/'.Str::slug(request('title')." ".$key, '-').'.png';
+            $path=public_path().$image_name;
+            file_put_contents($path, $data);
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
+        }
+
+        $content=$dom->saveHTML();
+        $data=array('title' => request('title'), 'slug' => $slug, 'content' => $content, 'state' => request('state'), 'user_id' => Auth::user()->id);
+
+        // Mover imagen a carpeta blogs y extraer nombre
+        if ($request->hasFile('image')) {
+            $file=$request->file('image');
+            $image=time()."_".$file->getClientOriginalName();
+            $file->move(public_path().'/admins/img/blogs/', $image);
+            $data['image']=$image;
+        }
 
         $blog=Blog::create($data)->save();
         if ($blog) {
@@ -95,7 +120,31 @@ class BlogController extends Controller
     public function update(WebBlogUpdateRequest $request, $slug)
     {
         $blog=Blog::where('slug', $slug)->firstOrFail();
-        $data=array('title' => request('title'), 'slug' => request('slug'), 'content' => request('content'), 'user_id' => request('user_id'));
+        $dom=new \DomDocument();
+        $dom->loadHtml(request('content'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images=$dom->getElementsByTagName('img');
+
+        foreach($images as $key => $img){
+            $data=$img->getAttribute('src');
+            list($type, $data)=explode(';', $data);
+            list(, $data)=explode(',', $data);
+            $data=base64_decode($data);
+            $image_name='/admins/img/blogs/'.Str::slug(request('title')." ".$key, '-').'.png';
+            $path=public_path().$image_name;
+            file_put_contents($path, $data);
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
+        }
+        $content=$dom->saveHTML();
+        $data=array('title' => request('title'), 'content' => $content, 'state' => request('state'));
+
+        // Mover imagen a carpeta blogs y extraer nombre
+        if ($request->hasFile('image')) {
+            $file=$request->file('image');
+            $image=time()."_".$file->getClientOriginalName();
+            $file->move(public_path().'/admins/img/blogs/', $image);
+            $data['image']=$image;
+        }
 
         $blog->fill($data)->save();
 
@@ -118,7 +167,7 @@ class BlogController extends Controller
         $blogs->delete();
 
         if ($blogs) {
-            return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'La Marca ha sido eliminada exitosamente.']);
+            return redirect()->route('blog.index')->with(['type' => 'success', 'title' => 'Eliminación exitosa', 'msg' => 'El artículo ha sido eliminado exitosamente.']);
         } else {
             return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }

@@ -39,10 +39,10 @@
   @if(!isset($search['precio']))
   <div class="mb-3">
     <p class="h6">Precio</p>
-    <select class="form-control" name="precio" id="filterPrice">
+    <select class="form-control" id="filterPrice">
       <option value="">Seleccione</option>
-      <option value="bajo">Precios más bajos</option>
-      <option value="alto">Precios más altos</option>
+      <option value="bajo" url="{{ route('tienda', filterRedirect($search, 'precio', 'bajo')) }}">Precios más bajos</option>
+      <option value="alto" url="{{ route('tienda', filterRedirect($search, 'precio', 'alto')) }}">Precios más altos</option>
     </select>
   </div>
   @endif
@@ -50,27 +50,36 @@
   @if(!isset($search['marca']))
   <div class="mb-3">
     <p class="h6">Marcas</p>
-    @foreach($brands as $brand)
-    <a href="{{ route('tienda', filterRedirect($search, 'marca', $brand->slug)) }}" class="nav-link text-primary">{{ $brand->name }}</a>
-    @endforeach
+    <select class="multiselect form-control" id="filterBrand">
+      <option value="">Seleccione</option>
+      @foreach($brands as $brand)
+      <option value="{{ $brand->slug }}" url="{{ route('tienda', filterRedirect($search, 'marca', $brand->slug)) }}">{{ $brand->name }}</option>
+      @endforeach
+    </select>
   </div>
   @endif
 
   @if(!isset($search['categoria']))
   <div class="mb-3">
     <p class="h6">Categorías</p>
-    @foreach($categories as $category)
-    <a href="{{ route('tienda', filterRedirect($search, 'categoria', $category->slug)) }}" class="nav-link text-primary">{{ $category->name }}</a>
-    @endforeach
+    <select class="multiselect form-control" id="filterCategory">
+      <option value="">Seleccione</option>
+      @foreach($categories as $category)
+      <option value="{{ $category->slug }}" url="{{ route('tienda', filterRedirect($search, 'categoria', $category->slug)) }}">{{ $category->name }}</option>
+      @endforeach
+    </select>
   </div>
   @endif
 
   @if(!isset($search['distrito']))
   <div class="mb-3">
     <p class="h6">Distritos</p>
-    @foreach($districts as $district)
-    <a href="{{ route('tienda', filterRedirect($search, 'distrito', $district['id'])) }}" class="nav-link text-primary">{{ $district['name'] }}</a>
-    @endforeach
+    <select class="multiselect form-control" id="filterDistrict">
+      <option value="">Seleccione</option>
+      @foreach($districts as $district)
+      <option value="{{ $district['id'] }}" url="{{ route('tienda', filterRedirect($search, 'distrito', $district['id'])) }}">{{ $district['name'] }}</option>
+      @endforeach
+    </select>
   </div>
   @endif
 </div>

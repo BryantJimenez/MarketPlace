@@ -17,7 +17,9 @@ class CreatePaymentProductTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->bigInteger('payment_id')->unsigned()->nullable();
+            $table->string('bank')->nullable();
             $table->integer('qty')->default(1);
+            $table->integer('ofert')->default(0);
             $table->float('price', 10, 2)->default(0.00);
             $table->enum('state', [1, 2, 3])->nullable();
             $table->timestamps();

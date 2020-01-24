@@ -183,4 +183,9 @@ class WebController extends Controller
         $num=1;
         return view('web.sales', compact("payments","num"));
     }
+
+    public function saleShow($slug) {
+        $payment=Payment::where('slug', $slug)->firstOrFail();
+        return view('web.sale', compact("payment"));
+    }
 }

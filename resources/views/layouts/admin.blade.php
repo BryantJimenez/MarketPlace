@@ -11,7 +11,7 @@
 
 	<link href="{{ asset('/admins/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/admins/css/style.css') }}" rel="stylesheet">
-	<link href="{{ asset('/admins/vendors/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+	<link href="{{ asset('/admins/vendors/mcustomscrollbar/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
 	
 	@yield('links')
 	<link href="{{ asset('/admins/css/colors/purple.css') }}" id="theme" rel="stylesheet" type="text/css">
@@ -57,7 +57,7 @@
 	<script src="{{ asset('/admins/js/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('/admins/js/bootstrap/popper.min.js') }}"></script>
 	<script src="{{ asset('/admins/js/bootstrap/bootstrap.min.js') }}"></script>
-	<script src="{{ asset('/admins/js/perfect-scrollbar.jquery.min.js') }}"></script>
+	<script src="{{ asset('/admins/vendors/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 	<script src="{{ asset('/admins/js/waves.js') }}"></script>
 	<script src="{{ asset('/admins/js/sidebarmenu.js') }}"></script>
 	@yield('script')

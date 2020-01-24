@@ -24,6 +24,16 @@ function saleState($state) {
 	}
 }
 
+function blogState($state) {
+	if ($state==1) {
+		return '<span class="badge badge-success">Publicado</span>';
+	} elseif ($state==2) {
+		return '<span class="badge badge-dark">Borrador</span>';
+	} else {
+		return '<span class="badge badge-primary">Desconocido</span>';
+	}
+}
+
 function saleShape($shape) {
 	if ($shape==1) {
 		return '<span class="badge badge-primary">Tarjeta</span>';
@@ -93,4 +103,14 @@ function filterRedirect($request, $index, $value) {
 		$request=Arr::add($request, $index, $value);
 	}
 	return $request;
+}
+
+//Función para agregar texto de descripción de una entrada del blog
+function blogContent($content) {
+// dd($content);
+// 	$dom=new \DomDocument();
+// 	$dom->loadHtml($content);
+// 	$pTags=$dom->getElementsByTagName('p');
+// 	dd($pTags);
+	// return ;
 }

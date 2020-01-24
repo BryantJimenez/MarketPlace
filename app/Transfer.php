@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transfer extends Model
 {
-    protected $fillable = ['payment_id'];
+    protected $fillable = ['payment_id', 'bank'];
 
-    public function bank() {
-        return $this->belongsTo(Bank::class);
-    }
+    public function payment() {
+		return $this->belongsTo(Payment::class);
+	}
 }

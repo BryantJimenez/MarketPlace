@@ -19,72 +19,31 @@
 		<div class="row">
 			<div class="col-lg-8 ftco-animate">
 				<div class="row">
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#">Admin</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+
+					@forelse($blogs as $blog)
+					<div class="card col-12 mb-3">
+						<div class="row no-gutters">
+							<div class="col-lg-3 col-md-3 col-12">
+								<a href="{{ route('web.blog.show', ['slug' => $blog->slug]) }}">
+									<img class="img-fluid w-100" src="{{ asset('/admins/img/blogs/'.$blog->image) }}" alt="{{ $blog->title }}">
+								</a>
+							</div>
+							<div class="col-lg-9 col-md-9 col-12">
+								<div class="card-body">
+									<p class="card-text mb-0"><small class="text-muted"><i class="icon-user"></i> {{ $blog->user->name." ".$blog->user->lastname }} <i class="icon-clock-o"></i> {{ date('d-m-Y', strtotime($blog->updated_at)) }} <i class="icon-chat"></i> 3</small></p>
+									<h5 class="card-title mb-0 d-flex"><a href="{{ route('web.blog.show', ['slug' => $blog->slug]) }}">{{ $blog->title }}</a></h5>
+									{{-- <p class="card-text">{{ blogContent($blog->content) }}</p> --}}
+									<a href="{{ route('web.blog.show', ['slug' => $blog->slug]) }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Leer Más</a>
 								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#">Admin</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#">Admin</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#">Admin</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
+					@empty
+					@endforelse
+
 				</div>
-			</div> <!-- .col-md-8 -->
+			</div>
+			<!-- .col-md-8 -->
 			<div class="col-lg-4 sidebar ftco-animate">
 				<div class="sidebar-box">
 					<form action="#" class="search-form">
@@ -97,45 +56,18 @@
 
 				<div class="sidebar-box ftco-animate">
 					<h3 class="heading">Recientemente en el Blog</h3>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
 
-
-				<div class="sidebar-box ftco-animate">
-					<h3 class="heading">Acerca del Blog</h3>
-					<p>Cuerpo...</p>
+					<div class="block-21 mb-4 d-flex">
+						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
+						<div class="text">
+							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
+							<div class="meta">
+								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
+								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
+								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 

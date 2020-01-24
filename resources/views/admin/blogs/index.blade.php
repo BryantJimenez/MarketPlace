@@ -19,27 +19,24 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
-					<table id="tablaExport" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+					<table id="tabla" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Título</th>
+								<th>Estado</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($blog as $blogs)
+							@foreach($blogs as $blog)
 							<tr>
 								<td>{{ $num++ }}</td>
-								<td>
-									<span class="image-list">
-										 {{ $blogs->title }}
-									</span>
-								</td>
+								<td>{{ $blog->title }}</td>
+								<td>{!! blogState($blog->state) !!}</td>
 								<td class="d-flex">
-									<a class="btn btn-primary btn-circle btn-sm" href="{{ route('web.blog.show', ['slug' => $blogs->slug]) }}"><i class="fa fa-briefcase"></i></a>&nbsp;&nbsp;
-									<a class="btn btn-info btn-circle btn-sm" href="{{ route('blog.edit', ['slug' => $blogs->slug]) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-									<button class="btn btn-danger btn-circle btn-sm" onclick="deleteBlog('{{ $blogs->slug }}')"><i class="fa fa-trash"></i></button>
+									<a class="btn btn-info btn-circle btn-sm" href="{{ route('blog.edit', ['slug' => $blog->slug]) }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+									<button class="btn btn-danger btn-circle btn-sm" onclick="deleteBlog('{{ $blog->slug }}')"><i class="fa fa-trash"></i></button>
 								</td>
 							</tr> 
 							@endforeach
@@ -77,11 +74,4 @@
 @section('script')
 <script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
 <script src="{{ asset('/admins/vendors/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/dataTables.flash.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/jszip.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/pdfmake.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/vfs_fonts.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('/admins/vendors/datatables/buttons/buttons.print.min.js') }}"></script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', 'Blog')
+@section('title', $blog->title)
 
 @section('content')
 <div class="hero-wrap hero-bread" style="background-image: url('/web/images/bg_1.jpg');">
@@ -8,7 +8,7 @@
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-center justify-content-center">
 			<div class="col-md-9 ftco-animate text-center">
-				<h1 class="mb-0 bread">Blog</h1>
+				<h1 class="mb-0 bread">{{ $blog->title }}</h1>
 			</div>
 		</div>
 	</div>
@@ -19,22 +19,7 @@
 		<div class="row">
 			<div class="col-lg-8 ftco-animate">
 				<h2 class="mb-3">{{ $blog->title }}</h2>
-				<p>{{ $blog->content }}</p>
-				<p>
-					<img src="/web/images/bg_1.jpg" alt="" class="img-fluid">
-				</p>
-
-
-				<div class="about-author d-flex p-4 bg-light">
-					<div class="bio align-self-md-center mr-4">
-						<img src="/admins/img/users/{{ Auth::user()->photo }}" alt="Image placeholder" class="img-fluid mb-4">
-					</div>
-					<div class="desc align-self-md-center">
-						<h3>{{ Auth::user()->name." ".Auth::user()->lastname }}</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-					</div>
-				</div>
-
+				{!! $blog->content !!}
 
 				<div class="pt-5 mt-5">
 					<h3 class="mb-5">Comentarios</h3>
@@ -88,7 +73,7 @@
 						</form>
 					</div>
 				</div>
-			</div> <!-- .col-md-8 -->
+			</div>
 			<div class="col-lg-4 sidebar ftco-animate">
 
 				<div class="sidebar-box ftco-animate">
@@ -132,6 +117,6 @@
 
 		</div>
 	</div>
-</section> <!-- .section -->
+</section>
 
 @endsection

@@ -38,9 +38,9 @@
 								<td>
 									<span class="image-list">
 										@if(count($payment->products[0]->images)>0)
-										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/products/'.$payment->products[0]->images[0]->image) }}' style='width: 150px; height: 150px;' ><br><b>{{ $payment->products[0]->name }}</b>"><img src="{{ asset('/admins/img/products/'.$payment->products[0]->images[0]->image) }}" class="img-circle" alt="Foto de perfil" width="40" height="40" /> {{ $payment->products[0]->name }}</a>
+										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/products/'.$payment->products[0]->images[0]->image) }}' style='width: 150px; height: 150px;' ><br><b>{{ $payment->products[0]->name." x ".$payment->products[0]->pivot->qty }}</b>"><img src="{{ asset('/admins/img/products/'.$payment->products[0]->images[0]->image) }}" class="img-circle" alt="Foto de perfil" width="40" height="40" /> {{ $payment->products[0]->name." x ".$payment->products[0]->pivot->qty }}</a>
 										@else
-										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/products/imagen.jpg') }}' style='width: 150px; height: 150px;' ><br><b>{{ $payment->products[0]->name }}</b>"><img src="{{ asset('/admins/img/products/imagen.jpg') }}" class="img-circle" alt="Foto de perfil" width="40" height="40" /> {{ $payment->products[0]->name }}</a>
+										<a data-toggle="tooltip" data-placement="bottom" data-html="true" title="<img src='{{ asset('/admins/img/products/imagen.jpg') }}' style='width: 150px; height: 150px;' ><br><b>{{ $payment->products[0]->name." x ".$payment->products[0]->pivot->qty }}</b>"><img src="{{ asset('/admins/img/products/imagen.jpg') }}" class="img-circle" alt="Foto de perfil" width="40" height="40" /> {{ $payment->products[0]->name." x ".$payment->products[0]->pivot->qty }}</a>
 										@endif
 									</span>
 								</td>

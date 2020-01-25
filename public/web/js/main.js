@@ -566,6 +566,29 @@ $('#filterDistrict').change(function() {
 	}
 });
 
+//Cambiar url en la paginación
+// if ($('a.page-link').length) {
+// 	$("a.page-link").each(function(){
+// 		var url=window.location.href;
+// 		console.log(url);
+
+// 		if (url.indexOf('?')!=-1) {
+// 			if (url.indexOf('page=')!=-1) {
+// 				var start=url.indexOf('page=');
+// 				var page=url.substr(start, start+6);
+// 				$(this).attr('href', url.replace('/'+page+'/g', 'page='+$(this).text()));
+// 				console.log(url.replace(/page/g, 'page='+$(this).text()));
+// 			} else {
+// 				$(this).attr('href', url+'&page='+$(this).text());
+// 			}
+// 		} else {
+// 			$(this).attr('href', url+'?page='+$(this).text());
+// 		}
+
+
+// 	});
+// }
+
 //Al cambiar la cantidad de un producto cambia el total
 $('.qty').change(function() {
 	var slug=$(this).attr('slug'), qty=$(this).val();

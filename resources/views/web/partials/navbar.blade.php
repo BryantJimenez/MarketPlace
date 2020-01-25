@@ -23,8 +23,8 @@
 						<a class="dropdown-item" href="{{ route('web.sales') }}">Mis Compras</a>
 						<hr class="w-75 my-0">
 						<p class="dropdown-item my-0"><b>Blog</b></p>
-						<a class="dropdown-item" href="#">Nueva Entrada</a>
-						<a class="dropdown-item" href="#">Mis Entradas</a>
+						<a class="dropdown-item" href="{{ route('blog.article') }}">Nueva Entrada</a>
+						<a class="dropdown-item" href="{{ route('blog.my.article') }}">Mis Entradas</a>
 						<hr class="w-75 my-0">
 						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

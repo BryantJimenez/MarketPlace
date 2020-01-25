@@ -188,4 +188,17 @@ class WebController extends Controller
         $payment=Payment::where('slug', $slug)->firstOrFail();
         return view('web.sale', compact("payment"));
     }
+
+    public function services() {
+        return view('web.services');
+    }
+
+    public function offerServices() {
+        return view('web.offerServices');
+    }
+
+    public function shopSingle($slug) {
+        $store=Store::where('slug', $slug)->firstOrFail();
+        return view('web.store', compact("store"));
+    }
 }

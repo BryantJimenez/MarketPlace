@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 2525),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@123maker.com.ar'),
-        'name' => env('MAIL_FROM_NAME', '123 Maker'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@misterfix.com'),
+        'name' => env('MAIL_FROM_NAME', 'Mister Fix'),
     ],
 
     /*

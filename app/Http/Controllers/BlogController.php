@@ -21,10 +21,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-     $blogs=Blog::orderBy('id', 'DESC')->get();
-     $num=1;
-     return view('admin.blogs.index', compact('blogs', 'num'));
- }
+       $blogs=Blog::where('state', 1)->orderBy('id', 'DESC')->get();
+       return view('admin.blogs.index', compact('blogs'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -172,4 +171,15 @@ class BlogController extends Controller
             return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
     }
+
+    public function myArticles()
+    {
+        return view('web.myarticles');
+    }
+
+    public function articleCreate()
+    {
+        return view('web.articlecreate');
+    }
+
 }

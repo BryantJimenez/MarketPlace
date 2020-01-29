@@ -135,4 +135,15 @@ class StoreController extends Controller
             return redirect()->route('tiendas.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
     }
+
+    public function index2(){
+
+        return view('admin.stores.stores.index');
+    }
+
+
+     public function show2($slug)
+    {
+       return view('admin.stores.stores.show'); 
+    }
 }

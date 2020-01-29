@@ -86,6 +86,8 @@ Route::get('/misterfix/tiendas/{slug}', 'StoreController@show')->name('tiendas.s
 Route::get('/misterfix/tiendas/{slug}/editar', 'StoreController@edit')->name('tiendas.edit');
 Route::put('/misterfix/tiendas/{slug}', 'StoreController@update')->name('tiendas.update');
 Route::delete('/misterfix/tiendas/{slug}', 'StoreController@destroy')->name('tiendas.destroy');
+Route::get('/misterfix/tienditas', 'StoreController@index2')->name('tienditas.index');
+Route::get('/misterfix/tienditas/{slug}', 'StoreController@show2')->name('tienditas.show');
 
 // Productos
 Route::get('/misterfix/productos', 'ProductController@index')->name('productos.index');

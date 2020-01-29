@@ -158,9 +158,9 @@ class WebController extends Controller
 
     public function productSingle($slug) {
         $product=Product::where('slug', $slug)->firstOrFail();
-        $relatedProducts=Product::where('subcategory_id', $product->subcategory_id)->limit(4)->inRandomOrder()->get();
+        $products=Product::where('subcategory_id', $product->subcategory_id)->limit(4)->inRandomOrder()->get();
 
-        return view('web.product', compact("product", "relatedProducts"));
+        return view('web.product', compact("product", "products"));
     }
 
     public function buy($slug) {
@@ -189,6 +189,11 @@ class WebController extends Controller
         return view('web.sale', compact("payment"));
     }
 
+    public function shopSingle($slug) {
+        $store=Store::where('slug', $slug)->firstOrFail();
+        return view('web.store', compact("store"));
+    }
+
     public function services() {
         return view('web.services');
     }
@@ -197,8 +202,12 @@ class WebController extends Controller
         return view('web.offerServices');
     }
 
-    public function shopSingle($slug) {
-        $store=Store::where('slug', $slug)->firstOrFail();
-        return view('web.store', compact("store"));
+    public function offerServiceShop() {
+        $districts=District::where('province_id', 1501)->get();
+        return view('web.offerShop', compact("districts"));
+    }
+
+    public function offerServiceShopStore(Request $request) {
+        // return view('web.offerShop', compact("districts"));
     }
 }

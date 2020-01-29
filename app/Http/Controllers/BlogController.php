@@ -22,7 +22,8 @@ class BlogController extends Controller
     public function index()
     {
        $blogs=Blog::where('state', 1)->orderBy('id', 'DESC')->get();
-       return view('admin.blogs.index', compact('blogs'));
+       $num=1;
+       return view('admin.blogs.index', compact('blogs', 'num'));
    }
 
     /**
@@ -57,28 +58,10 @@ class BlogController extends Controller
                 $slug=$slug."-".$num;
                 $num++;
             } else {
+                $data=array('title' => request('title'), 'slug' => $slug, 'content' => request('content'), 'state' => request('state'), 'user_id' => Auth::user()->id);
                 break;
             }
         }
-
-        $dom=new \DomDocument();
-        $dom->loadHtml(request('content'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
-        $images=$dom->getElementsByTagName('img');
-
-        foreach($images as $key => $img){
-            $data=$img->getAttribute('src');
-            list($type, $data)=explode(';', $data);
-            list(, $data)=explode(',', $data);
-            $data=base64_decode($data);
-            $image_name='/admins/img/blogs/'.Str::slug(request('title')." ".$key, '-').'.png';
-            $path=public_path().$image_name;
-            file_put_contents($path, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
-        }
-
-        $content=$dom->saveHTML();
-        $data=array('title' => request('title'), 'slug' => $slug, 'content' => $content, 'state' => request('state'), 'user_id' => Auth::user()->id);
 
         // Mover imagen a carpeta blogs y extraer nombre
         if ($request->hasFile('image')) {
@@ -119,23 +102,7 @@ class BlogController extends Controller
     public function update(WebBlogUpdateRequest $request, $slug)
     {
         $blog=Blog::where('slug', $slug)->firstOrFail();
-        $dom=new \DomDocument();
-        $dom->loadHtml(request('content'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $images=$dom->getElementsByTagName('img');
-
-        foreach($images as $key => $img){
-            $data=$img->getAttribute('src');
-            list($type, $data)=explode(';', $data);
-            list(, $data)=explode(',', $data);
-            $data=base64_decode($data);
-            $image_name='/admins/img/blogs/'.Str::slug(request('title')." ".$key, '-').'.png';
-            $path=public_path().$image_name;
-            file_put_contents($path, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
-        }
-        $content=$dom->saveHTML();
-        $data=array('title' => request('title'), 'content' => $content, 'state' => request('state'));
+        $data=array('title' => request('title'), 'content' => request('content'), 'state' => request('state'));
 
         // Mover imagen a carpeta blogs y extraer nombre
         if ($request->hasFile('image')) {
@@ -170,16 +137,6 @@ class BlogController extends Controller
         } else {
             return redirect()->route('blog.index')->with(['type' => 'error', 'title' => 'Eliminación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
-    }
-
-    public function myArticles()
-    {
-        return view('web.myarticles');
-    }
-
-    public function articleCreate()
-    {
-        return view('web.articlecreate');
     }
 
 }

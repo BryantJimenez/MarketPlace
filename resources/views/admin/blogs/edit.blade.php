@@ -5,7 +5,6 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/admins/vendors/summernote/dist/summernote.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -68,5 +67,5 @@
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
 <script src="{{ asset('/admins/js/validate.js') }}"></script>
-<script src="{{ asset('/admins/vendors/summernote/dist/summernote.min.js') }}"></script>
+<script src="{{ asset('/admins/vendors/ckeditor/ckeditor.js') }}"></script>
 @endsection

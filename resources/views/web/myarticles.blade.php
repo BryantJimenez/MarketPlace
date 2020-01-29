@@ -14,143 +14,47 @@
 	</div>
 </div>
 
-<section class="ftco-section ftco-degree-bg">
+<section class="ftco-section ftco-cart">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 ftco-animate">
-				<div class="sidebar-box">
-					<form action="#" class="search-form">
-						<div class="form-group">
-							<span class="icon ion-ios-search"></span>
-							<input type="text" class="form-control" placeholder="Buscar Artículo...">
-						</div>
-					</form>
+			<div class="col-md-12 ftco-animate">
+				@if(count($blogs)>0)
+				<div class="cart-list">
+					<table class="table">
+						<thead class="thead-primary">
+							<tr class="text-center">
+								<th>#</th>
+								<th>Título</th>
+								<th>Estado</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($blogs as $blog)
+							<tr>
+								<td>{{ $num++ }}</td>
+								<td>{{ $blog->title }}</td>
+								<td>{!! blogState($blog->state) !!}</td>
+								<td class="d-flex justify-content-center">
+									<a href="{{ route('web.sales.show', ['slug' => $blog->slug]) }}" class="btn btn-primary"><i class="icon-edit"></i></a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
 				</div>
-			</div>
-			<div class="col-lg-8 ftco-animate">
-				<div class="row">
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 d-flex ftco-animate">
-						<div class="blog-entry align-self-stretch d-md-flex">
-							<a href="blog-single.html" class="block-20" style="background-image: url(/web/images/bg_1.jpg);">
-							</a>
-							<div class="text d-block pl-md-4">
-								<div class="meta mb-3">
-									<div><a href="#">Enero, 10 2020</a></div>
-									<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-								</div>
-								<h3 class="heading"><a href="#">Título del Artículo</a></h3>
-								<p>Cuerpo del Artículo</p>
-								<p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Leer Más</a></p>
-							</div>
-						</div>
-					</div>
+				@else
+				<div class="col-12 text-center">
+					<p class="h3 text-danger">No tienes artículos publicados</p>
 				</div>
-			</div> <!-- .col-md-8 -->
-			<div class="col-lg-4 sidebar ftco-animate">
-
-				<div class="sidebar-box ftco-animate">
-					<h3 class="heading">Recientemente en el Blog</h3>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-					<div class="block-21 mb-4 d-flex">
-						<a class="blog-img mr-4" style="background-image: url(/web/images/bg_1.jpg);"></a>
-						<div class="text">
-							<h3 class="heading-1"><a href="#">Título del Artículo</a></h3>
-							<div class="meta">
-								<div><a href="#"><span class="icon-calendar"></span> April 09, 2019</a></div>
-								<div><a href="#"><span class="icon-person"></span> Admin</a></div>
-								<div><a href="#"><span class="icon-chat"></span> 19</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
+				@endif
 			</div>
 		</div>
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						<li><a href="#">&lt;</a></li>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&gt;</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		
 	</div>
 </section>
 
+@endsection
 
-
-
+@section('script')
+<script src="{{ asset('/admins/vendors/datatables/jquery.dataTables.min.js') }}"></script>
 @endsection

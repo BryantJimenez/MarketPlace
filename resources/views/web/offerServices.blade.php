@@ -13,7 +13,7 @@
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
 						<h2 class="mb-2 text-white">Registra tu tienda para que puedas vender tus productos</h2>
-						<a href="#" class="btn btn-white">Registrar</a>
+						<a href="{{ route('servicios.offer.shop') }}" class="btn btn-white">Registrar</a>
 					</div>
 				</div>
 			</div>

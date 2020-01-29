@@ -203,7 +203,6 @@
 											<input type="text" class="form-control" name="phone" placeholder="Introduzca su teléfono" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @else required @endif>
 										</div>
 									</div>
-									
 								</div>
 							</section>
 							<h3>Envio</h3>

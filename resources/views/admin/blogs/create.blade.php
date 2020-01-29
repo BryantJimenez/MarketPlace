@@ -5,7 +5,6 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/admins/vendors/summernote/dist/summernote.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -36,7 +35,7 @@
 						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Contenido del Artículo<b class="text-danger">*</b></label>
-							<textarea class="form-control summernote" name="content" required placeholder="Introduzca el contenido del artículo">{{ old('content') }}</textarea>
+							<textarea class="form-control" name="content" required placeholder="Introduzca el contenido del artículo">{{ old('content') }}</textarea>
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Estado<b class="text-danger">*</b></label>
@@ -67,5 +66,5 @@
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
 <script src="{{ asset('/admins/js/validate.js') }}"></script>
-<script src="{{ asset('/admins/vendors/summernote/dist/summernote.min.js') }}"></script>
+<script src="{{ asset('/admins/vendors/ckeditor/ckeditor.js') }}"></script>
 @endsection

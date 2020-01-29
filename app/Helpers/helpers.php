@@ -104,13 +104,3 @@ function filterRedirect($request, $index, $value) {
 	}
 	return $request;
 }
-
-//Función para agregar texto de descripción de una entrada del blog
-function blogContent($content) {
-// dd($content);
-// 	$dom=new \DomDocument();
-// 	$dom->loadHtml($content);
-// 	$pTags=$dom->getElementsByTagName('p');
-// 	dd($pTags);
-	// return ;
-}

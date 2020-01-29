@@ -14,8 +14,7 @@
 	<link rel="stylesheet" href="{{ asset('/web/css/open-iconic-bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/web/css/animate.css') }}">
 
-	<link rel="stylesheet" href="{{ asset('/web/css/owl.carousel.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('/web/css/owl.theme.default.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/admins/vendors/lobibox/Lobibox.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/web/css/magnific-popup.css') }}">
 
 	<link rel="stylesheet" href="{{ asset('/web/css/aos.css') }}">
@@ -45,10 +44,11 @@
 	<script src="{{ asset('/web/js/jquery-migrate-3.0.1.min.js') }}"></script>
 	<script src="{{ asset('/web/js/popper.min.js') }}"></script>
 	<script src="{{ asset('/web/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
+	
 	<script src="{{ asset('/web/js/jquery.easing.1.3.js') }}"></script>
 	<script src="{{ asset('/web/js/jquery.waypoints.min.js') }}"></script>
 	<script src="{{ asset('/web/js/jquery.stellar.min.js') }}"></script>
-	<script src="{{ asset('/web/js/owl.carousel.min.js') }}"></script>
 	<script src="{{ asset('/web/js/jquery.magnific-popup.min.js') }}"></script>
 	<script src="{{ asset('/web/js/aos.js') }}"></script>
 	{{-- <script src="{{ asset('/web/js/jquery.animateNumber.min.js') }}"></script> --}}

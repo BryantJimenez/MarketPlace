@@ -532,6 +532,60 @@ $(document).ready(function() {
 		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
 		Culqi.init();
 	}
+
+	//Mapa de leaflet
+	if ($('#lat').length && $('#lng').length) {
+		if ($('#lat').val()=="" || $('#lng').val()=="") {
+			var map = L.map('map', {
+				center: [-12.05, -77.04],
+				zoom: 12
+			});
+
+			marker = L.marker([-12.05, -77.04]).addTo(map);
+		} else {
+			var mapLat=$('#lat').val();
+			var mapLng=$('#lng').val();
+			var map = L.map('map', {
+				center: [mapLat, mapLng],
+				zoom: 12
+			});
+
+			marker = L.marker([mapLat, mapLng]).addTo(map);
+		}
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		map.on('click', function(e) {
+			if (marker) {
+				map.removeLayer(marker);
+			}
+			marker=L.marker(e.latlng).addTo(map);
+			$('#lat').val(e.latlng.lat);
+			$('#lng').val(e.latlng.lng);
+		});
+	}
+
+	//dropify para input file más personalizado
+	if ($('.dropify').length) {
+		$('.dropify').dropify({
+			messages: {
+				default: 'Arrastre y suelte una imagen o da click para seleccionarla',
+				replace: 'Arrastre y suelte una imagen o haga click para reemplazar',
+				remove: 'Remover',
+				error: 'Lo sentimos, el archivo es demasiado grande'
+			},
+			error: {
+				'fileSize': 'El tamaño del archivo es demasiado grande ({{ value }} máximo).',
+				'minWidth': 'El ancho de la imagen es demasiado pequeño ({{ value }}}px mínimo).',
+				'maxWidth': 'El ancho de la imagen es demasiado grande ({{ value }}}px máximo).',
+				'minHeight': 'La altura de la imagen es demasiado pequeña ({{ value }}}px mínimo).',
+				'maxHeight': 'La altura de la imagen es demasiado grande ({{ value }}px máximo).',
+				'imageFormat': 'El formato de imagen no está permitido (Debe ser {{ value }}).'
+			}
+		});
+	}
 });
 
 //Redireccionar en el filtro de la tienda con la opcion precio

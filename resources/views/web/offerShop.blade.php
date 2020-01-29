@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{ asset('/web/vendors/select2/select2-bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/datepicker/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
 @endsection
 
 @section('content')
@@ -132,8 +133,9 @@
 			@else
 			<div class="col-12 ftco-animate">
 				<p class="h2">Registro de Tienda</p>
+				<p>Envía el formulario con todos los datos, la dolicitud de tu tienda sera revisada y aceptada de cumplir con todos los requerimientos.</p>
 				<p>Campos obligatorios (<b class="text-danger">*</b>)</p>
-				<form action="{{ route('pagar.product') }}" method="POST" class="billing-form">
+				<form action="{{ route('servicios.offer.shop.store') }}" method="POST" class="billing-form" enctype="multipart/form-data">
 					@csrf
 					<div class="row">
 						<div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -147,43 +149,70 @@
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<label>Nombre<b class="text-danger">*</b></label>
-										<input type="text" class="form-control" placeholder="Introduzca su nombre" readonly value="{{ Auth::user()->name }}">
+										<label>Nombre</label>
+										<input type="text" class="form-control" readonly value="{{ Auth::user()->name }}">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<label>Apellido<b class="text-danger">*</b></label>
-										<input type="text" class="form-control" placeholder="Introduzca su apellido" readonly value="{{ Auth::user()->lastname }}">
+										<label>Apellido</label>
+										<input type="text" class="form-control" readonly value="{{ Auth::user()->lastname }}">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<label>Correo Electrónico<b class="text-danger">*</b></label>
-										<input type="email" class="form-control" placeholder="{{ 'Ejm: correo@gmail.com' }}" readonly value="{{ Auth::user()->email }}">
+										<label>Correo Electrónico</label>
+										<input type="email" class="form-control" readonly value="{{ Auth::user()->email }}">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<label>DNI (Documento de Identidad)<b class="text-danger">*</b></label>
+										<input type="text" class="form-control" placeholder="Introduzca su dni" name="dni" required id="dni" @if(Auth::user()->dni!=null || Auth::user()->dni!="") readonly value="{{ Auth::user()->dni }}" @endif>
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Teléfono<b class="text-danger">*</b></label>
-										<input type="text" class="form-control" placeholder="Introduzca su teléfono" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @else name="phone" required @endif>
+										<input type="text" class="form-control phone" placeholder="Introduzca su teléfono" required name="phone" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @endif>
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Género<b class="text-danger">*</b></label>
-										<select class="form-control" name="genrer" required>
+										<select class="form-control" required name="genrer" @if(Auth::user()->genrer!=null || Auth::user()->genrer!="") readonly @endif>
 											<option value="">Seleccione</option>
-											<option value="Masculino">Masculino</option>
-											<option value="Femenino">Femenino</option>
+											<option value="Masculino" @if(Auth::user()->genrer=="Masculino") selected @endif>Masculino</option>
+											<option value="Femenino" @if(Auth::user()->genrer=="Femenino") selected @endif>Femenino</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Fecha de Nacimiento<b class="text-danger">*</b></label>
-										<input type="text" class="form-control" placeholder="Introduzca su fecha de nacimiento">
+										<input type="text" class="form-control date" placeholder="Seleccione su fecha de nacimiento" required name="birthday" @if(Auth::user()->birthday!=null || Auth::user()->birthday!="") readonly value="{{ date('d-m-Y', strtotime(Auth::user()->birthday)) }}" @endif>
 									</div>
+								</div>
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Departamento<b class="text-danger">*</b></label>
+									<select class="form-control multiselect" required id="multiselectDepartments">
+										<option value="">Seleccione</option>
+										@foreach($departments as $department)
+										<option value="{{ $department->id }}">{{ $department->name }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Provincia<b class="text-danger">*</b></label>
+									<select class="form-control multiselect" required disabled id="multiselectProvinces">
+										<option value="">Seleccione</option>
+									</select>
+								</div>
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Distrito<b class="text-danger">*</b></label>
+									<select class="form-control multiselect" required disabled name="district_id" id="multiselectDistricts">
+										<option value="">Seleccione</option>
+									</select>
 								</div>
 								<div class="col-12">
 									<div class="form-group">
@@ -201,17 +230,25 @@
 									<input class="form-control" type="text" name="name_shop" required placeholder="Introduzca un nombre" value="{{ old('name_shop') }}">
 								</div>
 								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Departamento</label>
+									<input type="text" class="form-control" readonly value="Lima">
+								</div>
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Provincia</label>
+									<input type="text" class="form-control" readonly value="Lima">
+								</div>
+								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Distrito<b class="text-danger">*</b></label>
-									<select class="form-control multiselect" name="district_id" required>
+									<select class="form-control multiselect" name="shop_district_id" required>
 										<option value="">Seleccione</option>
 										@foreach($districts as $district)
-										<option value="{{ $district->id }}" @if(old('district_id')==$district->id) selected @endif>{{ $district->name }}</option>
+										<option value="{{ $district->id }}" @if(old('shop_district_id')==$district->id) selected @endif>{{ $district->name }}</option>
 										@endforeach
 									</select>
 								</div>
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Teléfono<b class="text-danger">*</b></label>
-									<input class="form-control" type="text" name="phone_shop" required placeholder="Introduzca un teléfono" value="{{ old('phone_shop') }}">
+									<input class="form-control phone" type="text" name="phone_shop" required placeholder="Introduzca un teléfono" value="{{ old('phone_shop') }}">
 								</div>
 								<div class="form-group col-12">
 									<label class="col-form-label">Dirección<b class="text-danger">*</b></label>
@@ -224,6 +261,10 @@
 									<input type="hidden" name="lng" id="lng">
 								</div>
 							</div>
+						</div>
+						<div class="form-group col-12 mt-4">
+							<input type="submit" value="Enviar Solicitud" class="btn btn-primary py-3 px-4">
+							<a href="{{ route('servicios.offer') }}" class="btn btn-secondary py-3 px-4">Volver</a>
 						</div>
 					</div>
 				</form>
@@ -244,4 +285,6 @@
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
 <script src="{{ asset('/admins/js/validate.js') }}"></script>
+<script src="{{ asset('/admins/vendors/moment/moment.js') }}"></script>
+<script src="{{ asset('/admins/vendors/datepicker/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 @endsection

@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->string('photo')->default('usuario.png');
             $table->string('slug')->unique();
+            $table->string('dni')->nullable();
+            $table->bigInteger('country_id')->unsigned()->default(173);
+            $table->bigInteger('district_id')->unsigned()->nullable();
             $table->string('phone')->nullable();
             $table->enum('genrer', ["Masculino", "Femenino"])->nullable();
             $table->date('birthday')->nullable();
@@ -30,6 +33,10 @@ class CreateUsersTable extends Migration
             $table->enum('type', [1, 2, 3])->default(3);
             $table->rememberToken();
             $table->timestamps();
+
+            #Relations
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

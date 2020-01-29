@@ -298,6 +298,19 @@ $(document).ready(function() {
 		}
 	}
 
+	//Validación para introducir solo números
+	$('.number, .phone, #dni').keypress(function() {
+		return event.charCode >= 48 && event.charCode <= 57;
+	});
+    //Validación para introducir solo letras y espacios
+    $('#name, #lastname').keypress(function() {
+    	return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode==32;
+    });
+    //Validación para solo presionar enter y borrar
+    $('.date').keypress(function() {
+    	return event.charCode == 32 || event.charCode == 127;
+    });
+
 	//multiselect
 	if ($('.multiselect').length) {
 		$('.multiselect').select2({
@@ -305,6 +318,22 @@ $(document).ready(function() {
 			language: "es"
 		});
 	}
+
+	//Variables con fecha actual
+	var mayor=new Date();
+	//Restandole 18 años a la fecha actual
+	mayor.setMonth(mayor.getMonth() - 216);
+
+	//datepicker material
+    if ($('.date').length) {
+        $('.date').bootstrapMaterialDatePicker({
+            time: false,
+            cancelText: 'Cancelar',
+            clearText: 'Limpiar',
+            format: 'DD-MM-YYYY',
+            maxDate : mayor
+        });
+    }
 
 	//datatable español
 	var español = {
@@ -588,6 +617,85 @@ $(document).ready(function() {
 	}
 });
 
+// Funciones para agregar datos a select
+$('#multiselectDepartments').change(function() {
+	var id=$(this).val();
+	if (id!="") {
+		$.ajax({
+			url: '/misterfix/provincias/agregar',
+			type: 'POST',
+			dataType: 'html',
+			data: {id: id},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		})
+		.done(function(resultado) {
+			$("#multiselectProvinces option, #multiselectDistricts option").remove();
+			$("#multiselectProvinces, #multiselectDistricts").attr('disabled', true);
+			var obj=JSON.parse(resultado);
+
+			$('#multiselectProvinces, #multiselectDistricts').append($('<option>', {
+				value: '',
+				text: 'Seleccione'
+			}));
+			for (var i=obj.length-1; i>=0; i--) {
+				$('#multiselectProvinces').append($('<option>', {
+					value: obj[i].id,
+					text: obj[i].name
+				}));
+			}
+			$("#multiselectProvinces").attr('disabled', false);
+		});
+	} else {
+		$("#multiselectProvinces option, #multiselectDistricts option").remove();
+		$('#multiselectProvinces, #multiselectDistricts').append($('<option>', {
+			value: '',
+			text: 'Seleccione'
+		}));
+		$("#multiselectProvinces, #multiselectDistricts").attr('disabled', true);
+	}
+});
+
+$('#multiselectProvinces').change(function() {
+	var id=$(this).val();
+	if (id!="") {
+		$.ajax({
+			url: '/misterfix/distritos/agregar',
+			type: 'POST',
+			dataType: 'html',
+			data: {id: id},
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		})
+		.done(function(resultado) {
+			$("#multiselectDistricts option").remove();
+			$("#multiselectDistricts").attr('disabled', true);
+			var obj=JSON.parse(resultado);
+
+			$('#multiselectDistricts').append($('<option>', {
+				value: '',
+				text: 'Seleccione'
+			}));
+			for (var i=obj.length-1; i>=0; i--) {
+				$('#multiselectDistricts').append($('<option>', {
+					value: obj[i].id,
+					text: obj[i].name
+				}));
+			}
+			$("#multiselectDistricts").attr('disabled', false);
+		});
+	} else {
+		$("#multiselectDistricts option").remove();
+		$('#multiselectDistricts').append($('<option>', {
+			value: '',
+			text: 'Seleccione'
+		}));
+		$("#multiselectDistricts").attr('disabled', true);
+	}
+});
+
 //Redireccionar en el filtro de la tienda con la opcion precio
 $('#filterPrice').change(function() {
 	if ($(this).val()!="") {
@@ -619,29 +727,6 @@ $('#filterDistrict').change(function() {
 		location.href=url;
 	}
 });
-
-//Cambiar url en la paginación
-// if ($('a.page-link').length) {
-// 	$("a.page-link").each(function(){
-// 		var url=window.location.href;
-// 		console.log(url);
-
-// 		if (url.indexOf('?')!=-1) {
-// 			if (url.indexOf('page=')!=-1) {
-// 				var start=url.indexOf('page=');
-// 				var page=url.substr(start, start+6);
-// 				$(this).attr('href', url.replace('/'+page+'/g', 'page='+$(this).text()));
-// 				console.log(url.replace(/page/g, 'page='+$(this).text()));
-// 			} else {
-// 				$(this).attr('href', url+'&page='+$(this).text());
-// 			}
-// 		} else {
-// 			$(this).attr('href', url+'?page='+$(this).text());
-// 		}
-
-
-// 	});
-// }
 
 //Al cambiar la cantidad de un producto cambia el total
 $('.qty').change(function() {

@@ -15,6 +15,9 @@ class CreateStoreUserTable extends Migration
     {
         Schema::create('store_user', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('slug');
+            $table->enum('request', [1])->nullable();
+            $table->enum('state', [1, 2, 3])->default(2);
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('store_id')->unsigned()->nullable();
             $table->timestamps();

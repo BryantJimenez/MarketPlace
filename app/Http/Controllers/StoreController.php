@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Store;
+use App\User;
+use App\StoreUser;
 use App\District;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreStoreRequest;
 use App\Http\Requests\StoreUpdateRequest;
+use Auth;
 
 class StoreController extends Controller
 {
@@ -60,7 +63,7 @@ class StoreController extends Controller
                 $num++;
             } else {
                 $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();
-                $data=array('name' => request('name'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'lat' => request('lat'), 'lng' => request('lng'));
+                $data=array('name' => request('name'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'state' => 1, 'lat' => request('lat'), 'lng' => request('lng'));
                 break;
             }
         }
@@ -136,14 +139,64 @@ class StoreController extends Controller
         }
     }
 
+    public function offerServiceShopStore(Request $request) {
+
+        $user=User::where('id', Auth::user()->id)->firstOrFail();
+        $district=District::where('id', request('district_id'))->firstOrFail();
+        $data=array('dni' => request('dni'), 'genrer' => request('genrer'), 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'));
+        if ($request->has('birthday')) {
+            $data['birthday']=date('Y-m-d', strtotime(request('birthday')));
+        }
+
+        // Mover imagen a carpeta users y extraer nombre
+        if ($request->hasFile('photo')) {
+            $file=$request->file('photo');
+            $photo=time()."_".$file->getClientOriginalName();
+            $file->move(public_path().'/admins/img/users/', $photo);
+            $data['photo']=$photo;
+        }
+        $user->fill($data)->save();
+
+        $count=Store::where('name', request('name_shop'))->count();
+        $slug=Str::slug(request('name_shop'), '-');
+        if ($count>0) {
+            $slug=$slug."-".$count;
+        }
+
+        // Validación para que no se repita el slug
+        $num=0;
+        while (true) {
+            $count2=Store::where('slug', $slug)->count();
+            if ($count2>0) {
+                $slug=$slug."-".$num;
+                $num++;
+            } else {
+                $district=District::where('id', request('shop_district_id'))->where('province_id', 1501)->firstOrFail();
+                $data=array('name' => request('name_shop'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address_shop'), 'phone' => request('phone_shop'), 'lat' => request('lat'), 'lng' => request('lng'));
+                break;
+            }
+        }
+        $store=Store::create($data);
+
+        $slug="tienda-".$store->id;
+        $data=array('slug' => $slug, 'request' => 1, 'user_id' => Auth::user()->id, 'store_id' => $store->id);
+        $storeUser=StoreUser::create($data)->save();
+
+        if ($storeUser) {
+            return redirect()->route('servicios.offer')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La solicitud de la tienda ha sido enviada exitosamente.']);
+        } else {
+            return redirect()->route('servicios.offer')->with(['type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }
+    }
+
     public function index2(){
 
         return view('admin.stores.stores.index');
     }
 
 
-     public function show2($slug)
+    public function show2($slug)
     {
-       return view('admin.stores.stores.show'); 
-    }
+     return view('admin.stores.stores.show'); 
+ }
 }

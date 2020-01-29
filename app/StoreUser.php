@@ -8,5 +8,5 @@ class StoreUser extends Model
 {
     protected $table = 'store_user';
 
-    protected $fillable = ['user_id', 'store_id'];
+    protected $fillable = ['slug', 'request', 'state', 'user_id', 'store_id'];
 }

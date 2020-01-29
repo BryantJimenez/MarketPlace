@@ -22,6 +22,7 @@ class CreateStoresTable extends Migration
             $table->string('phone');
             $table->string('lat');
             $table->string('lng');
+            $table->enum('state', [1, 2])->default(2);
             $table->timestamps();
 
             #Relations

@@ -48,6 +48,8 @@ Route::post('/calcular/precio', 'PaymentController@calculator')->name('calcular.
 ///// ADMIN /////
 // Inicio
 Route::get('/misterfix', 'AdminController@index')->name('admin');
+Route::post('/misterfix/provincias/agregar', 'AdminController@addProvinces')->name('provincias.add');
+Route::post('/misterfix/distritos/agregar', 'AdminController@addDistricts')->name('districts.add');
 
 // Usuarios
 Route::get('/misterfix/usuarios', 'UserController@index')->name('usuarios.index');
@@ -86,6 +88,8 @@ Route::get('/misterfix/tiendas/{slug}', 'StoreController@show')->name('tiendas.s
 Route::get('/misterfix/tiendas/{slug}/editar', 'StoreController@edit')->name('tiendas.edit');
 Route::put('/misterfix/tiendas/{slug}', 'StoreController@update')->name('tiendas.update');
 Route::delete('/misterfix/tiendas/{slug}', 'StoreController@destroy')->name('tiendas.destroy');
+Route::post('/servicios/ofrecer/tienda', 'StoreController@offerServiceShopStore')->name('servicios.offer.shop.store');
+
 Route::get('/misterfix/tienditas', 'StoreController@index2')->name('tienditas.index');
 Route::get('/misterfix/tienditas/{slug}', 'StoreController@show2')->name('tienditas.show');
 

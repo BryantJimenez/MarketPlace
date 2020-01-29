@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\Department;
 use App\District;
 use App\Store;
 use App\Brand;
@@ -203,8 +204,9 @@ class WebController extends Controller
     }
 
     public function offerServiceShop() {
+        $departments=Department::all();
         $districts=District::where('province_id', 1501)->get();
-        return view('web.offerShop', compact("districts"));
+        return view('web.offerShop', compact("departments", "districts"));
     }
 
     public function offerServiceShopStore(Request $request) {

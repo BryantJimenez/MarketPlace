@@ -194,9 +194,8 @@ class StoreController extends Controller
         return view('admin.stores.stores.index');
     }
 
-
     public function show2($slug)
     {
-     return view('admin.stores.stores.show'); 
- }
+        return view('admin.stores.stores.show'); 
+    }
 }

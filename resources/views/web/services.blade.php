@@ -24,7 +24,7 @@
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
 						<h2 class="mb-2 text-white">Ofrece tus servicios como profesional en áreas mecanicas</h2>
-						<a href="#" class="btn btn-white">Ofrecer</a>
+						<a href="{{ route('cap.create') }}" class="btn btn-white">Ofrecer</a>
 					</div>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
 						<h2 class="mb-2 text-white">Quieres dar capacitaciones sobre temas ?</h2>
-						<a href="#" class="btn btn-white">Capacitar</a>
+						<a href="{{ route('cap.index') }}" class="btn btn-white">Capacitar</a>
 					</div>
 				</div>
 			</div>

@@ -25,7 +25,8 @@ class WebBlogController extends Controller
         }
         $recents=Blog::where('state', 1)->orderBy('id', 'DESC')->limit(3)->inRandomOrder()->get();
         $search=$request->all();
-        return view('web.blog', compact("blogs", "recents", "search"));
+        $num=1;
+        return view('web.blog', compact("blogs", "recents", "search", "num"));
     }
 
     /**

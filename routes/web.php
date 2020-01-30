@@ -127,3 +127,9 @@ Route::get('/misterfix/ventas', 'PaymentController@index')->name('ventas.index')
 Route::get('/misterfix/ventas/{slug}', 'PaymentController@show')->name('ventas.show');
 Route::put('/misterfix/ventas/confirmar/{slug}', 'PaymentController@confirm')->name('ventas.confirm');
 Route::put('/misterfix/ventas/rechazar/{slug}', 'PaymentController@refuse')->name('ventas.refuse');
+
+//Capacitación
+Route::get('/misterfix/capacitación', 'TrainingController@index')->name('cap.index');
+Route::get('/misterfix/capacitación/registrar', 'TrainingController@create')->name('cap.create');
+Route::get('/misterfix/capacitación/{slug}', 'TrainingController@show')->name('cap.show');
+

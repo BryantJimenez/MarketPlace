@@ -212,10 +212,10 @@ class PaymentController extends Controller
             if ($payment) {
                 return redirect()->back()->with(['type' => 'success', 'title' => 'Confirmación exitosa', 'msg' => 'El pago ha sido confirmado exitosamente.']);
             } else {
-                return redirect()->route()->with(['type' => 'error', 'title' => 'Confirmación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+                return redirect()->back()->with(['type' => 'error', 'title' => 'Confirmación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
             }   
         } else {
-            return redirect()->route()->with(['type' => 'warning', 'title' => 'Confirmación fallida', 'msg' => 'La cantidad del producto no es suficiente para confirmar la compra.']);
+            return redirect()->back()->with(['type' => 'warning', 'title' => 'Confirmación fallida', 'msg' => 'La cantidad del producto no es suficiente para confirmar la compra.']);
         }
     }
 
@@ -226,7 +226,7 @@ class PaymentController extends Controller
         if ($payment) {
             return redirect()->back()->with(['type' => 'success', 'title' => 'Rechazo exitoso', 'msg' => 'El pago ha sido rechazado exitosamente.']);
         } else {
-            return redirect()->route()->with(['type' => 'error', 'title' => 'Rechazo fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+            return redirect()->back()->with(['type' => 'error', 'title' => 'Rechazo fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
     }
 }

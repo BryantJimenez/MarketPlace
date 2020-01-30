@@ -7,6 +7,7 @@ use App\User;
 use App\StoreUser;
 use App\District;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreStoreRequest;
 use App\Http\Requests\StoreUpdateRequest;
@@ -140,10 +141,13 @@ class StoreController extends Controller
     }
 
     public function offerServiceShopStore(Request $request) {
-
+        $data=$request->all();
+        $data=Arr::except($data, 'photo');
         $user=User::where('id', Auth::user()->id)->firstOrFail();
-        $district=District::where('id', request('district_id'))->firstOrFail();
-        $data=array('dni' => request('dni'), 'genrer' => request('genrer'), 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'));
+        if ($request->has('district_id')) {
+            $district=District::where('id', request('district_id'))->firstOrFail();
+            $data['district_id']=$district->id;
+        }
         if ($request->has('birthday')) {
             $data['birthday']=date('Y-m-d', strtotime(request('birthday')));
         }
@@ -171,6 +175,7 @@ class StoreController extends Controller
                 $slug=$slug."-".$num;
                 $num++;
             } else {
+                $address=request('address_shop');
                 $district=District::where('id', request('shop_district_id'))->where('province_id', 1501)->firstOrFail();
                 $data=array('name' => request('name_shop'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address_shop'), 'phone' => request('phone_shop'), 'lat' => request('lat'), 'lng' => request('lng'));
                 break;
@@ -178,7 +183,8 @@ class StoreController extends Controller
         }
         $store=Store::create($data);
 
-        $slug="tienda-".$store->id;
+        $countRequest=StoreUser::where('request', 1)->count();
+        $slug="solicitud-".$countRequest;
         $data=array('slug' => $slug, 'request' => 1, 'user_id' => Auth::user()->id, 'store_id' => $store->id);
         $storeUser=StoreUser::create($data)->save();
 
@@ -189,13 +195,41 @@ class StoreController extends Controller
         }
     }
 
-    public function index2(){
-
-        return view('admin.stores.stores.index');
+    public function storesRequest() {
+        $storesRequest=Store::select('stores.id', 'stores.name', 'store_user.state', 'store_user.slug')->join('store_user', 'stores.id', '=', 'store_user.store_id')->where('store_user.request', 1)->get();
+        $num=1;
+        return view('admin.stores.stores.index', compact('storesRequest', 'num'));
     }
 
-    public function show2($slug)
+    public function storesRequestShow($slug)
     {
         return view('admin.stores.stores.show'); 
+    }
+
+    public function confirm(Request $request, $slug)
+    {
+        $storeUser=StoreUser::where('slug', $slug)->firstOrFail();
+        $store=Store::where('id', $storeUser->store_id)->firstOrFail();
+
+        $storeUser->fill(['state' => 1])->save();
+        $store->fill(['state' => 1])->save();
+
+        if ($storeUser && $store) {
+            return redirect()->back()->with(['type' => 'success', 'title' => 'Confirmación exitosa', 'msg' => 'La solicitud ha sido confirmada exitosamente.']);
+        } else {
+            return redirect()->back()->with(['type' => 'error', 'title' => 'Confirmación fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }   
+    }
+
+    public function refuse(Request $request, $slug)
+    {
+        $storeUser=StoreUser::where('slug', $slug)->firstOrFail();
+        $storeUser->fill(['state' => 3, 'explanation' => request('explanation')])->save();
+
+        if ($storeUser) {
+            return redirect()->back()->with(['type' => 'success', 'title' => 'Rechazo exitoso', 'msg' => 'La solicitud ha sido rechazada exitosamente.']);
+        } else {
+            return redirect()->back()->with(['type' => 'error', 'title' => 'Rechazo fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
+        }
     }
 }

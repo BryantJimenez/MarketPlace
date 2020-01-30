@@ -33,7 +33,7 @@
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('tiendas.create') }}">Registrar</a></li>
                         <li><a href="{{ route('tiendas.index') }}">Lista</a></li>
-                        <li><a href="{{ route('tienditas.index') }}">En Espera</a></li>
+                        <li><a href="{{ route('tiendas.request') }}">Solicitudes</a></li>
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-automobile (alias)"></i><span class="hide-menu">Productos</span></a>

@@ -39,7 +39,7 @@ class User extends Authenticatable
     }
 
     public function district() {
-        return $this->hasOne(District::class);
+        return $this->belongsTo(District::class);
     }
 
     public function blogs() {

@@ -133,3 +133,13 @@ Route::get('/misterfix/capacitación', 'TrainingController@index')->name('cap.in
 Route::get('/misterfix/capacitación/registrar', 'TrainingController@create')->name('cap.create');
 Route::get('/misterfix/capacitación/{slug}', 'TrainingController@show')->name('cap.show');
 
+//Profesionales
+Route::get('/misterfix/profesionales', 'ProfessionalController@index')->name('pro.index');
+Route::get('/misterfix/profesionales/{slug}', 'ProfessionalController@show')->name('pro.show');
+
+
+//Talleres
+Route::get('/misterfix/talleres', 'CourseController@index')->name('taller.index');
+Route::get('/misterfix/talleres/registrar', 'CourseController@create')->name('taller.create');
+Route::get('/misterfix/talleres/{slug}', 'CourseController@show')->name('taller.show');
+

@@ -12,6 +12,10 @@ class District extends Model
 		return $this->belongsTo(Province::class);
 	}
 
+	public function users() {
+        return $this->hasMany(User::class);
+    }
+
 	public function stores() {
         return $this->hasMany(Store::class);
     }

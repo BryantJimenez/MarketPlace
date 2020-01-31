@@ -88,10 +88,11 @@ Route::get('/misterfix/tiendas/{slug}', 'StoreController@show')->name('tiendas.s
 Route::get('/misterfix/tiendas/{slug}/editar', 'StoreController@edit')->name('tiendas.edit');
 Route::put('/misterfix/tiendas/{slug}', 'StoreController@update')->name('tiendas.update');
 Route::delete('/misterfix/tiendas/{slug}', 'StoreController@destroy')->name('tiendas.destroy');
+Route::get('/misterfix/solicitudes/tiendas', 'StoreController@storesRequest')->name('tiendas.request');
 Route::post('/servicios/ofrecer/tienda', 'StoreController@offerServiceShopStore')->name('servicios.offer.shop.store');
-
-Route::get('/misterfix/tienditas', 'StoreController@index2')->name('tienditas.index');
-Route::get('/misterfix/tienditas/{slug}', 'StoreController@show2')->name('tienditas.show');
+Route::get('/misterfix/solicitudes/tiendas/{slug}', 'StoreController@storesRequestShow')->name('tiendas.request.show');
+Route::put('/misterfix/tiendas/confirmar/{slug}', 'StoreController@confirm')->name('tiendas.confirm');
+Route::put('/misterfix/tiendas/rechazar/{slug}', 'StoreController@refuse')->name('tiendas.refuse');
 
 // Productos
 Route::get('/misterfix/productos', 'ProductController@index')->name('productos.index');

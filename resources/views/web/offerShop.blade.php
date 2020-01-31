@@ -144,7 +144,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label class="col-form-label">Foto<b class="text-danger">*</b></label>
-										<input type="file" name="photo" accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" @if(Auth::user()->photo!="usuario.png") data-default-file="{{ '/admins/img/users/'.Auth::user()->photo }}" @endif />
+										<input type="file" name="photo" accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" @if(Auth::user()->photo!="usuario.png") data-default-file="{{ '/admins/img/users/'.Auth::user()->photo }}" @else required @endif />
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
@@ -168,13 +168,13 @@
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>DNI (Documento de Identidad)<b class="text-danger">*</b></label>
-										<input type="text" class="form-control" placeholder="Introduzca su dni" name="dni" required id="dni" @if(Auth::user()->dni!=null || Auth::user()->dni!="") readonly value="{{ Auth::user()->dni }}" @endif>
+										<input type="text" class="form-control" placeholder="Introduzca su dni" name="dni" required id="dni" @if(Auth::user()->dni!=null || Auth::user()->dni!="") readonly value="{{ Auth::user()->dni }}" @else value="{{ old('dni') }}" @endif>
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Teléfono<b class="text-danger">*</b></label>
-										<input type="text" class="form-control phone" placeholder="Introduzca su teléfono" required name="phone" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @endif>
+										<input type="text" class="form-control phone" placeholder="Introduzca su teléfono" required name="phone" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @else value="{{ old('phone') }}" @endif>
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-12">
@@ -190,34 +190,46 @@
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Fecha de Nacimiento<b class="text-danger">*</b></label>
-										<input type="text" class="form-control date" placeholder="Seleccione su fecha de nacimiento" required name="birthday" @if(Auth::user()->birthday!=null || Auth::user()->birthday!="") readonly value="{{ date('d-m-Y', strtotime(Auth::user()->birthday)) }}" @endif>
+										<input type="text" class="form-control date" placeholder="Seleccione su fecha de nacimiento" required name="birthday" @if(Auth::user()->birthday!=null || Auth::user()->birthday!="") readonly value="{{ date('d-m-Y', strtotime(Auth::user()->birthday)) }}" @else value="{{ old('birthday') }}" @endif>
 									</div>
 								</div>
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Departamento<b class="text-danger">*</b></label>
-									<select class="form-control multiselect" required id="multiselectDepartments">
+									<select class="form-control multiselect" required id="multiselectDepartments" @if(Auth::user()->district_id!=null || Auth::user()->district_id!="") disabled @endif>
+										@if(Auth::user()->district_id!=null || Auth::user()->district_id!="")
+										<option value="{{ Auth::user()->district->province->department->id }}">{{ Auth::user()->district->province->department->name }}</option>
+										@else
 										<option value="">Seleccione</option>
 										@foreach($departments as $department)
 										<option value="{{ $department->id }}">{{ $department->name }}</option>
 										@endforeach
+										@endif
 									</select>
 								</div>
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Provincia<b class="text-danger">*</b></label>
 									<select class="form-control multiselect" required disabled id="multiselectProvinces">
+										@if(Auth::user()->district_id!=null || Auth::user()->district_id!="")
+										<option value="{{ Auth::user()->district->province->id }}">{{ Auth::user()->district->province->name }}</option>
+										@else
 										<option value="">Seleccione</option>
+										@endif
 									</select>
 								</div>
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Distrito<b class="text-danger">*</b></label>
 									<select class="form-control multiselect" required disabled name="district_id" id="multiselectDistricts">
+										@if(Auth::user()->district_id!=null || Auth::user()->district_id!="")
+										<option value="{{ Auth::user()->district->id }}">{{ Auth::user()->district->name }}</option>
+										@else
 										<option value="">Seleccione</option>
+										@endif
 									</select>
 								</div>
 								<div class="col-12">
 									<div class="form-group">
 										<label>Dirección<b class="text-danger">*</b></label>
-										<input class="form-control" type="text" name="address" required placeholder="Introduzca una dirección" value="{{ old('address') }}">
+										<input class="form-control" type="text" name="address" required placeholder="Introduzca una dirección" @if(Auth::user()->address!=null || Auth::user()->address!="") readonly value="{{ Auth::user()->address }}" @else value="{{ old('address') }}" @endif>
 									</div>
 								</div>
 							</div>

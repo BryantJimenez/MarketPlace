@@ -34,6 +34,18 @@ function blogState($state) {
 	}
 }
 
+function storeRequetsState($state) {
+	if ($state==1) {
+		return '<span class="badge badge-success">Aprobada</span>';
+	} elseif ($state==2) {
+		return '<span class="badge badge-warning">Pendiente</span>';
+	} elseif ($state==3) {
+		return '<span class="badge badge-danger">Rechazada</span>';
+	} else {
+		return '<span class="badge badge-primary">Desconocido</span>';
+	}
+}
+
 function saleShape($shape) {
 	if ($shape==1) {
 		return '<span class="badge badge-primary">Tarjeta</span>';

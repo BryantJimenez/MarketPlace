@@ -386,19 +386,19 @@
 
 @media (min-width: 1200px) {
     .wizard > .content {
-        min-height: 350px;
+        min-height: 500px;
     }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
     .wizard > .content {
-        min-height: 450px;
+        min-height: 500px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .wizard > .content {
-        min-height: 400px;
+        min-height: 500px;
     }
 }
 
@@ -410,6 +410,6 @@
 
 @media (max-width: 319px) {
     .wizard > .content {
-        min-height: 550px;
+        min-height: 500px;
     }
 }

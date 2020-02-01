@@ -5,6 +5,7 @@
 @section('links')
 <link rel="stylesheet" href="{{ asset('/web/vendors/steps/jquery.steps.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/lobibox/Lobibox.min.css') }}">
 @endsection
 
@@ -28,16 +29,16 @@
 							<h3 class="billing-heading mb-2">Total a Pagar</h3>
 							<p class="d-flex">
 								<span>Subtotal</span>
-								<span>{{ "S/. ".productPrice($product, 1) }}</span>
+								<span class="subtotal">{{ "S/. ".productPrice($product, 1) }}</span>
 							</p>
 							<p class="d-flex">
 								<span>Envio</span>
-								<span>S/. 0.00</span>
+								<span class="delivery">S/. 0.00</span>
 							</p>
 							@if($product->ofert>0)
 							<p class="d-flex">
 								<span>Descuento</span>
-								<span>{{ "S/. ".number_format($product->price*$product->ofert/100, 2, ".", "") }}</span>
+								<span class="ofert">{{ "S/. ".number_format($product->price*$product->ofert/100, 2, ".", "") }}</span>
 							</p>
 							@endif
 							<hr>
@@ -173,6 +174,9 @@
 					<input type="hidden" name="culqi" id="culqi">
 					<input type="hidden" name="slug" value="{{ $product->slug }}">
 					<input type="hidden" name="qty" value="1" id="qtySale">
+					<input type="hidden" id="checkoutDelivery" value="no">
+					<input type="hidden" name="lat" id="lat" @if(isset($lat) && !empty($lat)) value="{{ $lat }}" @else value="-12.05" @endif>
+					<input type="hidden" name="lng" id="lng" @if(isset($lng) && !empty($lng)) value="{{ $lng }}" @else value="-77.04" @endif>
 					<div class="row align-items-end">
 						<div class="col-12" id="checkout">
 							<h3>Datos Personales</h3>
@@ -216,15 +220,25 @@
 												<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 												<select name="delivery" required class="form-control">
 													<option value="no">No</option>
-													{{-- <option value="yes">Si</option> --}}
+													<option value="yes">Si</option>
 												</select>
 											</div>
 										</div>
 									</div>
-									<div class="col-12">
-										<div class="form-group">
-											<label>Dirección<b class="text-danger">*</b></label>
-											<input type="text" class="form-control" name="address" required placeholder="Ingresa tu dirección">
+									<div class="col-12 d-none" id="deliveryInputs">
+										<div class="row">
+											<div class="col-12">
+												<div class="form-group">
+													<label>Dirección<b class="text-danger">*</b></label>
+													<input type="text" class="form-control" name="address" required placeholder="Ingresa tu dirección" value="{{ Auth::user()->address }}">
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-group">
+													<label class="col-form-label">Busca la ubicación en la que quieres que llegue el producto y da click en ese lugar<b class="text-danger">*</b></label>
+													<div id="map" style="height: 200px;"></div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -319,6 +333,7 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
 <script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
 <script src="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 <script src="{{ asset('/web/vendors/steps/jquery.steps.js') }}"></script>

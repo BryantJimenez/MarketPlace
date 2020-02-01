@@ -18,7 +18,8 @@
         "laravelcollective/html": "^5.8",
         "maatwebsite/excel": "~2.1.0",
         "phpmailer/phpmailer": "^6.1",
-        "rmccue/requests": "^1.7"
+        "rmccue/requests": "^1.7",
+        "valentinmari/glovo-api-php": "^0.0.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

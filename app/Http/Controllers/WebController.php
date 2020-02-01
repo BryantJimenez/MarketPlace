@@ -164,10 +164,17 @@ class WebController extends Controller
         return view('web.product', compact("product", "products"));
     }
 
-    public function buy($slug) {
+    public function buy(Request $request, $slug) {
         $product=Product::where('slug', $slug)->firstOrFail();
         $banks=Bank::all();
-        return view('web.checkout', compact("product", "banks"));
+        if ($request->session()->has('lat') && $request->session()->has('lng')) {
+            $lat=$request->session()->get('lat');
+            $lng=$request->session()->get('lng');   
+        } else {
+            $lat="";
+            $lng="";
+        }
+        return view('web.checkout', compact("product", "banks", "lat", "lng"));
     }
 
     public function addLocation(Request $request) {

@@ -15,6 +15,10 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->float('price', 10, 2)->default(0.00);
+            $table->string('address');
+            $table->string('lat');
+            $table->string('lng');
             $table->bigInteger('payment_id')->unsigned()->nullable();
             $table->timestamps();
 

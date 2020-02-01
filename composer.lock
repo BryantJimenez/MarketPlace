@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a7bdb8a23bbc909896c50cba80d91f6",
+    "content-hash": "76730dad958496c0dee67e1eda1d9fb0",
     "packages": [
         {
             "name": "culqi/culqi-php",
@@ -329,6 +329,51 @@
                 "validator"
             ],
             "time": "2019-08-13T17:33:27+00:00"
+        },
+        {
+            "name": "emcconville/google-map-polyline-encoding-tool",
+            "version": "v1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emcconville/google-map-polyline-encoding-tool.git",
+                "reference": "dbf3816936620b88f0fc4000fddd94b5ce13eadb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emcconville/google-map-polyline-encoding-tool/zipball/dbf3816936620b88f0fc4000fddd94b5ce13eadb",
+                "reference": "dbf3816936620b88f0fc4000fddd94b5ce13eadb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*",
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "2.0.0a2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Polyline.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Eric McConville",
+                    "email": "emcconville@emcconville.com"
+                }
+            ],
+            "description": "A simple class to handle polyline-encoding for Google Maps",
+            "keywords": [
+                "google",
+                "maps"
+            ],
+            "time": "2016-04-05T01:18:39+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -3926,6 +3971,56 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2019-10-24T08:53:34+00:00"
+        },
+        {
+            "name": "valentinmari/glovo-api-php",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vmari/glovo-api-php.git",
+                "reference": "cdf77e9a46b51228e0a9dc03605537a3b400b2d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vmari/glovo-api-php/zipball/cdf77e9a46b51228e0a9dc03605537a3b400b2d1",
+                "reference": "cdf77e9a46b51228e0a9dc03605537a3b400b2d1",
+                "shasum": ""
+            },
+            "require": {
+                "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Glovo\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valentin Mari <valentinmari@hotmail.com>",
+                    "homepage": "https://github.com/vmari"
+                },
+                {
+                    "name": "Adán Mauri Ungaro <adan.mauri@gmail.com>",
+                    "homepage": "https://github.com/adanmauri"
+                }
+            ],
+            "description": "Glovo Business API",
+            "homepage": "https://business.glovoapp.com/",
+            "keywords": [
+                "api",
+                "delivery",
+                "glovo"
+            ],
+            "time": "2019-02-22T19:28:30+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -325,15 +325,15 @@ $(document).ready(function() {
 	mayor.setMonth(mayor.getMonth() - 216);
 
 	//datepicker material
-    if ($('.date').length) {
-        $('.date').bootstrapMaterialDatePicker({
-            time: false,
-            cancelText: 'Cancelar',
-            clearText: 'Limpiar',
-            format: 'DD-MM-YYYY',
-            maxDate : mayor
-        });
-    }
+	if ($('.date').length) {
+		$('.date').bootstrapMaterialDatePicker({
+			time: false,
+			cancelText: 'Cancelar',
+			clearText: 'Limpiar',
+			format: 'DD-MM-YYYY',
+			maxDate : mayor
+		});
+	}
 
 	//datatable español
 	var español = {
@@ -418,6 +418,20 @@ $(document).ready(function() {
 						$('#transferFields').removeClass('d-none');
 						$('#transferFields input, #transferFields select').attr('disabled', false);
 					}
+				});
+
+				//Cambiar valor de un input fuera del checkout al cambiar el selct del envio
+				$('select[name="delivery"]').change(function() {
+					if ($(this).val()=='no') {
+						$('#deliveryInputs').addClass('d-none');
+						$('#deliveryInputs input').attr('disabled', true);
+					} else {
+						$('#deliveryInputs').removeClass('d-none');
+						$('#deliveryInputs input').attr('disabled', false);
+					}
+					$('#checkoutDelivery').val($(this).val());
+					var slug=$('.qty').attr('slug'), qty=$('.qty').val(), delivery=$('#checkoutDelivery').val(), lat=$('#lat').val(), lng=$('#lng').val();
+					calculatorTotal(slug, qty, delivery, lat, lng);
 				});
 
 				$(".billing-form").validate().settings.ignore = ":disabled,:hidden";
@@ -730,21 +744,31 @@ $('#filterDistrict').change(function() {
 
 //Al cambiar la cantidad de un producto cambia el total
 $('.qty').change(function() {
-	var slug=$(this).attr('slug'), qty=$(this).val();
+	var slug=$(this).attr('slug'), qty=$(this).val(), delivery=$('#checkoutDelivery').val(), lat=$('#lat').val(), lng=$('#lng').val();
+	calculatorTotal(slug, qty, delivery, lat, lng);
+});
+
+//Función para calcular total de la compra
+function calculatorTotal(slug, qty, delivery, lat, lng) {
 	$("#qtySale").val(qty);
 	$.ajax({
 		url: '/calcular/precio',
 		type: 'POST',
 		dataType: 'html',
-		data: {qty: qty, delivery: 0.00, slug: slug},
+		data: {qty: qty, delivery: delivery, slug: slug, lat: lat, lng: lng},
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	}).done(function(resultado) {
 		var obj=JSON.parse(resultado);
+		$('.subtotal').text("S/. "+obj.price);
+		$('.delivery').text("S/. "+obj.delivery);
+		if ($(".ofert").length) {
+			$('.ofert').text("S/. "+obj.ofert);
+		}
 		$('.total').text("S/. "+obj.total);
 	});
-});
+}
 
 //Función para calcular las distancia entre 2 puntos en km
 function getDistance(lat1, lon1, lat2, lon2){

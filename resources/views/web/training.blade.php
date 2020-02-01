@@ -30,289 +30,86 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href=" " class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
 
-
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
-				<div class="product">
-					<a href="#" class="img-prod"><img class="img-fluid" src="/web/images/bg_2.jpg" alt="Colorlib Template">
-						<div class="overlay"></div>
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Nombre de la Capacitación</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">Categoría</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="ion-ios-eye"></i></span>
-								</a>
-								
-							</div>
+
+			<div class="col-lg-4 col-md-4 mt-4">
+				<div class="card text-center " style="width: 20rem; margin-top: 70px;">
+					<img style="height: 200px; width: 300px; background-color: #EFEFEF; margin: 20px;" class="card-img-top  mx-auto d-block" src="/web/images/bg_2.jpg" alt="">
+					<div class="card-body">
+						<h5 class="card-title">Nombre del Taller</h5>
+						<div class="col-sm">
+							<p class="card-text">Decsripción.</p>
+							<a href="#" class="btn btn-primary">Ver Más...</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="row mt-5">
 			<div class="col text-center">
 				<div class="block-27">

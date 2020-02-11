@@ -20,6 +20,7 @@ use Glovo\Model\WorkingArea;
 use Glovo\Model\Order;
 use Glovo\Model\Address;
 use Auth;
+use Exception;
 
 class PaymentController extends Controller
 {
@@ -211,39 +212,51 @@ class PaymentController extends Controller
     }
 
     public function calculator(Request $request)
-    {
-        $product=Product::where('slug', request('slug'))->firstOrFail();
+    {   
 
-        if ($request->has('delivery') && request('delivery')=="yes") {
-            $api=new Api("158051501801451", "c4b0dc4480154d3684a2056dc37a3ec6");
-            $api->sandbox_mode(true);
+        try {
+            $product=Product::where('slug', request('slug'))->firstOrFail();
 
-            $sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
-            $destDir=new Address(Address::TYPE_DELIVERY, -34.922945, -57.990177, "Diag. 73 75", "3A");
+            if ($request->has('delivery') && request('delivery')=="yes") {
+                $api=new Api("158051501801451", "c4b0dc4480154d3684a2056dc37a3ec6");
+                $api->sandbox_mode(true);
 
-            $order=new Order();
-            $order->setDescription(request('qty')." ".$product->name);
-            $order->setAddresses([$sourceDir, $destDir]);
-            // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
+                $lat = $request->lat;
+                $lng = $request->lng;
 
-            $orderEstimate=$api->estimateOrderPrice($order);
-            $delivery=$orderEstimate['total']['amount']/100;
-        } else {
-            $delivery=0;
-        }
-        
-        if ($product->ofert>0) {
-            $price=$product->price-($product->price*$product->ofert/100);
-            $ofert=number_format(request('qty')*($product->price*$product->ofert/100), 2, ".", "");
-        } else {
-            $price=$product->price;
-            $ofert="0.00";
-        }
-        $total=number_format(request('qty')*$price+$delivery, 2, ".", "");
-        $price=number_format(request('qty')*$price, 2, ".", "");
-        $delivery=number_format($delivery, 2, ".", "");
+                $sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
 
-        return response()->json(['total' => $total, 'price' => $price, 'ofert' => $ofert, 'delivery' => $delivery]);
+                $destDir=new Address(Address::TYPE_DELIVERY, $lat, $lng, "Diag. 73 75", "3A");
+
+                $order=new Order();
+                $order->setDescription(request('qty')." ".$product->name);
+                $order->setAddresses([$sourceDir, $destDir]);
+                // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
+
+                $orderEstimate=$api->estimateOrderPrice($order);
+
+                $delivery=$orderEstimate['total']['amount']/100;
+
+            } else {
+                $delivery=0;
+            }
+            
+            if ($product->ofert>0) {
+                $price=$product->price-($product->price*$product->ofert/100);
+                $ofert=number_format(request('qty')*($product->price*$product->ofert/100), 2, ".", "");
+            } else {
+                $price=$product->price;
+                $ofert="0.00";
+            }
+            $total=number_format(request('qty')*$price+$delivery, 2, ".", "");
+            $price=number_format(request('qty')*$price, 2, ".", "");
+            $delivery=number_format($delivery, 2, ".", "");
+
+            return response()->json(['total' => $total, 'price' => $price, 'ofert' => $ofert, 'delivery' => $delivery, 'error' => '']);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+                return response()->json(['error' => $e]);
+            }
     }
 
     public function confirm(Request $request, $slug) {

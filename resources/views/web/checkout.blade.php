@@ -218,7 +218,7 @@
 											<label>¿Quieres que te envien tu compra?<b class="text-danger">*</b></label>
 											<div class="select-wrap">
 												<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-												<select name="delivery" required class="form-control">
+												<select name="delivery" required class="form-control" id="select_entrega">
 													<option value="no">No</option>
 													<option value="yes">Si</option>
 												</select>
@@ -236,6 +236,7 @@
 											<div class="col-12">
 												<div class="form-group">
 													<label class="col-form-label">Busca la ubicación en la que quieres que llegue el producto y da click en ese lugar<b class="text-danger">*</b></label>
+													<div id="error_mensaje"></div>
 													<div id="map" style="height: 200px;"></div>
 												</div>
 											</div>

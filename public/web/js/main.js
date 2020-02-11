@@ -577,7 +577,7 @@ $(document).ready(function() {
 	}
 
 	//Mapa de leaflet
-	if ($('#lat').length && $('#lng').length) {
+	if ($('#lat').length && $('#lng').length && $('#map').length) {
 		if ($('#lat').val()=="" || $('#lng').val()=="") {
 			var map = L.map('map', {
 				center: [-12.05, -77.04],
@@ -596,6 +596,8 @@ $(document).ready(function() {
 			marker = L.marker([mapLat, mapLng]).addTo(map);
 		}
 
+		var geocoder = L.Control.Geocoder.nominatim();
+
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
@@ -604,10 +606,43 @@ $(document).ready(function() {
 			if (marker) {
 				map.removeLayer(marker);
 			}
+
+			geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+				var r = results[0];
+				$('#addressDelivery').val(r.name);
+			});
+
 			marker=L.marker(e.latlng).addTo(map);
 			$('#lat').val(e.latlng.lat);
 			$('#lng').val(e.latlng.lng);
 		});
+	}
+
+	if ($('#latStore').length && $('#lngStore').length && $('#map').length) {
+		var latStore=$('#latStore').val();
+		var lngStore=$('#lngStore').val();
+		var latUser=$('#latUser').val();
+		var lngUser=$('#lngUser').val();
+
+		var map = L.map('map', {
+			center: [latStore, lngStore],
+			zoom: 13
+		});
+
+		if (latUser!="" && lngUser!="") {
+			L.Routing.control({
+				waypoints: [
+				L.latLng(latStore, lngStore),
+				L.latLng(latUser, lngUser)
+				]
+			}).addTo(map);
+		} else {
+			marker = L.marker([latStore, lngStore]).addTo(map);
+		}
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
 	}
 
 	//dropify para input file más personalizado
@@ -707,6 +742,35 @@ $('#multiselectProvinces').change(function() {
 			text: 'Seleccione'
 		}));
 		$("#multiselectDistricts").attr('disabled', true);
+	}
+});
+
+//Redireccionar en el filtro de la tienda con los datos del buscador del inicio
+$('#sendFilter').click(function() {
+	if ($('select[name="search"] option:selected').val()!="" && $('select[name="brand"] option:selected').val()!="") {
+		var searchValue=$('select[name="search"] option:selected').val();
+		var brandValue=$('select[name="brand"] option:selected').val();
+		location.href="/tienda/buscar_"+searchValue+"_marca_"+brandValue+"_";
+	} else if ($('select[name="search"] option:selected').val()!="" || $('select[name="brand"] option:selected').val()!="") {
+		if ($('select[name="search"] option:selected').val()!="") {
+			var searchValue=$('select[name="search"] option:selected').val();
+			location.href="/tienda/buscar_"+searchValue+"_";
+		}
+
+		if ($('select[name="brand"] option:selected').val()!="") {
+			var brandValue=$('select[name="brand"] option:selected').val();
+			location.href="/tienda/marca_"+brandValue+"_";
+		}
+	} else {
+		location.href="/tienda/";
+	}
+});
+
+//Redireccionar en el filtro de la tienda con la opcion buscar
+$('#searchField').change(function() {
+	if ($(this).val()!="") {
+		var url=$('#searchField option:selected').attr('url');
+		location.href=url;
 	}
 });
 

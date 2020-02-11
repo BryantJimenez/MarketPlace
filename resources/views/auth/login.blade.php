@@ -18,24 +18,12 @@
             <label>Correo Electrónico</label>
             <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
           </div>
-
-          @error('email')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
         </div>
         <div class="form-group">
           <div class="col-xs-12">
             <label>Contraseña</label>
             <input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********">
           </div>
-
-          @error('password')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
         </div>
         <div class="form-group row">
           <div class="col-md-12">

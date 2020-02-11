@@ -13,7 +13,7 @@
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
 						<h2 class="mb-2 text-white">Registra tu tienda para que puedas vender tus productos</h2>
-						<a href="#" class="btn btn-white">Registrar</a>
+						<a href="{{ route('servicios.offer.shop') }}" class="btn btn-white">Registrar</a>
 					</div>
 				</div>
 			</div>
@@ -34,8 +34,8 @@
 					<img src="{{ asset('/web/images/capacitar.jpg') }}" class="img-fluid w-100" style="height: 300px;">
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
-						<h2 class="mb-2 text-white">Quieres dar capacitaciones sobre temas ?</h2>
-						<a href="{{ route('cap.index') }}" class="btn btn-white">Capacitar</a>
+						<h2 class="mb-2 text-white">Capacita a otros en diversas áreas profesionales de la mecánica</h2>
+						<a href="{{ route('cap.create') }}" class="btn btn-white">Capacitar</a>
 					</div>
 				</div>
 			</div>

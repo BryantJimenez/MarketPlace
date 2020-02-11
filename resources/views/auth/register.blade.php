@@ -11,16 +11,13 @@
                 {{ csrf_field() }}
                 <p class="h2 text-center db">REGISTRATE</p>
                 <div class="form-group m-t-10 m-b-10">
+
+                    @include('admin.partials.errors')
+
                     <div class="col-xs-12">
                         <label>Nombre</label>
                         <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Ejm: Juan" value="{{ old('name') }}" autocomplete="name" autofocus>
                     </div>
-
-                    @error('name')
-                    <span class="invalid-feedback text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
 
                 <div class="form-group m-t-10">
@@ -28,12 +25,6 @@
                         <label>Apellido</label>
                         <input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Ejm: Lopez" value="{{ old('lastname') }}" autocomplete="lastname">
                     </div>
-
-                    @error('lastname')
-                    <span class="invalid-feedback text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
 
 
@@ -42,12 +33,6 @@
                         <label>Correo Electrónico</label>
                         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
                     </div>
-
-                    @error('email')
-                    <span class="invalid-feedback text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
 
                 <div class="form-group m-t-10">
@@ -55,12 +40,6 @@
                         <label>Contraseña</label>
                         <input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********" id="password">
                     </div>
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
 
                 <div class="form-group m-t-10">

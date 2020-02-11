@@ -89,7 +89,7 @@ $(document).ready(function(){
 					email: 'Introduce una dirección de correo valida.',
 					minlength: 'Escribe mínimo {0} caracteres.',
 					maxlength: 'Escribe máximo {0} caracteres.',
-					remote: "El correo ya esta en uso"
+					remote: "Usted ya esta usando este correo."
 				},
 
 				password: {

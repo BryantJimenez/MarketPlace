@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('/web/vendors/select2/select2.css') }}">
 <link rel="stylesheet" href="{{ asset('/web/vendors/select2/select2-bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/control.geocoder.css') }}" />
 <link rel="stylesheet" href="{{ asset('/admins/vendors/dropify/css/dropify.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/datepicker/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
 @endsection
@@ -18,6 +19,9 @@
 			@guest
 			<div class="col-12 ftco-animate">
 				<p class="h2">Inicia sesión o registrate para continuar con el registro de tu tienda.</p>
+			</div>
+			<div class="col-12">
+				@include('admin.partials.errors')
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-12 ftco-animate">
 				<form action="{{ route('login') }}" method="POST" id="formLogin">
@@ -32,22 +36,12 @@
 											<label>Correo Electrónico</label>
 											<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
 										</div>
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Contraseña</label>
 											<input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********">
 										</div>
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group text-center">
@@ -74,44 +68,24 @@
 											<label>Nombre</label>
 											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Ejm: Juan" value="{{ old('name') }}" autocomplete="name" autofocus>
 										</div>
-										@error('name')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Apellido</label>
 											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Ejm: Lopez" value="{{ old('lastname') }}" autocomplete="lastname">
 										</div>
-										@error('lastname')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Correo Electrónico</label>
 											<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
 										</div>
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Contraseña</label>
 											<input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********" id="password">
 										</div>
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
@@ -133,7 +107,7 @@
 			@else
 			<div class="col-12 ftco-animate">
 				<p class="h2">Registro de Tienda</p>
-				<p>Envía el formulario con todos los datos, la dolicitud de tu tienda sera revisada y aceptada de cumplir con todos los requerimientos.</p>
+				<p>Envía el formulario con todos los datos, la solicitud de tu tienda sera revisada y aceptada de cumplir con todos los requerimientos.</p>
 				<p>Campos obligatorios (<b class="text-danger">*</b>)</p>
 				<form action="{{ route('servicios.offer.shop.store') }}" method="POST" class="billing-form" enctype="multipart/form-data">
 					@csrf
@@ -264,7 +238,7 @@
 								</div>
 								<div class="form-group col-12">
 									<label class="col-form-label">Dirección<b class="text-danger">*</b></label>
-									<input class="form-control" type="text" name="address_shop" required placeholder="Introduzca una dirección" value="{{ old('address_shop') }}">
+									<input class="form-control" type="text" name="address_shop" required placeholder="Selecciona una dirección" readonly value="{{ old('address_shop') }}" id="addressDelivery">
 								</div>
 								<div class="form-group col-12">
 									<label class="col-form-label">Busca la ubicación de tu tienda y da click en ese lugar<b class="text-danger">*</b></label>
@@ -291,6 +265,7 @@
 @section('script')
 <script src="{{ asset('/admins/vendors/dropify/js/dropify.min.js') }}"></script>
 <script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/control.geocoder.js') }}"></script>
 <script src="{{ asset('/web/vendors/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('/web/vendors/select2/es.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>

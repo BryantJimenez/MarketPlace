@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Arr;
+use App\District;
+
+function district($id) {
+	$district=District::where('id', $id)->firstOrFail();
+	return $district->name;
+}
 
 function userState($state) {
 	if ($state==1) {
@@ -108,11 +114,7 @@ function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_lon
 }
 
 //Función para cambiar redirecciones de url dinamicamente
-function filterRedirect($request, $index, $value) {
-	if(Arr::has($request, $index)) {
-		$request=Arr::set($request, $index, $value);
-	} else {
-		$request=Arr::add($request, $index, $value);
-	}
-	return $request;
+function filterRedirect($url, $index, $value) {
+	$url=$url.$index.'_'.$value.'_';
+	return $url;
 }

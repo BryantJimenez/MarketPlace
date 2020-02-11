@@ -8,6 +8,11 @@
 <li class="breadcrumb-item active">Detalles</li>
 @endsection
 
+@section('links')
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet-routing-machine.css') }}">
+@endsection
+
 @section('content')
 <div class="row">
 	<div class="col-lg-12 col-md-12">
@@ -54,6 +59,14 @@
 							<div class="col-lg-6 col-md-6 col-12">
 								<p><strong>Tienda:</strong> {{ $payment->products[0]->stores[0]->name }}</p>
 							</div>
+							@if($payment->delivery)
+							<div class="col-lg-6 col-md-6 col-12">
+								<p><strong>Envio:</strong> Si</p>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<p><strong>Dirección de Envio:</strong> {{ $payment->delivery->address }}</p>
+							</div>
+							@endif
 							<div class="col-12">
 								<p><strong>Descripción:</strong> {{ $payment->description }}</p>
 							</div>
@@ -76,10 +89,12 @@
 								<span>Subtotal</span>
 								<span>{{ "S/. ".number_format($payment->products[0]->pivot->price*$payment->products[0]->pivot->qty, 2, '.', '') }}</span>
 							</p>
+							@if($payment->delivery)
 							<p class="d-flex justify-content-between">
 								<span>Envio</span>
-								<span>S/. 0.00</span>
+								<span>{{ "S/. ".number_format($payment->delivery->price, 2, ".", "") }}</span>
 							</p>
+							@endif
 							@if($payment->products[0]->pivot->ofert>0)
 							<p class="d-flex justify-content-between">
 								<span>Descuento</span>
@@ -93,6 +108,15 @@
 							</p>
 						</div>
 					</div>
+
+					<div class="col-12 ftco-animate mt-2">
+						<input type="hidden" id="latStore" value="{{ $payment->products[0]->stores[0]->lat }}">
+						<input type="hidden" id="lngStore" value="{{ $payment->products[0]->stores[0]->lng }}">
+						<input type="hidden" id="latUser" @if(isset($lat) && !empty($lat)) value="{{ $lat }}" @endif>
+						<input type="hidden" id="lngUser" @if(isset($lng) && !empty($lng)) value="{{ $lng }}" @endif>
+
+						<div id="map" style="height: 300px;"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -101,36 +125,7 @@
 
 @endsection
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@section('script')
+<script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/leaflet-routing-machine.js') }}"></script>
+@endsection

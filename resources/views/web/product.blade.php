@@ -5,6 +5,8 @@
 @section('links')
 <link rel="stylesheet" href="{{ asset('/web/vendors/lightslider/lightslider.css') }}">
 <link rel="stylesheet" href="{{ asset('/web/vendors/lightgallery/lightgallery.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet-routing-machine.css') }}">
 @endsection
 
 @section('content')
@@ -12,7 +14,7 @@
 <section class="ftco-section pt-5 pb-0 bg-light">
 	<div class="container">
 		<div class="row d-flex">
-			<div class="col-lg-7 order-lg-1 order-xl-1 product-details pl-md-5 ftco-animate">
+			<div class="col-lg-6 order-lg-1 order-xl-1 product-details pl-md-5 ftco-animate">
 				<h3>{{ $product->name }}</h3>
 				<div class="rating d-flex">
 					<p class="text-left mr-4">
@@ -23,20 +25,32 @@
 				<p class="price h4 text-primary">{{ 'S/. '.number_format($product->price, 2, ',', '.') }}</p>
 				<p class="text-left mr-2 text-muted">{{ $product->qty }} Disponibles</p>
 				<div class="row">
-					<div class="col-12">
+					<div class="col-6">
 						<p>Categoría: {{ $product->subcategory->category->name }}</p>
 					</div>
-					<div class="col-12">
+					<div class="col-6">
 						<p>Subcategoría: {{ $product->subcategory->name }}</p>
 					</div>
-					<div class="col-12">
+					<div class="col-6">
 						<p>Marca: {{ $product->brand->name }}</p>
+					</div>
+					<div class="col-6">
+						<p>Tienda: {{ $product->stores[0]->name }}</p>
+					</div>
+					<div class="col-6">
+						<p>Provincia: {{ $product->stores[0]->district->province->name }}</p>
+					</div>
+					<div class="col-6">
+						<p>Distrito: {{ $product->stores[0]->district->name }}</p>
+					</div>
+					<div class="col-12">
+						<p>Dirección: {{ $product->stores[0]->address }}</p>
 					</div>
 				</div>
 				
 				<p><a href="{{ route('comprar.product', ['slug' => $product->slug]) }}" class="btn btn-primary py-2 px-3">Comprar</a></p>
 			</div>
-			<div class="col-lg-5 mb-5 ftco-animate order-lg-0 order-xl-0">
+			<div class="col-lg-6 mb-5 ftco-animate order-lg-0 order-xl-0">
 				<ul id="imagesProduct">
 					@forelse($product->images as $image)
 					<a href="{{ asset('/admins/img/products/'.$image->image) }}">
@@ -51,7 +65,13 @@
 			</div>
 			<div class="col-12 order-lg-2 order-xl-2">
 				<p class="h3">Descripción</p>
-				<p>{!! $product->description !!}</p>
+				<input type="hidden" id="latStore" value="{{ $product->stores[0]->lat }}">
+				<input type="hidden" id="lngStore" value="{{ $product->stores[0]->lng }}">
+				<input type="hidden" id="latUser" @if(isset($lat) && !empty($lat)) value="{{ $lat }}" @endif>
+				<input type="hidden" id="lngUser" @if(isset($lng) && !empty($lng)) value="{{ $lng }}" @endif>
+
+				<div id="map" style="height: 300px;"></div>
+				<p class="mt-2">{!! $product->description !!}</p>
 			</div>
 		</div>
 	</div>
@@ -120,6 +140,8 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/leaflet-routing-machine.js') }}"></script>
 <script src="{{ asset('/admins/vendors/rater/rater.min.js') }}"></script>
 <script src="{{ asset('/web/vendors/lightslider/lightslider.js') }}"></script>
 <script src="{{ asset('/web/vendors/lightgallery/lightgallery.js') }}"></script>

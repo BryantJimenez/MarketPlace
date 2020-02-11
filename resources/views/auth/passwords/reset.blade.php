@@ -13,28 +13,19 @@
                 <p class="h2 text-center db">RESTAURAR CONTRASEÑA</p>
 
                 <div class="form-group m-t-40">
+
+                    @include('admin.partials.errors')
+
                     <div class="col-xs-12">
                         <label>Correo Electrónico</label>
                         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}" autocomplete="email" autofocus>
                     </div>
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label>Nueva Contraseña</label>
                         <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********" autocomplete="new-password">
                     </div>
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">

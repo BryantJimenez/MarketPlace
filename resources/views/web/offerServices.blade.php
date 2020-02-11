@@ -24,7 +24,7 @@
 					<div class="card-img-overlay bg-dark-opacity"></div>
 					<div class="text text-center card-img-overlay">
 						<h2 class="mb-2 text-white">Capacitaciones</h2>
-						<a href="{{ route('cap.create') }}" class="btn btn-white">Ingresar</a>
+						<a href="{{ route('cap.index') }}" class="btn btn-white">Ingresar</a>
 					</div>
 				</div>
 			</div>

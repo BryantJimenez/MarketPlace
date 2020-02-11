@@ -38,28 +38,28 @@ class PaymentController extends Controller
     public function payProduct(Request $request)
     {
         $paymentCount=Payment::all()->count();
-        if ($paymentCount>0) {
-            $count=Payment::orderBy('id', 'DESC')->first();
-            $slug="compra-".$count->id;
-        } else {
-            $slug="compra-0";
-        }
+        $slug="compra-".$paymentCount;
+
         $product=Product::where('slug', request('slug'))->firstOrFail();
         $description="Venta de ".request('qty')." cantidades del producto: ".$product->name.".";
 
         if ($request->has('delivery') && request('delivery')=="yes") {
-            $api=new Api("158051501801451", "c4b0dc4480154d3684a2056dc37a3ec6");
+            $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
             $api->sandbox_mode(true);
 
-            $sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
-            $destDir=new Address(Address::TYPE_DELIVERY, -34.922945, -57.990177, "Diag. 73 75", "3A");
+            $sourceDir=new Address(Address::TYPE_PICKUP, request('lat'), request('lng'), request('address'), request('address'));
+            $destDir=new Address(Address::TYPE_DELIVERY, request('lat'), request('lng')-0.001, request('address'), request('address'));
 
             $order=new Order();
             $order->setDescription(request('qty')." ".$product->name);
             $order->setAddresses([$sourceDir, $destDir]);
+            
             // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
 
+            dd($api->estimateOrderPrice($order));
+
             $orderEstimate=$api->estimateOrderPrice($order);
+            dd($estimateOrderPrice);
             $deliveryPrice=$orderEstimate['total']['amount']/100;
         } else {
             $deliveryPrice=0;
@@ -167,10 +167,18 @@ class PaymentController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $payment=Payment::where('slug', $slug)->firstOrFail();
-        return view('admin.sales.show', compact("payment"));
+        if ($request->session()->has('lat') && $request->session()->has('lng')) {
+            $lat=$request->session()->get('lat');
+            $lng=$request->session()->get('lng');   
+        } else {
+            $lat="";
+            $lng="";
+        }
+
+        return view('admin.sales.show', compact("payment", "lat", "lng"));
     }
 
     /**
@@ -215,7 +223,7 @@ class PaymentController extends Controller
         $product=Product::where('slug', request('slug'))->firstOrFail();
 
         if ($request->has('delivery') && request('delivery')=="yes") {
-            $api=new Api("158051501801451", "c4b0dc4480154d3684a2056dc37a3ec6");
+            $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
             $api->sandbox_mode(true);
 
             $sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");

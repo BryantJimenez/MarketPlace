@@ -14,8 +14,8 @@
 				<h5 class="card-title mb-0 d-flex"><a href="{{ route('web.producto', ['slug' => $product->slug]) }}">{{ $product->name }}</a> <div class="distance ml-2" lat="{{ $product->stores[0]->lat }}" lng="{{ $product->stores[0]->lng }}"></div></h5>
 				<div class="ratings text-warning" data-rate-value="{{ number_format($product->brand->quality, 1, ".", ".") }}"></div>
 				<p class="card-text mb-0">Marca: {{ $product->brand->name }}</p>
-				<p class="card-text text-truncate">{{ $product->description }}</p>
-				<p class="card-text"><small class="text-muted"><i class="icon-home"></i> {{ $product->stores[0]->name }} - <i class="icon-map-marker"></i> {{ $product->stores[0]->district->name }}</small></p>
+				{{-- <p class="card-text text-truncate">{{ $product->description }}</p> --}}
+				<p class="card-text"><small class="text-muted"><a href="{{ route('ver.tienda', ['slug' => $product->stores[0]->slug, 'url' => 'distrito_'.$product->stores[0]->district_id.'_']) }}"><i class="icon-home"></i> {{ $product->stores[0]->name }}</a> - <i class="icon-map-marker"></i> {{ $product->stores[0]->district->name }}</small></p>
 			</div>
 		</div>
 		<div class="col-lg-2 col-md-3 col-12">
@@ -26,7 +26,6 @@
 				<span class="text-primary">{{ "S/. ".productPrice($product, 2) }}</span>
 				@endif
 				<a href="{{ route('comprar.product', ['slug' => $product->slug]) }}" class="btn btn-primary btn-sm mb-lg-2 mb-md-2">Comprar</a>
-				<a href="#" class="btn btn-primary btn-sm">Entrega</a>
 			</div>
 		</div>
 	</div>

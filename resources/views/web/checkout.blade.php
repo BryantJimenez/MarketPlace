@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('/web/vendors/steps/jquery.steps.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/control.geocoder.css') }}" />
 <link rel="stylesheet" href="{{ asset('/admins/vendors/lobibox/Lobibox.min.css') }}">
 @endsection
 
@@ -54,6 +55,10 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="col-12">
+				@include('admin.partials.errors')
+			</div>
 			
 			@guest
 			<div class="col-xl-4 col-lg-4 order-lg-0 order-xl-0 ftco-animate">
@@ -69,22 +74,12 @@
 											<label>Correo Electrónico</label>
 											<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
 										</div>
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Contraseña</label>
 											<input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********">
 										</div>
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group text-center">
@@ -111,44 +106,24 @@
 											<label>Nombre</label>
 											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Ejm: Juan" value="{{ old('name') }}" autocomplete="name" autofocus>
 										</div>
-										@error('name')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Apellido</label>
 											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Ejm: Lopez" value="{{ old('lastname') }}" autocomplete="lastname">
 										</div>
-										@error('lastname')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Correo Electrónico</label>
 											<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}">
 										</div>
-										@error('email')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
 											<label>Contraseña</label>
 											<input class="form-control @error('password') is-invalid @enderror" type="password" required name="password" placeholder="********" id="password">
 										</div>
-										@error('password')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-										@enderror
 									</div>
 									<div class="col-12">
 										<div class="form-group">
@@ -230,7 +205,7 @@
 											<div class="col-12">
 												<div class="form-group">
 													<label>Dirección<b class="text-danger">*</b></label>
-													<input type="text" class="form-control" name="address" required placeholder="Ingresa tu dirección" value="{{ Auth::user()->address }}">
+													<input type="text" class="form-control" name="address" required readonly placeholder="Selecciona la dirección" id="addressDelivery">
 												</div>
 											</div>
 											<div class="col-12">
@@ -334,6 +309,7 @@
 
 @section('script')
 <script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/control.geocoder.js') }}"></script>
 <script src="{{ asset('/admins/vendors/lobibox/Lobibox.js') }}"></script>
 <script src="{{ asset('/admins/vendors/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 <script src="{{ asset('/web/vendors/steps/jquery.steps.js') }}"></script>

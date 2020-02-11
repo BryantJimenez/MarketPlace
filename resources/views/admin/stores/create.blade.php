@@ -6,6 +6,7 @@
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/vendors/multiselect/bootstrap.multiselect.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/control.geocoder.css') }}" />
 @endsection
 
 @section('breadcrumb')
@@ -31,6 +32,14 @@
 							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name') }}">
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
+							<label class="col-form-label">Departamento</label>
+							<input class="form-control" type="text" disabled value="Lima">
+						</div>
+						<div class="form-group col-lg-6 col-md-6 col-12">
+							<label class="col-form-label">Provincia</label>
+							<input class="form-control" type="text" disabled value="Lima">
+						</div>
+						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Distrito<b class="text-danger">*</b></label>
 							<select class="form-control multiselect" name="district_id" required>
 								<option value="">Seleccione</option>
@@ -41,11 +50,11 @@
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Dirección<b class="text-danger">*</b></label>
-							<input class="form-control" type="text" name="address" required placeholder="Introduzca una dirección" value="{{ old('address') }}">
+							<input class="form-control" type="text" name="address" required readonly placeholder="Seleccione una dirección" value="{{ old('address') }}" id="addressDelivery">
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Teléfono<b class="text-danger">*</b></label>
-							<input class="form-control" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ old('phone') }}">
+							<input class="form-control" type="text" name="phone" required  placeholder="Introduzca un teléfono" value="{{ old('phone') }}">
 						</div>
 						<div class="form-group col-lg-12 col-md-12 col-12">
 							<label class="col-form-label">Busca la ubicación de tu tienda y da click en ese lugar<b class="text-danger">*</b></label>
@@ -70,6 +79,7 @@
 
 @section('script')
 <script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/control.geocoder.js') }}"></script>
 <script src="{{ asset('/admins/vendors/multiselect/bootstrap-multiselect.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
 <script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>

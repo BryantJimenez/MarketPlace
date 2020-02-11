@@ -12,23 +12,14 @@
                 <p class="h2 text-center db">RECUPERAR CONTRASEÑA</p>
                 <p class="text-muted">Ingresa tu correo y te enviaremos un link para que recuperes tu contraseña.</p>
 
-                @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-                @endif
-
                 <div class="form-group m-t-40">
+
+                    @include('admin.partials.errors')
+
                     <div class="col-xs-12">
                         <label>Correo Electrónico</label>
                         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="{{ 'ejemplo@gmail.com' }}" value="{{ old('email') }}" autocomplete="email" autofocus>
                     </div>
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">

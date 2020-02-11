@@ -8,3 +8,12 @@
 	</ul>
 </div>
 @endif
+
+@if(session('status'))
+<div class="alert alert-info">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<ul>
+		<li>{{ session('status') }}</li>
+	</ul>
+</div>
+@endif

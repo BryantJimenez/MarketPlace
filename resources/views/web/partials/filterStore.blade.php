@@ -14,7 +14,7 @@
       </div>
       @if(strpos(url()->full(), "/tiendas")===false || $urlArray[$i]!="distrito")
       <div class="col-3">
-        <a href="{{ route('tienda', ['url' => str_replace($urlArray[$i]."_".$urlArray[$i+1]."_", "", $url)]) }}" class="btn btn-outline-secondary rounded"><i class="icon-close"></i></a>
+        <a href="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => str_replace($urlArray[$i]."_".$urlArray[$i+1]."_", "", $url)]) }}" class="btn btn-outline-secondary rounded"><i class="icon-close"></i></a>
       </div>
       @endif
     </div>
@@ -33,7 +33,7 @@
     <select class="multiselect form-control" id="searchField">
       <option value="">Buscar</option>
       @foreach($productsSelect as $product)
-      <option value="{{ $product['slug'] }}" url="{{ route('tienda', ['url' => filterRedirect($url, 'buscar', $product['slug'])]) }}">{{ $product['name'] }}</option>
+      <option value="{{ $product['slug'] }}" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'buscar', $product['slug'])]) }}">{{ $product['name'] }}</option>
       @endforeach
     </select>
   </div>
@@ -44,8 +44,8 @@
     <p class="h6">Precio</p>
     <select class="form-control" id="filterPrice">
       <option value="">Seleccione</option>
-      <option value="bajo" url="{{ route('tienda', ['url' => filterRedirect($url, 'precio', 'bajo')]) }}">Precios más bajos</option>
-      <option value="alto" url="{{ route('tienda', ['url' => filterRedirect($url, 'precio', 'alto')]) }}">Precios más altos</option>
+      <option value="bajo" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'precio', 'bajo')]) }}">Precios más bajos</option>
+      <option value="alto" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'precio', 'alto')]) }}">Precios más altos</option>
     </select>
   </div>
   @endif
@@ -56,7 +56,7 @@
     <select class="multiselect form-control" id="filterBrand">
       <option value="">Seleccione</option>
       @foreach($brands as $brand)
-      <option value="{{ $brand->slug }}" url="{{ route('tienda', ['url' => filterRedirect($url, 'marca', $brand->slug)]) }}">{{ $brand->name }}</option>
+      <option value="{{ $brand->slug }}" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'marca', $brand->slug)]) }}">{{ $brand->name }}</option>
       @endforeach
     </select>
   </div>
@@ -68,7 +68,7 @@
     <select class="multiselect form-control" id="filterCategory">
       <option value="">Seleccione</option>
       @foreach($categories as $category)
-      <option value="{{ $category->slug }}" url="{{ route('tienda', ['url' => filterRedirect($url, 'categoria', $category->slug)]) }}">{{ $category->name }}</option>
+      <option value="{{ $category->slug }}" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'categoria', $category->slug)]) }}">{{ $category->name }}</option>
       @endforeach
     </select>
   </div>
@@ -80,7 +80,7 @@
     <select class="multiselect form-control" id="filterDistrict">
       <option value="">Seleccione</option>
       @foreach($districts as $district)
-      <option value="{{ $district['id'] }}" url="{{ route('tienda', ['url' => filterRedirect($url, 'distrito', $district['id'])]) }}">{{ $district['name'] }}</option>
+      <option value="{{ $district['id'] }}" url="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => filterRedirect($url, 'distrito', $district['id'])]) }}">{{ $district['name'] }}</option>
       @endforeach
     </select>
   </div>

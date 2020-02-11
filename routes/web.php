@@ -20,17 +20,18 @@ Route::get('/registro/email', 'UserController@emailVerify');
 Route::get('/', 'WebController@index')->name('home');
 
 // Tienda
-Route::get('/tienda', 'WebController@shop')->name('tienda');
+Route::get('/tienda/{url?}', 'WebController@shop')->name('tienda');
 Route::get('/categorias', 'WebController@categories')->name('categorias');
 Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.producto');
 Route::get('/comprar/producto/{slug?}', 'WebController@buy')->name('comprar.product');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
 Route::post('/agregar/ubicacion', 'WebController@addLocation')->name('web.add.location');
-Route::get('/tienda/{slug}', 'WebController@shopSingle')->name('ver.tienda');
+Route::get('/tiendas/{url?}', 'WebController@stores')->name('tiendas');
+Route::get('/tienda/productos/{slug}/{url?}', 'WebController@shopSingle')->name('ver.tienda');
 
 // Servicios
-Route::get('/servicios', 'WebController@services')->name('servicios');
-Route::get('/servicios/ofrecer', 'WebController@offerServices')->name('servicios.offer');
+Route::get('/servicios', 'WebController@services')->name('servicios.offer');
+Route::get('/servicios/ofrecer', 'WebController@offerServices')->name('servicios');
 Route::get('/servicios/ofrecer/tienda', 'WebController@offerServiceShop')->name('servicios.offer.shop');
 
 // Blog

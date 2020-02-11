@@ -824,13 +824,28 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	}).done(function(resultado) {
+
 		var obj=JSON.parse(resultado);
-		$('.subtotal').text("S/. "+obj.price);
-		$('.delivery').text("S/. "+obj.delivery);
-		if ($(".ofert").length) {
-			$('.ofert').text("S/. "+obj.ofert);
+
+		if (obj.error=='') {
+			$('.subtotal').text("S/. "+obj.price);
+			$('.delivery').text("S/. "+obj.delivery);
+			if ($(".ofert").length) {
+				$('.ofert').text("S/. "+obj.ofert);
+			}
+			$('.total').text("S/. "+obj.total);
+		}else{
+			$('#error_mensaje').before(`
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				  <strong>Lo sentimos!</strong> No realizamos envíos a esta dirección. Por favor, seleccione otra ubicación 
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+			`);
 		}
-		$('.total').text("S/. "+obj.total);
+
+		
 	});
 }
 

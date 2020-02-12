@@ -221,6 +221,7 @@ class PaymentController extends Controller
 
     public function calculator(Request $request)
     {   
+
         try {
             $product=Product::where('slug', request('slug'))->firstOrFail();
 
@@ -231,7 +232,7 @@ class PaymentController extends Controller
                 $lat = $request->lat;
                 $lng = $request->lng;
 
-                $sourceDir=new Address(Address::TYPE_PICKUP, $product->stores->lat, $product->stores->lng, $product->stores->address);
+                $sourceDir=new Address(Address::TYPE_PICKUP, $data->lat, $data->lng, $data->address);
 
                 $destDir=new Address(Address::TYPE_DELIVERY, $lat, $lng, "Diag. 73 75", "3A");
 

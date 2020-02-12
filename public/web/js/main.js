@@ -615,6 +615,14 @@ $(document).ready(function() {
 			marker=L.marker(e.latlng).addTo(map);
 			$('#lat').val(e.latlng.lat);
 			$('#lng').val(e.latlng.lng);
+
+			var slug=$('.qty').attr('slug'), 
+				qty=$('.qty').val(), 
+				delivery=$('#checkoutDelivery').val(), 
+				lat=$('#lat').val(), 
+				lng=$('#lng').val();
+				
+			calculatorTotal(slug, qty, delivery, lat, lng);
 		});
 	}
 

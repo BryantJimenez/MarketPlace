@@ -4,95 +4,66 @@
 @section('page-title', 'Detalles de la Tienda')
 
 @section('links')
-<link rel="stylesheet" href="{{ asset('/admins/vendors/multiselect/bootstrap.multiselect.css') }}">
 <link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/leaflet.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendors/leaflet/control.geocoder.css') }}" />
+
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('tiendas.index') }}">Tiendas</a></li>
-<li class="breadcrumb-item active">Registro</li>
+<li class="breadcrumb-item active">Solicitud</li>
 @endsection
 
 @section('content')
 
-
-
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="card-title"><span class="lstick"></span>Datos del Propietario</h4>
-				<div id="visitor" style="height:290px; width:100%;"></div>
-				<table class="table vm font-14">
-					<tr>
-						<td class="b-0">Nombre Completo</td>
-						<td class="text-right font-medium b-0">38.5%</td>
-					</tr>
-					<tr>
-						<td>Correo</td>
-						<td class="text-right font-medium">30.8%</td>
-					</tr>
-					<tr>
-						<td>Teléfono</td>
-						<td class="text-right font-medium">7.7%</td>
-					</tr>
-					<tr>
-						<td>Género</td>
-						<td class="text-right font-medium">23.1%</td>
-					</tr>
-					<tr>
-						<td>Fecha de Nacimiento</td>
-						<td class="text-right font-medium">7.7%</td>
-					</tr>
-					<tr>
-						<td>Dirección</td>
-						<td class="text-right font-medium">23.1%</td>
-					</tr>
-				</table>
-			</div> 
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-body">
-				<h4 class="card-title"><span class="lstick"></span>Datos de laTtienda</h4>
-				<div id="visitor" style="height:290px; width:100%;"></div>
-				<table class="table vm font-14">
-					<tr>
-						<td class="b-0">Nombre</td>
-						<td class="text-right font-medium b-0">38.5%</td>
-					</tr>
-					<tr>
-						<td>Distrito</td>
-						<td class="text-right font-medium">30.8%</td>
-					</tr>
-					<tr>
-						<td>Teléfono</td>
-						<td class="text-right font-medium">7.7%</td>
-					</tr>
-					<tr>
-						<td>Dirección</td>
-						<td class="text-right font-medium">23.1%</td>
-					</tr>
-				</table>
-			</div> 
+				<div class="d-flex">
+					<div class="mb-4">
+						<h4 class="card-title"><span class="lstick"></span>Estado: {!! storeRequetsState($store->state) !!}</h4>
+					</div>
+					<div class="ml-auto">
+						<h5 class="card-title"><span class="lstick"></span>Fecha: {{ date('d-m-Y', strtotime($store->created_at)) }}</h5>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 ftco-animate">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-12">
+								<p><strong>Nombre de la tienda:</strong> {{ $store->name }}</p>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<p><strong>Dirección:</strong> {{ $store->address }}</p>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<p><strong>Teléfono:</strong> {{ $store->phone }}</p>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<p class="mb-2"><strong>Tienda De:</strong></p>
+								<p class="mb-0">{{ $store->users[0]->name." ".$store->users[0]->lastname }}</p>
+								<p>{{ $store->users[0]->email }}</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 ftco-animate mt-2">
+						<input type="hidden" id="lat" value="{{ $store->lat }}">
+						<input type="hidden" id="lng" value="{{ $store->lng }}">
+
+						<div id="map" style="height: 300px;"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
 
 @endsection
 
 @section('script')
 <script src="{{ asset('/admins/vendors/leaflet/leaflet.js') }}"></script>
-<script src="{{ asset('/admins/vendors/multiselect/bootstrap-multiselect.js') }}"></script>
-<script src="{{ asset('/admins/vendors/validate/jquery.validate.js') }}"></script>
-<script src="{{ asset('/admins/vendors/validate/additional-methods.js') }}"></script>
-<script src="{{ asset('/admins/vendors/validate/messages_es.js') }}"></script>
-<script src="{{ asset('/admins/js/validate.js') }}"></script>
+<script src="{{ asset('/admins/vendors/leaflet/control.geocoder.js') }}"></script>
 @endsection

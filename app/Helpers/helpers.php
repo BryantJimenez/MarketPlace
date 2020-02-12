@@ -115,6 +115,12 @@ function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_lon
 
 //Función para cambiar redirecciones de url dinamicamente
 function filterRedirect($url, $index, $value) {
-	$url=$url.$index.'_'.$value.'_';
+	if (is_array($index) && is_array($value)) {
+		for ($i=0; $i < count($index); $i++) { 
+			$url.=$index[$i].'_'.$value[$i].'_';
+		}
+	} else {
+		$url=$url.$index.'_'.$value.'_';	
+	}
 	return $url;
 }

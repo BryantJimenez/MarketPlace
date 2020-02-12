@@ -30,8 +30,8 @@ Route::get('/tiendas/{url?}', 'WebController@stores')->name('tiendas');
 Route::get('/tienda/productos/{slug}/{url?}', 'WebController@shopSingle')->name('ver.tienda');
 
 // Servicios
-Route::get('/servicios', 'WebController@services')->name('servicios.offer');
-Route::get('/servicios/ofrecer', 'WebController@offerServices')->name('servicios');
+Route::get('/servicios/', 'WebController@offerServices')->name('servicios');
+Route::get('/servicios/ofrecer', 'WebController@services')->name('servicios.offer');
 Route::get('/servicios/ofrecer/tienda', 'WebController@offerServiceShop')->name('servicios.offer.shop');
 
 // Blog

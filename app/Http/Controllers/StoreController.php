@@ -196,14 +196,15 @@ class StoreController extends Controller
     }
 
     public function storesRequest() {
-        $storesRequest=Store::select('stores.id', 'stores.name', 'store_user.state', 'store_user.slug')->join('store_user', 'stores.id', '=', 'store_user.store_id')->where('store_user.request', 1)->get();
+        $storesRequest=Store::select('stores.id', 'stores.name', 'store_user.state', 'stores.slug')->join('store_user', 'stores.id', '=', 'store_user.store_id')->where('store_user.request', 1)->get();
         $num=1;
         return view('admin.stores.stores.index', compact('storesRequest', 'num'));
     }
 
     public function storesRequestShow($slug)
     {
-        return view('admin.stores.stores.show'); 
+        $store=Store::where('slug', $slug)->firstOrFail();
+        return view('admin.stores.stores.show', compact('store')); 
     }
 
     public function confirm(Request $request, $slug)

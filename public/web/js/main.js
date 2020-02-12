@@ -851,6 +851,8 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 				  </button>
 				</div>
 			`);
+			console.log(resultado);
+			console.log(obj);
 		}
 
 		

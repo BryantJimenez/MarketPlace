@@ -27,7 +27,7 @@ class ProductStoreTableSeeder extends Seeder
             ['id' => 13, 'product_id' => 13, 'store_id' => 3],
             ['id' => 14, 'product_id' => 14, 'store_id' => 3],
             ['id' => 15, 'product_id' => 15, 'store_id' => 3],
-            // ['id' => 16, 'product_id' => 16, 'store_id' => 3],
+            ['id' => 16, 'product_id' => 16, 'store_id' => 3],
             ['id' => 17, 'product_id' => 17, 'store_id' => 4],
             ['id' => 18, 'product_id' => 18, 'store_id' => 4],
             ['id' => 19, 'product_id' => 19, 'store_id' => 4],

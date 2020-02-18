@@ -17,6 +17,7 @@ class CreateBrandsProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug')->unique();
+            $table->float('quality', 2, 1)->default(1.0);
             $table->timestamps();
         });
     }

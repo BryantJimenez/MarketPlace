@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->mediumText('description');
             $table->integer('min')->default(5);
             $table->integer('ofert')->default(0);
+            $table->string('all')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->bigInteger('subcategory_id')->unsigned()->nullable();
             $table->timestamps();

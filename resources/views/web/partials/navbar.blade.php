@@ -10,6 +10,7 @@
 				<li class="nav-item active"><a href="{{ route('home') }}" class="nav-link">Inicio</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{ route('tienda') }}">Tienda</a></li>
 				<li class="nav-item"><a href="{{ route('categorias') }}" class="nav-link">Categorías</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{ route('talleres') }}">Talleres</a></li>
 				<li class="nav-item"><a href="{{ route('web.blog.index') }}" class="nav-link">Blog</a></li>
 				@guest
 				<li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Ingresar</a></li>

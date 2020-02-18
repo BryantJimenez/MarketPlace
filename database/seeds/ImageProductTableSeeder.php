@@ -34,7 +34,7 @@ class ImageProductTableSeeder extends Seeder
             ['id' => 20, 'product_id' => 13, 'image' => 'embrague.jpg'],
             ['id' => 21, 'product_id' => 14, 'image' => 'pastillas-de-freno.jpg'],
             ['id' => 22, 'product_id' => 15, 'image' => 'pastillas-de-freno-1.jpg'],
-            // ['id' => 23, 'product_id' => 16, 'image' => 'bujia-2.jpg'],
+            ['id' => 23, 'product_id' => 16, 'image' => 'bujia-2.jpg'],
             ['id' => 24, 'product_id' => 17, 'image' => 'limpia-carburador.jpg'],
             ['id' => 25, 'product_id' => 18, 'image' => 'claxon.jpg'],
             ['id' => 26, 'product_id' => 19, 'image' => 'alternador.jpg'],

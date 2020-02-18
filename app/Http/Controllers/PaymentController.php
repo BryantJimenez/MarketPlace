@@ -236,6 +236,7 @@ class PaymentController extends Controller
 
     public function calculator(Request $request)
     {   
+
         try {
             $product=Product::where('slug', request('slug'))->firstOrFail();
 
@@ -246,9 +247,15 @@ class PaymentController extends Controller
                 $lat = $request->lat;
                 $lng = $request->lng;
 
-                $sourceDir=new Address(Address::TYPE_PICKUP, $product->stores->lat, $product->stores->lng, $product->stores->address);
+                $data = $product->stores;
+                $data = $data->first();
+
+                $sourceDir=new Address(Address::TYPE_PICKUP, $data->lat, $data->lng, $data->address,'1st');
 
                 $destDir=new Address(Address::TYPE_DELIVERY, $lat, $lng, "Diag. 73 75", "3A");
+
+                //$sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
+                //$destDir=new Address(Address::TYPE_DELIVERY, -34.922945, -57.990177, "Diag. 73 75", "3A");
 
                 $order=new Order();
                 $order->setDescription(request('qty')." ".$product->name);
@@ -273,11 +280,16 @@ class PaymentController extends Controller
             $total=number_format(request('qty')*$price+$delivery, 2, ".", "");
             $price=number_format(request('qty')*$price, 2, ".", "");
             $delivery=number_format($delivery, 2, ".", "");
-
             return response()->json(['total' => $total, 'price' => $price, 'ofert' => $ofert, 'delivery' => $delivery, 'error' => '']);
+
         } catch (Exception $e) {
             $error = $e->getMessage();
-            return response()->json(['error' => $e]);
+
+            if ($error=='') {
+                $error = 'No message';
+            }
+
+            return response()->json(['error' => $error]);
         }
     }
 

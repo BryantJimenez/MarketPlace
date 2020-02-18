@@ -800,11 +800,13 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
-				</div>
-				`);
+				</div>`);
 			$('a[href="#next"]').attr('delivery', 'no');
 			$('a[delivery="no"]').attr('href', '');
 		}
+
+		console.log(resultado);
+		console.log(obj);
 
 		
 	});

@@ -12,9 +12,11 @@ class StoresTableSeeder extends Seeder
     public function run()
     {
         $stores = [
-    		['id' => 1, 'name' => 'Motores 2020', 'slug' => 'motores-2020', 'district_id' => 150122, 'address' => 'Calle 7, AV. Santa Miraflores', 'phone' => '8758573855', 'lat' => '-12.05533217', 'lng' => '-77.04288125', 'state' => 1],
-    		['id' => 2, 'name' => 'El Taller de los Respuestos', 'slug' => 'el-taller-de-los-repuestos', 'district_id' => 150115, 'address' => 'AV. Principal cc Calle Intercomunal', 'phone' => '7467647455', 'lat' => '-12.0699999', 'lng' => '-77.02974916', 'state' => 1],
-    		['id' => 3, 'name' => 'Mil Repuestos', 'slug' => 'mil-repuestos', 'district_id' => 150122, 'address' => 'Calle Libertador, Local n° 46', 'phone' => '7837855783', 'lat' => '-12.12341806', 'lng' => '-77.02952385', 'state' => 1]
+    		['id' => 1, 'name' => 'Repuestos Piura', 'slug' => 'repuestos-piura', 'district_id' => 150104, 'address' => 'Repuestera, Jirón Rosendo Vidaure, Barranco, Lima, 15063, Perú', 'phone' => '997892696', 'lat' => '-12.137861790202003', 'lng' => '-77.01826930046083', 'state' => 1, 'owner' => 'José Peña'],
+    		['id' => 2, 'name' => 'Repuestos Volcán', 'slug' => 'repuestos-volcan', 'district_id' => 150108, 'address' => 'Avenida Caminos del Inca, Sarita Colonia, Chorrillos, Lima, 15067, Perú', 'phone' => '993382727', 'lat' => '-12.1931178', 'lng' => '-77.004091', 'state' => 1, 'owner' => 'Alberto Rojas'],
+            ['id' => 3, 'name' => 'Repuestos Jofran Clauste', 'slug' => 'repuestos-jofran-clauste', 'district_id' => 150115, 'address' => 'Prolongación Parinacochas, Balconcillo, La Victoria, Lima, 15034, Perú', 'phone' => '946133095', 'lat' => '-12.0753262', 'lng' => '-77.0185386', 'state' => 1, 'owner' => 'Héctor Samames'],
+            ['id' => 4, 'name' => 'Repuestos, Autoservicios José', 'slug' => 'repuestos-autoservicios-jose', 'district_id' => 150141, 'address' => 'Velarde, prolongacion carmen mz b6 lt9, Surquillo, Lima, LIMA 34, Perú', 'phone' => '998900018', 'lat' => '-12.1139441', 'lng' => '-77.0191106', 'state' => 1, 'owner' => 'José Marca'],
+            ['id' => 5, 'name' => 'Repuestos Rojas', 'slug' => 'repuestos-rojas', 'district_id' => 150115, 'address' => 'Jirón Lucanas, Balconcillo, La Victoria, Lima, 15011, Perú', 'phone' => '994224661', 'lat' => '-12.0895568', 'lng' => '-77.039707', 'state' => 1, 'owner' => 'Rosas Vergaray']
     	];
     	DB::table('stores')->insert($stores);
     }

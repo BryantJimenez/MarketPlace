@@ -115,12 +115,14 @@
 						<div class="col-xl-6 col-lg-6 col-md-6 col-12">
 							<p class="h5">Datos del Propietario</p>
 							<div class="row">
+								@if(Auth::user()->photo=="usuario.png")
 								<div class="col-12">
 									<div class="form-group">
 										<label class="col-form-label">Foto<b class="text-danger">*</b></label>
-										<input type="file" name="photo" accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" @if(Auth::user()->photo!="usuario.png") data-default-file="{{ '/admins/img/users/'.Auth::user()->photo }}" @else required @endif />
+										<input type="file" name="photo" accept="image/*" id="input-file-now" class="dropify" data-height="125" data-max-file-size="3M" data-allowed-file-extensions="jpg png jpeg web3" required />
 									</div>
 								</div>
+								@endif
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Nombre</label>

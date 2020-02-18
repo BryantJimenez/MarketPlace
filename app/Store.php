@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $fillable = ['name', 'slug', 'district_id', 'address', 'phone', 'lat', 'lng'];
+    protected $fillable = ['name', 'slug', 'district_id', 'address', 'phone', 'lat', 'lng', 'owner'];
 
     public function users() {
 		return $this->belongsToMany(User::class)->withTimestamps();

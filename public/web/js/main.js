@@ -1,8 +1,3 @@
- AOS.init({
- 	duration: 800,
- 	easing: 'slide'
- });
-
  (function($) {
 
  	"use strict";
@@ -30,27 +25,6 @@
  		}
  	};
 
-
- 	$(window).stellar({
- 		responsive: true,
- 		parallaxBackgrounds: true,
- 		parallaxElements: true,
- 		horizontalScrolling: false,
- 		hideDistantElements: false,
- 		scrollProperty: 'scroll'
- 	});
-
-
- 	var fullHeight = function() {
-
- 		$('.js-fullheight').css('height', $(window).height());
- 		$(window).resize(function(){
- 			$('.js-fullheight').css('height', $(window).height());
- 		});
-
- 	};
- 	fullHeight();
-
 	// loader
 	var loader = function() {
 		setTimeout(function() { 
@@ -60,9 +34,6 @@
 		}, 1);
 	};
 	loader();
-
-	// Scrollax
-	$.Scrollax();
 
 	$('nav .dropdown').hover(function(){
 		var $this = $(this);
@@ -216,40 +187,6 @@
 	};
 	OnePageNav();
 
-
-	// magnific popup
-	$('.image-popup').magnificPopup({
-		type: 'image',
-		closeOnContentClick: true,
-		closeBtnInside: false,
-		fixedContentPos: true,
-    	mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
-    	gallery: {
-    		enabled: true,
-    		navigateByImgClick: true,
-      		preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-      	},
-      	image: {
-      		verticalFit: true
-      	},
-      	zoom: {
-      		enabled: true,
-      		duration: 300 // don't foget to change the duration also in CSS
-      	}
-      });
-
-	$('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-		disableOn: 700,
-		type: 'iframe',
-		mainClass: 'mfp-fade',
-		removalDelay: 160,
-		preloader: false,
-
-		fixedContentPos: false
-	});
-
-
-
 	var goHere = function() {
 
 		$('.mouse-icon').on('click', function(event){
@@ -368,6 +305,10 @@ $(document).ready(function() {
 		});
 	}
 
+	if ($('.lazy').length) {
+		$('.lazy').loadScroll();
+	}
+
 	//Llamado para agregar touchspin a campos de cantidad
 	if ($('.qty').length) {
 		qtyProduct();
@@ -445,8 +386,12 @@ $(document).ready(function() {
 			onFinished: function (event, currentIndex)
 			{
 				// Crea el objeto Token con Culqi JS
-				Culqi.createToken();
-				e.preventDefault();
+				if ($('select[name="pay"] option:selected').val()==1) {
+					Culqi.createToken();
+					e.preventDefault();
+				} else {
+					$(".billing-form").submit();
+				}
 			}
 		}).validate({
 			rules:
@@ -572,7 +517,11 @@ $(document).ready(function() {
 		});
 
 		//Llave para conectarse a culqi e inicializador
-		Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
+		//llave mia
+		// Culqi.publicKey='pk_test_u3aBMzCGCvPM3vfc';
+
+		//llave eduardo
+		Culqi.publicKey='pk_live_f3c652ac24a45c92';
 		Culqi.init();
 	}
 
@@ -617,11 +566,11 @@ $(document).ready(function() {
 			$('#lng').val(e.latlng.lng);
 
 			var slug=$('.qty').attr('slug'), 
-				qty=$('.qty').val(), 
-				delivery=$('#checkoutDelivery').val(), 
-				lat=$('#lat').val(), 
-				lng=$('#lng').val();
-				
+			qty=$('.qty').val(), 
+			delivery=$('#checkoutDelivery').val(), 
+			lat=$('#lat').val(), 
+			lng=$('#lng').val();
+
 			calculatorTotal(slug, qty, delivery, lat, lng);
 		});
 	}
@@ -842,15 +791,19 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 				$('.ofert').text("S/. "+obj.ofert);
 			}
 			$('.total').text("S/. "+obj.total);
+			$('a[delivery="no"]').attr('delivery', 'si');
+			$('a[delivery="si"]').attr('href', '#next');
 		}else{
 			$('#error_mensaje').before(`
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				  <strong>Lo sentimos!</strong> No realizamos envíos a esta dirección. Por favor, seleccione otra ubicación 
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				  </button>
+				<strong>Lo sentimos!</strong> No realizamos envíos a esta dirección. Por favor, seleccione otra ubicación 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
 				</div>
-			`);
+				`);
+			$('a[href="#next"]').attr('delivery', 'no');
+			$('a[delivery="no"]').attr('href', '');
 		}
 
 		

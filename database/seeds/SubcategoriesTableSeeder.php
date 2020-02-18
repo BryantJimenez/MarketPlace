@@ -18,7 +18,7 @@ class SubcategoriesTableSeeder extends Seeder
     		['id' => 4, 'name' => 'Aceites vegetales y animales', 'slug' => 'aceites-vegetales-y-animales', 'category_id' => 2],
     		['id' => 5, 'name' => 'Aceites compuestos', 'slug' => 'aceites-compuestos', 'category_id' => 2],
     		['id' => 6, 'name' => 'Aceites sintéticos', 'slug' => 'aceites-sinteticos', 'category_id' => 2],
-    		['id' => 7, 'name' => 'Bujías', 'slug' => 'bujias', 'category_id' => 3],
+    		['id' => 7, 'name' => 'Bujías', 'slug' => 'bujias', 'category_id' => 6],
     		['id' => 8, 'name' => 'Condensadores', 'slug' => 'condensadores', 'category_id' => 3],
     		['id' => 9, 'name' => 'Culatas', 'slug' => 'culatas', 'category_id' => 3],
     		['id' => 10, 'name' => 'Bloques', 'slug' => 'bloques', 'category_id' => 3],
@@ -34,7 +34,15 @@ class SubcategoriesTableSeeder extends Seeder
     		['id' => 20, 'name' => 'Filtros de aceite por sedimentación', 'slug' => 'filtros-de-aceite-por-sedimentacion', 'category_id' => 4],
     		['id' => 21, 'name' => 'Filtros de aceite con cámara térmica', 'slug' => 'filtros-de-aceite-con-camara-tecnica', 'category_id' => 4],
     		['id' => 22, 'name' => 'Filtros de aceite centrífugo', 'slug' => 'filtros-de-aceite-centrifugo', 'category_id' => 4],
-    		['id' => 23, 'name' => 'Cajas de velocidades', 'slug' => 'cajas-de-velocidades', 'category_id' => 5]
+    		['id' => 23, 'name' => 'Cajas de velocidades', 'slug' => 'cajas-de-velocidades', 'category_id' => 5],
+            ['id' => 24, 'name' => 'Relés Electrícos', 'slug' => 'reles-electricos', 'category_id' => 7],
+            ['id' => 25, 'name' => 'Arranques y piezas', 'slug' => 'arranques-y-piezas', 'category_id' => 6],
+            ['id' => 26, 'name' => 'Amortiguadores', 'slug' => 'amortiguadores', 'category_id' => 8],
+            ['id' => 27, 'name' => 'Pastillas de frenos', 'slug' => 'pastillas-de-frenos', 'category_id' => 9],
+            ['id' => 28, 'name' => 'Accesorios', 'slug' => 'accesorios', 'category_id' => 10],
+            ['id' => 29, 'name' => 'Alternadores', 'slug' => 'alternadores', 'category_id' => 3],
+            ['id' => 30, 'name' => 'Filtros de aire', 'slug' => 'filtros-de-aire', 'category_id' => 4],
+            ['id' => 31, 'name' => 'Bobinas', 'slug' => 'bobinas', 'category_id' => 6]
     	];
     	DB::table('subcategories')->insert($subcategories);
     }

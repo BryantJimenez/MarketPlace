@@ -65,15 +65,15 @@ function saleShape($shape) {
 function imageCardProduct($product, $type=0) {
 	if ($type==0) {
 		if(count($product->images)>0) {
-			return '<img class="img-fluid" src="'.asset('/admins/img/products/'.$product->images[0]->image).'" alt="'.$product->name.'">';
+			return '<img class="img-fluid lazy" data-src="'.asset('/admins/img/products/'.$product->images[0]->image).'" src="'.asset('/web/images/loading.gif').'" alt="'.$product->name.'">';
 		} else {
-			return '<img class="img-fluid" src="'.asset('/admins/img/products/imagen.jpg').'" alt="'.$product->name.'">';
+			return '<img class="img-fluid lazy" data-src="'.asset('/admins/img/products/imagen.jpg').'" src="'.asset('/web/images/loading.gif').'" alt="'.$product->name.'">';
 		}
 	} else {
 		if(count($product->images)>0) {
-			return '<img class="w-100 h-100" src="'.asset('/admins/img/products/'.$product->images[0]->image).'" alt="'.$product->name.'">';
+			return '<img class="w-100 img-fluid h-180-px lazy" data-src="'.asset('/admins/img/products/'.$product->images[0]->image).'" src="'.asset('/web/images/loading.gif').'" alt="'.$product->name.'">';
 		} else {
-			return '<img class="w-100 h-100" src="'.asset('/admins/img/products/imagen.jpg').'" alt="'.$product->name.'">';
+			return '<img class="w-100 img-fluid h-180-px lazy" data-src="'.asset('/admins/img/products/imagen.jpg').'" src="'.asset('/web/images/loading.gif').'" alt="'.$product->name.'">';
 		}
 	}
 }

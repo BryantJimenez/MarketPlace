@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
 
             #Relations
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('brand_id')->references('id')->on('brandsProducts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade')->onUpdate('cascade');
         });
     }

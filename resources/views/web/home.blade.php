@@ -46,7 +46,33 @@
 	</div>
 </section>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb mt-5">
+<section class="ftco-section bg-light py-5">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-left ftco-animate">
+				<h2 class="mb-4">Tiendas <a href="{{ route('tiendas') }}" class="h6 pl-2 text-primary">Ver más</a></h2>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+
+					@foreach($stores as $store)
+					@if($loop->index==3) @break @endif
+					<div class="col-lg-4 col-md-4 col-12">
+						@include('web.partials.cardStore')
+					</div>
+					@endforeach
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-no-pb mb-4">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-lg-6 col-12 mb-4">
@@ -62,52 +88,7 @@
 				<div class="ftco-animate img mb-4 d-flex align-items-end shadow rounded bg-primary">
 					<div class="text text-center px-3 py-4">
 						<h2 class="mb-2 text-white">Encuentra profesionales listos para atender tus necesidades</h2>
-						<a href="{{ route('servicios') }}" class="btn btn-white">Encuentra</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section class="ftco-section ftco-category ftco-no-pt">
-	<div class="container">
-		<div class="row justify-content-center mb-3 pb-3">
-			<div class="col-md-12 heading-section text-left ftco-animate">
-				<h2 class="mb-4">Categorías <a href="{{ route('categorias') }}" class="h6 pl-2 text-primary">Ver más</a></h2>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div id="carousel" class="carousel slide" data-ride="carousel">
-					<div class="carousel-inner">
-						@for($i=0; $i<2; $i++)
-						<div class="carousel-item @if($i==0) active @endif">
-							<div class="row">
-								@for($j=0; $j<3; $j++)
-								@isset($categories[3*$i+$j])
-								<div class="col-lg-4 col-md-4 col-sm-6 col-12">
-									<a href="{{ route('tienda', ['url' => 'categoria_'.$categories[3*$i+$j]->slug."_"]) }}"><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/categories/'.$categories[3*$i+$j]->image) }});">
-										<div class="text px-3 py-1">
-											<h2 class="mb-0 text-white">{{ $categories[3*$i+$j]->name }}</h2>
-										</div>
-									</div></a>
-								</div>
-								@endisset
-								@endfor
-							</div>
-						</div>
-						@endfor
-						<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
+						<a href="{{ route('servicios.search') }}" class="btn btn-white">Encuentra</a>
 					</div>
 				</div>
 			</div>
@@ -135,8 +116,9 @@
 								@for($j=0; $j<4; $j++)
 								@isset($brands[4*$i+$j])
 								<div class="col-lg-3 col-md-4 col-sm-6 col-12">
-									<a href="{{ route('tienda', ['url' => 'marca_'.$brands[4*$i+$j]->slug.'_']) }}"><div class="category-wrap bg-white ftco-animate img mb-4 d-flex align-items-end" style="background-image: url({{ asset('/admins/img/brands/'.$brands[4*$i+$j]->image) }}); background-size: 100%;">
-										<div class="text px-3 py-1">
+									<a href="{{ route('tienda', ['url' => 'marca_'.$brands[4*$i+$j]->slug.'_']) }}"><div class="category-wrap bg-white ftco-animate img mb-4 d-flex align-items-end">
+										<img class="w-100 h-100 lazy" data-src="{{ asset('/admins/img/brands/'.$brands[4*$i+$j]->image) }}" src="{{ asset('/web/images/loading.gif') }}" alt="{{ $brands[4*$i+$j]->name }}">
+										<div class="text px-3 py-1 position-absolute">
 											<h2 class="mb-0 text-white">{{ $brands[4*$i+$j]->name }}</h2>
 										</div>
 									</div></a>
@@ -161,33 +143,51 @@
 	</div>
 </section>
 
-
 <section class="ftco-section ftco-category">
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
 			<div class="col-md-12 heading-section text-left ftco-animate">
-				<h2 class="mb-4">Tiendas <a href="{{ route('tiendas') }}" class="h6 pl-2 text-primary">Ver más</a></h2>
+				<h2 class="mb-4">Categorías <a href="{{ route('categorias') }}" class="h6 pl-2 text-primary">Ver más</a></h2>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="row">
-
-					@foreach($stores as $store)
-					@if($loop->index==3) @break @endif
-					<div class="col-lg-4 col-md-4 col-12">
-						@include('web.partials.cardStore')
+				<div id="carousel" class="carousel slide" data-ride="carousel">
+					<div class="carousel-inner">
+						@for($i=0; $i<2; $i++)
+						<div class="carousel-item @if($i==0) active @endif">
+							<div class="row">
+								@for($j=0; $j<3; $j++)
+								@isset($categories[3*$i+$j])
+								<div class="col-lg-4 col-md-4 col-sm-6 col-12">
+									<a href="{{ route('tienda', ['url' => 'categoria_'.$categories[3*$i+$j]->slug."_"]) }}"><div class="category-wrap ftco-animate img mb-4 d-flex align-items-end">
+										<img class="w-100 h-100 lazy" data-src="{{ asset('/admins/img/categories/'.$categories[3*$i+$j]->image) }}" src="{{ asset('/web/images/loading.gif') }}" alt="{{ $categories[3*$i+$j]->name }}">
+										<div class="text px-3 py-1 position-absolute">
+											<h2 class="mb-0 text-white">{{ $categories[3*$i+$j]->name }}</h2>
+										</div>
+									</div></a>
+								</div>
+								@endisset
+								@endfor
+							</div>
+						</div>
+						@endfor
+						<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
 					</div>
-					@endforeach
-
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
 
 <section class="ftco-section bg-light">
 	<div class="container">

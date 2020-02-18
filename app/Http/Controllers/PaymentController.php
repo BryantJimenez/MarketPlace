@@ -45,23 +45,28 @@ class PaymentController extends Controller
         $description="Venta de ".request('qty')." cantidades del producto: ".$product->name.".";
 
         if ($request->has('delivery') && request('delivery')=="yes") {
-            $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
-            $api->sandbox_mode(true);
+            try {
+                $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
+                $api->sandbox_mode(true);
 
-            $sourceDir=new Address(Address::TYPE_PICKUP, request('lat'), request('lng'), request('address'), request('address'));
-            $destDir=new Address(Address::TYPE_DELIVERY, request('lat'), request('lng')-0.001, request('address'), request('address'));
+                $sourceDir=new Address(Address::TYPE_PICKUP, request('lat'), request('lng'), request('address'), request('address'));
+                $destDir=new Address(Address::TYPE_DELIVERY, request('lat'), request('lng')-0.001, request('address'), request('address'));
 
-            $order=new Order();
-            $order->setDescription(request('qty')." ".$product->name);
-            $order->setAddresses([$sourceDir, $destDir]);
-            
-            // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
+                $order=new Order();
+                $order->setDescription(request('qty')." ".$product->name);
+                $order->setAddresses([$sourceDir, $destDir]);
 
-            dd($api->estimateOrderPrice($order));
+                // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
 
-            $orderEstimate=$api->estimateOrderPrice($order);
-            dd($estimateOrderPrice);
-            $deliveryPrice=$orderEstimate['total']['amount']/100;
+                // dd($api->estimateOrderPrice($order));
+
+                $orderEstimate=$api->estimateOrderPrice($order);
+                // dd($estimateOrderPrice);
+                $deliveryPrice=$orderEstimate['total']['amount']/100;
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+                return response()->json(['error' => $e]);
+            }
         } else {
             $deliveryPrice=0;
         }
@@ -77,7 +82,11 @@ class PaymentController extends Controller
         $delivery=number_format($deliveryPrice, 2, ".", "");
 
         if (request('pay')==1) {
-            $SECRET_KEY = "sk_test_FsqzQFJOUgoyTIiM";
+            //llave mia
+            // $SECRET_KEY = "sk_test_FsqzQFJOUgoyTIiM";
+
+            //llave eduardo
+            $SECRET_KEY = "sk_live_fc7be8d7fb081773";
             $culqi = new Culqi(array('api_key' => $SECRET_KEY));
 
             // Creamos Cargo a una tarjeta
@@ -114,8 +123,14 @@ class PaymentController extends Controller
             $total_fee=$charge->total_fee/100;
             $transfer_amount=$charge->transfer_amount/100;
 
+            if (isset($charge->fraud_score) && $charge->fraud_score!=null) {
+                $fraudScore=$charge->fraud_score;
+            } else {
+                $fraudScore=0.00;
+            }
+
             $payment=Payment::create(['slug' => $slug, 'shape' => request('pay'), 'type' => 1, 'total' => $total, 'reference' => $charge->reference_code, 'currency' => 'PEN', 'device' => $charge->source->client->device_type, 'description' => $description, 'state' => 1, 'ip_country_id' => $countryUser->id, 'user_id' => Auth::user()->id]);
-            $card=Card::create(['bank' => $charge->source->iin->issuer->name, 'brand' => $charge->source->iin->card_brand, 'fraud_score' => $charge->fraud_score, 'total_fee' => $total_fee, 'transfer_amount' => $transfer_amount, 'type' => $charge->source->iin->card_type, 'country_id' => $countryCard->id, 'payment_id' => $payment->id])->save();
+            $card=Card::create(['bank' => $charge->source->iin->issuer->name, 'brand' => $charge->source->iin->card_brand, 'fraud_score' => $fraudScore, 'total_fee' => $total_fee, 'transfer_amount' => $transfer_amount, 'type' => $charge->source->iin->card_type, 'country_id' => $countryCard->id, 'payment_id' => $payment->id])->save();
 
             PaymentProduct::create(['payment_id' => $payment->id, 'product_id' => $product->id, 'qty' => request('qty'), 'ofert' => $product->ofert, 'price' => $product->price]);
 

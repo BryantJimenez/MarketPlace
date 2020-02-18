@@ -32,6 +32,19 @@
 							<input class="form-control" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name') }}">
 						</div>
 						<div class="form-group col-lg-6 col-md-6 col-12">
+							<label class="col-form-label">Administrador<b class="text-danger">*</b></label>
+							<select class="form-control multiselect" name="user_id" required>
+								<option value="">Seleccione</option>
+								@foreach($users as $user)
+								<option value="{{ $user->slug }}" @if(old('user_id')==$user->slug) selected @endif>{{ $user->name." ".$user->lastname }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group col-lg-6 col-md-6 col-12">
+							<label class="col-form-label">Dueño (Opcional)</label>
+							<input class="form-control" type="text" name="owner" placeholder="Introduzca el nombre del dueño" value="{{ old('owner') }}">
+						</div>
+						<div class="form-group col-lg-6 col-md-6 col-12">
 							<label class="col-form-label">Departamento</label>
 							<input class="form-control" type="text" disabled value="Lima">
 						</div>

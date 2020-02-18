@@ -26,13 +26,16 @@ Route::get('/producto/{slug}', 'WebController@productSingle')->name('web.product
 Route::get('/comprar/producto/{slug?}', 'WebController@buy')->name('comprar.product');
 Route::get('/perfil', 'WebController@profile')->name('web.profile');
 Route::post('/agregar/ubicacion', 'WebController@addLocation')->name('web.add.location');
-Route::get('/tiendas/{url?}', 'WebController@stores')->name('tiendas');
+Route::get('/tiendas', 'WebController@stores')->name('tiendas');
 Route::get('/tienda/productos/{slug}/{url?}', 'WebController@shopSingle')->name('ver.tienda');
+Route::get('/talleres', 'WebController@workshops')->name('talleres');
+Route::get('/taller/{slug}', 'WebController@workshopSingle')->name('ver.taller');
 
 // Servicios
-Route::get('/servicios/', 'WebController@offerServices')->name('servicios');
-Route::get('/servicios/ofrecer', 'WebController@services')->name('servicios.offer');
+Route::get('/servicios/buscar', 'WebController@searchServices')->name('servicios.search');
+Route::get('/servicios/ofrecer', 'WebController@offerServices')->name('servicios.offer');
 Route::get('/servicios/ofrecer/tienda', 'WebController@offerServiceShop')->name('servicios.offer.shop');
+Route::get('/servicios/ofrecer/taller', 'WebController@offerServiceWorkshop')->name('servicios.offer.workshop');
 
 // Blog
 Route::get('/blog', 'WebBlogController@index')->name('web.blog.index');
@@ -139,9 +142,7 @@ Route::get('/misterfix/capacitación/{slug}', 'TrainingController@show')->name('
 Route::get('/misterfix/profesionales', 'ProfessionalController@index')->name('pro.index');
 Route::get('/misterfix/profesionales/{slug}', 'ProfessionalController@show')->name('pro.show');
 
-
 //Talleres
-Route::get('/misterfix/talleres', 'CourseController@index')->name('taller.index');
-Route::get('/misterfix/talleres/registrar', 'CourseController@create')->name('taller.create');
-Route::get('/misterfix/talleres/{slug}', 'CourseController@show')->name('taller.show');
-
+Route::get('/misterfix/talleres', 'WorkshopController@index')->name('taller.index');
+Route::get('/misterfix/talleres/registrar', 'WorkshopController@create')->name('taller.create');
+Route::get('/misterfix/talleres/{slug}', 'WorkshopController@show')->name('taller.show');

@@ -38,7 +38,8 @@ class StoreController extends Controller
     public function create()
     {
         $districts=District::where('province_id', 1501)->get();
-        return view('admin.stores.create', compact('districts'));
+        $users=User::all();
+        return view('admin.stores.create', compact('districts', 'users'));
     }
 
     /**
@@ -64,12 +65,18 @@ class StoreController extends Controller
                 $num++;
             } else {
                 $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();
+                $user=User::where('slug', request('user_id'))->firstOrFail();
                 $data=array('name' => request('name'), 'slug' => $slug, 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'state' => 1, 'lat' => request('lat'), 'lng' => request('lng'));
+                if (request('owner')!="") {
+                    $data['owner']=request('owner');
+                }
                 break;
             }
         }
 
-        $store=Store::create($data)->save();
+        $store=Store::create($data);
+        StoreUser::create(['user_id' => $user->id, 'store_id' => $store->id]);
+
         if ($store) {
             return redirect()->route('tiendas.index')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La tienda ha sido registrada exitosamente.']);
         } else {
@@ -98,7 +105,8 @@ class StoreController extends Controller
     {
         $store=Store::where('slug', $slug)->firstOrFail();
         $districts=District::where('province_id', 1501)->get();
-        return view('admin.stores.edit', compact("store", "districts"));
+        $users=User::all();
+        return view('admin.stores.edit', compact("store", "districts", "users"));
     }
 
     /**
@@ -112,7 +120,20 @@ class StoreController extends Controller
     {
         $store=Store::where('slug', $slug)->firstOrFail();
         $district=District::where('id', request('district_id'))->where('province_id', 1501)->firstOrFail();
+        $user=User::where('slug', request('user_id'))->firstOrFail();
         $data=array('name' => request('name'), 'district_id' => $district->id, 'address' => request('address'), 'phone' => request('phone'), 'lat' => request('lat'), 'lng' => request('lng'));
+        if (!empty(request('owner'))) {
+            $data['owner']=request('owner');
+        } else {
+            $data['owner']=null;
+        }
+
+        if ($user->id!=$store->users[0]->id) {
+            $storeUser=StoreUser::where('user_id', $store->users[0]->id)->where('store_id', $store->id)->firstOrFail();
+            $storeUser->delete();
+            StoreUser::create(['user_id' => $user->id, 'store_id' => $store->id]);
+        }
+
         $store->fill($data)->save();
 
         if ($store) {
@@ -224,7 +245,8 @@ class StoreController extends Controller
 
     public function refuse(Request $request, $slug)
     {
-        $storeUser=StoreUser::where('slug', $slug)->firstOrFail();
+        $store=Store::where('slug', $slug)->firstOrFail();
+        $storeUser=StoreUser::where('store_id', $store->id)->first();
         $storeUser->fill(['state' => 3, 'explanation' => request('explanation')])->save();
 
         if ($storeUser) {

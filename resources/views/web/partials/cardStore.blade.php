@@ -9,9 +9,9 @@
 			@if($loop->index==3) @break @endif
 			<div class="col-4">
 				@if(count($product->images)>0)
-				<img class="img-100-50" src="{{ asset('/admins/img/products/'.$product->images[0]->image) }}" alt="{{ $product->name }}">
+				<img class="img-100-50 lazy" data-src="{{ asset('/admins/img/products/'.$product->images[0]->image) }}" src="{{ asset('/web/images/loading.gif') }}" alt="{{ $product->name }}">
 				@else
-				<img class="img-100-50" src="{{ asset('/admins/img/products/imagen.jpg') }}" alt="{{ $product->name }}">
+				<img class="img-100-50 lazy" data-src="{{ asset('/admins/img/products/imagen.jpg') }}" src="{{ asset('/web/images/loading.gif') }}" alt="{{ $product->name }}">
 				@endif
 				<p class="text-truncate">{{ $product->name }}</p>
 			</div>
@@ -21,6 +21,6 @@
 			</div>
 			@endforelse
 		</div>
-		<a href="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => 'distrito-'.$store->district_id.'-']) }}" class="btn btn-primary">Ver Más</a>
+		<a href="{{ route('ver.tienda', ['slug' => $store->slug, 'url' => 'distrito_'.$store->district_id.'_']) }}" class="btn btn-primary">Ver Más</a>
 	</div>
 </div>

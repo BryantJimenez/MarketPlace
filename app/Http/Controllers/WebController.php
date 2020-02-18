@@ -403,7 +403,7 @@ class WebController extends Controller
 
         $search=$request->all();
 
-        return view('web.workshop.workshops', compact("workshop", "workshopsAll", "districts", "brands", "offset", "pagination", "search"));
+        return view('web.workshop.workshops', compact("workshops", "workshopsAll", "districts", "brands", "offset", "pagination", "search"));
     }
 
     public function workshopSingle(Request $request, $slug, $url=null) {

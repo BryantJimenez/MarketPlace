@@ -21,7 +21,8 @@ use Glovo\Model\Order;
 use Glovo\Model\Address;
 use Auth;
 use Exception;
-
+use App\Notifications\PedidosPorEnviosNotification;
+use App\User; 
 class PaymentController extends Controller
 {
     /**
@@ -38,6 +39,8 @@ class PaymentController extends Controller
 
     public function payProduct(Request $request)
     {
+
+        //exit();
         $paymentCount=Payment::all()->count();
         $slug="compra-".$paymentCount;
 
@@ -45,7 +48,9 @@ class PaymentController extends Controller
         $description="Venta de ".request('qty')." cantidades del producto: ".$product->name.".";
 
         if ($request->has('delivery') && request('delivery')=="yes") {
-            try {
+
+            
+            /*try {
                 $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
                 $api->sandbox_mode(true);
 
@@ -66,10 +71,19 @@ class PaymentController extends Controller
             } catch (Exception $e) {
                 $error = $e->getMessage();
                 return response()->json(['error' => $e]);
-            }
+            }*/ 
+
+            $client_data = User::find(Auth::user()->id);
+
+            //$client_data->email = 'misterfixperu@gmail.com';
+            $client_data->email = 'carlospaiva1374@gmail.com';
+            $client_data->email_cliente = Auth::user()->email;
+            $client_data->notify(new PedidosPorEnviosNotification());
+            $deliveryPrice=0;
         } else {
             $deliveryPrice=0;
         }
+
 
         if ($product->ofert>0) {
             $price=$product->price-($product->price*$product->ofert/100);
@@ -80,7 +94,7 @@ class PaymentController extends Controller
         }
         $total=number_format(request('qty')*$price+$deliveryPrice, 2, ".", "");
         $delivery=number_format($deliveryPrice, 2, ".", "");
-
+       
         if (request('pay')==1) {
             //llave mia
             // $SECRET_KEY = "sk_test_FsqzQFJOUgoyTIiM";

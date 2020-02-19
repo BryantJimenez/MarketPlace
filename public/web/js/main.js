@@ -794,19 +794,19 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 			$('a[delivery="no"]').attr('delivery', 'si');
 			$('a[delivery="si"]').attr('href', '#next');
 		}else{
-			$('#error_mensaje').before(`
+			/*$('#error_mensaje').before(`
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
 				<strong>Lo sentimos!</strong> No realizamos envíos a esta dirección. Por favor, seleccione otra ubicación 
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
-				</div>`);
-			$('a[href="#next"]').attr('delivery', 'no');
-			$('a[delivery="no"]').attr('href', '');
+				</div>`);*/
+			//$('a[href="#next"]').attr('delivery', 'no');
+			//$('a[delivery="no"]').attr('href', '');
 		}
 
-		console.log(resultado);
-		console.log(obj);
+		//console.log(resultado);
+		//console.log(obj);
 
 		
 	});

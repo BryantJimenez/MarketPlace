@@ -24,7 +24,7 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'José Machado',
         		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
         		'type'        => 1,
-        		'state'       => 2
+        		'state'       => 1
 
         	],
         	[
@@ -39,7 +39,7 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'Roberto Smeet',
         		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
         		'type'        => 1,
-        		'state'       => 2
+        		'state'       => 1
 
         	],
         	[
@@ -54,7 +54,7 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'María Flores',
         		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
         		'type'        => 2,
-        		'state'       => 2
+        		'state'       => 1
 
         	]
         ];

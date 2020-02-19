@@ -66,15 +66,12 @@
 					@foreach($workshops as $key)
 						<div class="col-lg-4 col-md-4 mt-4">
 							<div class="card text-center">
-								<div class="card-header">
-									<video style="min-width: 100%; max-width: 100%; min-height: 300px; max-height: 300px;" 
-									controls
-			                        
-			                        poster="{{asset('admins/videos/video.png')}}"
+								{{-- <div class="card-header">
+									<video style="min-width: 100%; max-width: 100%; min-height: 300px; max-height: 300px;" controls poster="{{asset('admins/videos/video.png')}}"
 									>
 										<source src="{{asset('admins/videos/workshops/'.$key->video)}}" type="video/mp4">
 									</video>
-								</div>
+								</div> --}}
 								<div class="card-body">
 									<h5 class="card-title">{{$key->name}}</h5>
 									<div class="col-sm">

@@ -61,20 +61,22 @@ class WebController extends Controller
     public function shop(Request $request, $url=null) {
         $newUrl=($url!=NULL) ? str_replace("_", "/", $url) : null ;
         $urlArray=explode("/", $newUrl);
-        // $districts=(object) $districts;
 
-        $products=Product::where('qty', '>', 0);
+        $products=Product::select('products.id', 'products.name', 'products.slug', 'products.brand_id', 'products.subcategory_id','products.price')->where('products.qty', '>', 0);
         if (in_array("buscar", $urlArray)) {
             $key=array_search("buscar", $urlArray);
             $search=$urlArray[$key+1];
-            $products->where('slug', 'LIKE', '%'.$search.'%');
+            $products->where('products.slug', 'LIKE', '%'.$search.'%');
         }
 
         if (in_array("marca", $urlArray)) {
             $key=array_search("marca", $urlArray);
             $brand=$urlArray[$key+1];
             $brand=Brand::where('slug', $brand)->firstOrFail();
-            $products->where('products.brand_id', $brand->id);
+
+            if (count($brand->products)>0) {
+                $products->join('brand_product', 'products.id', '=', 'brand_product.product_id')->where('brand_product.brand_id', $brand->id);
+            }
         } else {
             $brands=Brand::all();
         }
@@ -83,9 +85,9 @@ class WebController extends Controller
             $key=array_search("precio", $urlArray);
             $price=$urlArray[$key+1];
             if ($price=='bajo') {
-                $products->orderBy('price', 'ASC');
+                $products->orderBy('products.price', 'ASC');
             } elseif ($price=='alto') {
-                $products->orderBy('price', 'DESC');
+                $products->orderBy('products.price', 'DESC');
             }
         }
 
@@ -172,7 +174,7 @@ class WebController extends Controller
 
         $varPage='page';
         $page=Paginator::resolveCurrentPage($varPage);
-        $pagination=new LengthAwarePaginator($products, $total=count($products), $perPage = 8, $page, ['path' => Paginator::resolveCurrentPath(), 'pageName' => $varPage,]);
+        $pagination=new LengthAwarePaginator($products, $total=$countProducts, $perPage = 8, $page, ['path' => Paginator::resolveCurrentPath(), 'pageName' => $varPage,]);
 
         $search=$request->all();
 

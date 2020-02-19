@@ -413,7 +413,7 @@ class WebController extends Controller
         return view('web.workshop.workshops', compact("workshops", "workshopsAll", "districts", "brands", "offset", "pagination", "search"));
     }
 
-    public function workshopSingle(Request $request, $slug, $url=null) {
+    public function workshopSingle($slug,Request $request, $url=null) {
     //     $newUrl=($url!=NULL) ? str_replace("_", "/", $url) : null ;
     //     $urlArray=explode("/", $newUrl);
 
@@ -491,7 +491,11 @@ class WebController extends Controller
     //     $page=Paginator::resolveCurrentPage($varPage);
     //     $pagination=new LengthAwarePaginator($products, $total=count($products), $perPage = 8, $page, ['path' => Paginator::resolveCurrentPath(), 'pageName' => $varPage,]);
 
-        return view('web.workshop.workshopSingle', compact("store", "products", "offset", "pagination", "url", "urlArray", "productsSelect", "categories", "brands"));
+        //return view('web.workshop.workshopSingle', compact("store", "products", "offset", "pagination", "url", "urlArray", "productsSelect", "categories", "brands"));
+
+        $data = Workshop::all()->where('slug',$slug)->first();
+
+        return view('web.workshop.workshopSingle',compact('data'));
     }
 
     public function searchServices() {

@@ -76,7 +76,7 @@
 									<h5 class="card-title">{{$key->name}}</h5>
 									<div class="col-sm">
 										<p class="card-text">Decsripción.</p>
-										<a href="#{{$key->id}}" class="btn btn-primary">Ver Más</a>
+										<a href="{{route('taller.show',$key->slug)}}" class="btn btn-primary">Ver Más</a>
 									</div>
 								</div>
 							</div>

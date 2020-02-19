@@ -145,4 +145,4 @@ Route::get('/misterfix/profesionales/{slug}', 'ProfessionalController@show')->na
 //Talleres
 Route::get('/misterfix/talleres', 'WorkshopController@index')->name('taller.index');
 Route::get('/misterfix/talleres/registrar', 'WorkshopController@create')->name('taller.create');
-Route::get('/misterfix/talleres/{slug}', 'WorkshopController@show')->name('taller.show');
+Route::get('/misterfix/talleres/{slug}', 'WebController@workshopSingle')->name('taller.show');

@@ -22,9 +22,9 @@ class WorkshopsTableSeeder extends Seeder
         		'lat' 		  => -12.0431800,
         		'lng'		  => -77.0282400,
         		'owner'       => 'José Machado',
-        		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
+        		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 1,
-        		'state'       => 2
+        		'state'       => 1
 
         	],
         	[
@@ -37,9 +37,9 @@ class WorkshopsTableSeeder extends Seeder
         		'lat' 		  => -12.0431800,
         		'lng'		  => -77.0282400,
         		'owner'       => 'Roberto Smeet',
-        		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
+        		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 1,
-        		'state'       => 2
+        		'state'       => 1
 
         	],
         	[
@@ -52,9 +52,9 @@ class WorkshopsTableSeeder extends Seeder
         		'lat' 		  => -12.0431800,
         		'lng'		  => -77.0282400,
         		'owner'       => 'María Flores',
-        		'video'       => '/admins/videos/workshops/16-2 Final Mister Fix',
+        		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 2,
-        		'state'       => 2
+        		'state'       => 1
 
         	]
         ];

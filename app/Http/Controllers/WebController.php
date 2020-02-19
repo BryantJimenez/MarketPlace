@@ -386,7 +386,12 @@ class WebController extends Controller
             }
 
             if (array_search($workshop->brand_id, array_column($brands, 'id'))===false) {
-                $brands[$num2]=['name' => $workshop->brand->name, 'id' => $workshop->brand->id];
+                if ($workshop->brand=='' or is_null($workshop->brand)===true) {
+                    //
+                }else{
+                    $brands[$num2]=['name' => $workshop->brand->name, 'id' => $workshop->brand->id];
+                    $num2++;
+                }                
                 $num++;
             }
         }

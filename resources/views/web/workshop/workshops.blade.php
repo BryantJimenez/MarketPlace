@@ -27,12 +27,15 @@
 					<select class="multiselect form-control" name="marca">
 						<option value="">Marca</option>
 						@foreach($brands as $brand)
+
+
 						@isset($search['marca'])
 						<option value="{{ $brand['id'] }}" @if($search['marca']==$brand['id']) selected @endif>{{ $brand['name'] }}</option>
 						@else
-						<option value="{{ $brand['id'] }}">{{ $brand-['name'] }}</option>
+						<option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
 						@endisset
 						@endforeach
+
 					</select>
 				</div>
 			</div>
@@ -60,77 +63,29 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="row">
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
+					@foreach($workshops as $key)
+						<div class="col-lg-4 col-md-4 mt-4">
+							<div class="card text-center">
+								<div class="card-header">
+									<video style="min-width: 100%; max-width: 100%; min-height: 300px; max-height: 300px;" 
+									controls
+			                        
+			                        poster="{{asset('admins/videos/video.png')}}"
+									>
+										<source src="{{asset('admins/videos/workshops/'.$key->video)}}" type="video/mp4">
+									</video>
+								</div>
+								<div class="card-body">
+									<h5 class="card-title">{{$key->name}}</h5>
+									<div class="col-sm">
+										<p class="card-text">Decsripción.</p>
+										<a href="#{{$key->id}}" class="btn btn-primary">Ver Más</a>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-4 mt-4">
-						<div class="card text-center">
-							<div class="card-body">
-								<h5 class="card-title">Nombre del Taller</h5>
-								<div class="col-sm">
-									<p class="card-text">Decsripción.</p>
-									<a href="#" class="btn btn-primary">Ver Más</a>
-								</div>
-							</div>
-						</div>
-					</div>
+					@endforeach
+				
 				</div>
 			</div>
 

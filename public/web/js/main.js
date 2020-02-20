@@ -362,18 +362,18 @@ $(document).ready(function() {
 				});
 
 				//Cambiar valor de un input fuera del checkout al cambiar el selct del envio
-				$('select[name="delivery"]').change(function() {
-					if ($(this).val()=='no') {
-						$('#deliveryInputs').addClass('d-none');
-						$('#deliveryInputs input').attr('disabled', true);
-					} else {
-						$('#deliveryInputs').removeClass('d-none');
-						$('#deliveryInputs input').attr('disabled', false);
-					}
-					$('#checkoutDelivery').val($(this).val());
-					var slug=$('.qty').attr('slug'), qty=$('.qty').val(), delivery=$('#checkoutDelivery').val(), lat=$('#lat').val(), lng=$('#lng').val();
-					calculatorTotal(slug, qty, delivery, lat, lng);
-				});
+				// $('select[name="delivery"]').change(function() {
+					// if ($(this).val()=='no') {
+					// 	$('#deliveryInputs').addClass('d-none');
+					// 	$('#deliveryInputs input').attr('disabled', true);
+					// } else {
+					// 	$('#deliveryInputs').removeClass('d-none');
+					// 	$('#deliveryInputs input').attr('disabled', false);
+					// }
+					// $('#checkoutDelivery').val($(this).val());
+					// var slug=$('.qty').attr('slug'), qty=$('.qty').val(), delivery=$('#checkoutDelivery').val(), lat=$('#lat').val(), lng=$('#lng').val();
+					// calculatorTotal(slug, qty, delivery, lat, lng);
+				// });
 
 				$(".billing-form").validate().settings.ignore = ":disabled,:hidden";
 				return $(".billing-form").valid();
@@ -421,11 +421,11 @@ $(document).ready(function() {
 					maxlength: 15
 				},
 
-				address: {
-					required: true,
-					minlength: 2,
-					maxlength: 191
-				},
+				// address: {
+				// 	required: true,
+				// 	minlength: 2,
+				// 	maxlength: 191
+				// },
 
 				pay: {
 					required: true
@@ -484,10 +484,10 @@ $(document).ready(function() {
 					maxlength: 'Escribe máximo {0} números.'
 				},
 
-				address: {
-					minlength: 'Escribe mínimo {0} caracteres.',
-					maxlength: 'Escribe máximo {0} caracteres.'
-				},
+				// address: {
+				// 	minlength: 'Escribe mínimo {0} caracteres.',
+				// 	maxlength: 'Escribe máximo {0} caracteres.'
+				// },
 
 				card: {
 					minlength: 'Escribe mínimo {0} números.',
@@ -784,16 +784,16 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 
 		var obj=JSON.parse(resultado);
 
-		if (obj.error=='') {
+		// if (obj.error=='') {
 			$('.subtotal').text("S/. "+obj.price);
-			$('.delivery').text("S/. "+obj.delivery);
+			// $('.delivery').text("S/. "+obj.delivery);
 			if ($(".ofert").length) {
 				$('.ofert').text("S/. "+obj.ofert);
 			}
 			$('.total').text("S/. "+obj.total);
-			$('a[delivery="no"]').attr('delivery', 'si');
-			$('a[delivery="si"]').attr('href', '#next');
-		}else{
+			// $('a[delivery="no"]').attr('delivery', 'si');
+			// $('a[delivery="si"]').attr('href', '#next');
+		// }else{
 			/*$('#error_mensaje').before(`
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
 				<strong>Lo sentimos!</strong> No realizamos envíos a esta dirección. Por favor, seleccione otra ubicación 
@@ -801,9 +801,9 @@ function calculatorTotal(slug, qty, delivery, lat, lng) {
 				<span aria-hidden="true">&times;</span>
 				</button>
 				</div>`);*/
-			//$('a[href="#next"]').attr('delivery', 'no');
-			//$('a[delivery="no"]').attr('href', '');
-		}
+		// 	$('a[href="#next"]').attr('delivery', 'no');
+		// 	$('a[delivery="no"]').attr('href', '');
+		// }
 
 		//console.log(resultado);
 		//console.log(obj);

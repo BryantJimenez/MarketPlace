@@ -73,12 +73,12 @@ class PaymentController extends Controller
                 return response()->json(['error' => $e]);
             }*/ 
 
-            $client_data = User::find(Auth::user()->id);
+            // $client_data = User::find(Auth::user()->id);
 
             //$client_data->email = 'misterfixperu@gmail.com';
-            $client_data->email = 'carlospaiva1374@gmail.com';
-            $client_data->email_cliente = Auth::user()->email;
-            $client_data->notify(new PedidosPorEnviosNotification());
+            // $client_data->email = 'otters.c.01@gmail.com';
+            // $client_data->email_cliente = Auth::user()->email;
+            // $client_data->notify(new PedidosPorEnviosNotification());
             $deliveryPrice=0;
         } else {
             $deliveryPrice=0;
@@ -127,6 +127,8 @@ class PaymentController extends Controller
             if (is_array($charge) && $charge['object']=="error") {
                 if (isset($charge['user_message'])) {
                     return redirect()->back()->with(['type' => 'error', 'title' => 'Compra fallida', 'msg' => $charge['user_message']]);
+                } elseif (isset($charge['merchant_message'])) {
+                    return redirect()->back()->with(['type' => 'error', 'title' => 'Compra fallida', 'msg' => $charge['merchant_message']]);
                 } else {
                     return redirect()->back()->with(['type' => 'error', 'title' => 'Compra fallida', 'msg' => 'Los datos ingresados son invalidos, intentelo denuevo.']);
                 }
@@ -179,13 +181,20 @@ class PaymentController extends Controller
         }
 
         if (request('delivery')=='yes') {
-            Delivery::create(['price' => $deliveryPrice, 'address' => request('address'), 'lat' => request('lat'), 'lng' => request('lng'), 'payment_id' => $payment->id]);
+            // Delivery::create(['price' => $deliveryPrice, 'address' => request('address'), 'lat' => request('lat'), 'lng' => request('lng'), 'payment_id' => $payment->id]);
+            $client_data = User::find(Auth::user()->id);
+
+            $client_data->email = 'misterfixperu@gmail.com';
+            // $client_data->email = 'otters.c.01@gmail.com';
+            $client_data->email_cliente = Auth::user()->email;
+            $client_data->phone_cliente = request('phone');
+            $client_data->notify(new PedidosPorEnviosNotification());
         }
 
         if (isset($transfer) && $transfer) {
-            return redirect()->back()->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La compra esta en proceso de revisión para confirmar la realización de la transferencia.']);
+            return redirect()->route('web.sales')->with(['type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La compra esta en proceso de revisión para confirmar la realización de la transferencia.']);
         } elseif (isset($card) && $card) {
-            return redirect()->back()->with(['type' => 'success', 'title' => 'Compra exitosa', 'msg' => 'La compra ha sido finalizada exitosamente.']);
+            return redirect()->route('web.sales')->with(['type' => 'success', 'title' => 'Compra exitosa', 'msg' => 'La compra ha sido finalizada exitosamente.']);
         } else {
             return redirect()->back()->with(['type' => 'error', 'title' => 'Compra fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intnetelo nuevamente.']);
         }
@@ -251,38 +260,40 @@ class PaymentController extends Controller
     public function calculator(Request $request)
     {   
 
-        try {
+        // try {
             $product=Product::where('slug', request('slug'))->firstOrFail();
 
-            if ($request->has('delivery') && request('delivery')=="yes") {
-                $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
-                $api->sandbox_mode(true);
+            // if ($request->has('delivery') && request('delivery')=="yes") {
+            //     $api=new Api("158116800738714", "eadb8a8440aa47dd8589ef2783a83315");
+            //     $api->sandbox_mode(true);
 
-                $lat = $request->lat;
-                $lng = $request->lng;
+            //     $lat = $request->lat;
+            //     $lng = $request->lng;
 
-                $data = $product->stores;
-                $data = $data->first();
+            //     $data = $product->stores;
+            //     $data = $data->first();
 
-                $sourceDir=new Address(Address::TYPE_PICKUP, $data->lat, $data->lng, $data->address,'1st');
+            //     $sourceDir=new Address(Address::TYPE_PICKUP, $data->lat, $data->lng, $data->address,'1st');
 
-                $destDir=new Address(Address::TYPE_DELIVERY, $lat, $lng, "Diag. 73 75", "3A");
+            //     $destDir=new Address(Address::TYPE_DELIVERY, $lat, $lng, "Diag. 73 75", "3A");
 
-                //$sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
-                //$destDir=new Address(Address::TYPE_DELIVERY, -34.922945, -57.990177, "Diag. 73 75", "3A");
+            //     //$sourceDir=new Address(Address::TYPE_PICKUP, -34.919861, -57.919027, "Diag. 73 1234", "1st floor");
+            //     //$destDir=new Address(Address::TYPE_DELIVERY, -34.922945, -57.990177, "Diag. 73 75", "3A");
 
-                $order=new Order();
-                $order->setDescription(request('qty')." ".$product->name);
-                $order->setAddresses([$sourceDir, $destDir]);
-                // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
+            //     $order=new Order();
+            //     $order->setDescription(request('qty')." ".$product->name);
+            //     $order->setAddresses([$sourceDir, $destDir]);
+            //     // $order->setScheduleTime( ( new \DateTime( '+1 hour' ) )->setTime( 19, 0 ) );
 
-                $orderEstimate=$api->estimateOrderPrice($order);
+            //     $orderEstimate=$api->estimateOrderPrice($order);
 
-                $delivery=$orderEstimate['total']['amount']/100;
+            //     $delivery=$orderEstimate['total']['amount']/100;
 
-            } else {
-                $delivery=0;
-            }
+            // } else {
+            //     $delivery=0;
+            // }
+
+            $delivery=0;
             
             if ($product->ofert>0) {
                 $price=$product->price-($product->price*$product->ofert/100);
@@ -296,15 +307,15 @@ class PaymentController extends Controller
             $delivery=number_format($delivery, 2, ".", "");
             return response()->json(['total' => $total, 'price' => $price, 'ofert' => $ofert, 'delivery' => $delivery, 'error' => '']);
 
-        } catch (Exception $e) {
-            $error = $e->getMessage();
+        // } catch (Exception $e) {
+        //     $error = $e->getMessage();
 
-            if ($error=='') {
-                $error = 'No message';
-            }
+        //     if ($error=='') {
+        //         $error = 'No message';
+        //     }
 
-            return response()->json(['error' => $error]);
-        }
+        //     return response()->json(['error' => $error]);
+        // }
     }
 
     public function confirm(Request $request, $slug) {

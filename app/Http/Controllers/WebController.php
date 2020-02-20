@@ -104,9 +104,11 @@ class WebController extends Controller
                     $num++;
                 }
             }
+            $countProducts=count($products);
             $products=(object) $products;
         } else {
             $categories=Category::all();
+            $countProducts=$products->count();
             $products=$products->get();
         }
 
@@ -123,6 +125,7 @@ class WebController extends Controller
                     $num++;
                 }
             }
+            $countProducts=count($products);
             $products=(object) $products;
         } else {
             $stores=Store::all();
@@ -178,7 +181,7 @@ class WebController extends Controller
 
         $search=$request->all();
 
-        return view('web.store.shop', compact("productsSelect", "categories", "brands", "products", "districts", "pagination", "offset", "search", "url", "urlArray"));
+        return view('web.store.shop', compact("productsSelect", "categories", "brands", "products", "districts", "pagination", "offset", "countProducts", "search", "url", "urlArray"));
     }
 
     public function categories() {

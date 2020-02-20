@@ -541,6 +541,16 @@
       max-width: 540px; 
     } 
   }
+
+  @media (max-width: 576px) {
+    #div-filtro{
+      position: fixed; background: #fff; z-index: 4; width: 95%;text-align: center;
+    }
+    .select2{
+      width: 100% !important;
+    }
+  }
+
   @media (min-width: 768px) {
     .container {
       max-width: 720px; 

@@ -850,3 +850,22 @@ function culqi() {
     	alert(Culqi.error.user_message);
     }
 };
+
+$('#filtro').click(function(){
+
+	if ($('#div-filtro').hasClass('active')) {
+
+		
+
+		$('#div-filtro').removeClass('d-block');
+		$('#div-filtro').addClass('d-none');		
+		$('#div-filtro').removeClass('active');
+
+	}else{
+		$('#div-filtro').removeClass('d-none');
+		$('#div-filtro').addClass('d-block');
+		$('#div-filtro').addClass('active');		
+	}
+
+	
+});

@@ -1,4 +1,7 @@
-<div class="nav flex-column">
+<div class="nav flex-column d-none d-md-block" id="div-filtro">
+  <div class="d-block d-md-none">
+    <br><br><br>
+  </div>
   @if(count($urlArray)>0 && $url!=NULL)
   <div class="card border-secondary mb-3 px-2 py-2">
     @for ($i=0; $i < count($urlArray); $i+=2)

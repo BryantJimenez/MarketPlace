@@ -29,33 +29,18 @@
 			</div>
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 				<h3>{{$data->name}}</h3>
-				<div class="rating d-flex">
-					<p class="text-left mr-4">
-						<a href="#" class="mr-2">Capacitador</a>
-					</p>
-					<p class="text-left mr-4">
-						<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-					</p>
-					<p class="text-left">
-						<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-					</p>
+				<div class="rating d-flex">				
 				</div>
-				<p class="price"><span>$120.00</span></p>
-				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until.
-				</p>
-				<div class="row mt-4">
-					<div class="w-100"></div>
-					<div class="w-100"></div>
-					<div class="col-md-12">
-						<p style="color: #000;">Duración</p>
-					</div>
-				</div>
-				<p><a href="#" class="btn btn-black py-3 px-5">Ingresar</a></p>
+				<br>
+				<center><h3>Datos personales</h3></center>
+				<br>
+				
+				<h4><strong>Dirección de taller:</strong> {{$data->address}}</h4> 
 			</div>
 		</div>
 	</div>
 </section>
-
+<!--
 <section class="ftco-section">
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
@@ -161,5 +146,5 @@
 		</div>
 	</div>
 </section>
-
+-->
 @endsection

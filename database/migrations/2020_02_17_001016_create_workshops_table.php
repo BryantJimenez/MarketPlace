@@ -15,6 +15,8 @@ class CreateWorkshopsTable extends Migration
     {
         Schema::create('workshops', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->bigInteger('user_id')->unsigned();
             $table->string('name');
             $table->string('slug')->unique();
             $table->bigInteger('district_id')->unsigned()->nullable();
@@ -27,11 +29,15 @@ class CreateWorkshopsTable extends Migration
             $table->string('video');
             $table->enum('type', [1, 2])->default(1);
             $table->enum('state', [1, 2])->default(2);
+            $table->text('experience');
             $table->timestamps();
 
             #Relations
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 

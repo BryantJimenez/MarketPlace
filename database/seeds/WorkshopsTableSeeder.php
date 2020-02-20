@@ -13,6 +13,7 @@ class WorkshopsTableSeeder extends Seeder
     {
         $talleres = [
         	[
+                'user_id'     => 1,
         		'name'		  => 'Taller Matucana',
         		'slug' 		  => 'taller-matucana',
         		'district_id' => 10104,
@@ -24,10 +25,14 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'José Machado',
         		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 1,
-        		'state'       => 1
+        		'state'       => 1,
+                'experience'  =>'
+                    Líderes en reparación de Automóviles con más de 10 años de experiencia. Contamos con un personal altamente capacitado para resolver los problemas de su vehículo. 
+                '
 
         	],
         	[
+                'user_id'     => 2,
         		'name'		  => 'Taller San vicente',
         		'slug' 		  => 'taller-san-vicente',
         		'district_id' => 10104,
@@ -39,10 +44,14 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'Roberto Smeet',
         		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 1,
-        		'state'       => 1
+        		'state'       => 1,
+                'experience'  =>'
+                    Líderes en reparación de Automóviles con más de 10 años de experiencia. Contamos con un personal altamente capacitado para resolver los problemas de su vehículo. 
+                '
 
         	],
         	[
+                'user_id'     => 2,
         		'name'		  => 'Taller Toyota',
         		'slug' 		  => 'taller-toyota',
         		'district_id' => 10104,
@@ -54,7 +63,10 @@ class WorkshopsTableSeeder extends Seeder
         		'owner'       => 'María Flores',
         		'video'       => '16-2 Final Mister Fix.mp4',
         		'type'        => 2,
-        		'state'       => 1
+        		'state'       => 1,
+                'experience'  =>'
+                    Líderes en reparación de Automóviles con más de 10 años de experiencia. Contamos con un personal altamente capacitado para resolver los problemas de su vehículo. 
+                '
 
         	]
         ];

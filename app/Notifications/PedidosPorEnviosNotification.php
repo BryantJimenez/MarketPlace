@@ -46,7 +46,7 @@ class PedidosPorEnviosNotification extends Notification
                     ->line('Tienes  un nuevo pedido de '.$notifiable->name)
                     ->line('Por favor, comuníquese con el cliente a través de la información de contacto subministrada:')
                     ->line('Nombre: '.$notifiable->name.' '.$notifiable->lastname)
-                    ->line('Teléfono: '.$notifiable->phone)
+                    ->line('Teléfono: '.$notifiable->phone_cliente)
                     ->line('Email: '.$notifiable->email_cliente);
     }
 

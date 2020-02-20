@@ -32,10 +32,10 @@
 								<span>Subtotal</span>
 								<span class="subtotal">{{ "S/. ".productPrice($product, 1) }}</span>
 							</p>
-							<p class="d-flex">
+							{{-- <p class="d-flex">
 								<span>Envio</span>
 								<span class="delivery">S/. 0.00</span>
-							</p>
+							</p> --}}
 							@if($product->ofert>0)
 							<p class="d-flex">
 								<span>Descuento</span>
@@ -179,7 +179,7 @@
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Teléfono<b class="text-danger">*</b></label>
-											<input type="text" class="form-control" name="phone" placeholder="Introduzca su teléfono" @if(Auth::user()->phone!=null || Auth::user()->phone!="") readonly value="{{ Auth::user()->phone }}" @else required @endif>
+											<input type="text" class="form-control" name="phone" placeholder="Introduzca su teléfono" required value="{{ Auth::user()->phone }}">
 										</div>
 									</div>
 								</div>
@@ -200,7 +200,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-12 d-none" id="deliveryInputs">
+									{{-- <div class="col-12 d-none" id="deliveryInputs">
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group">
@@ -216,7 +216,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 								</div>
 							</section>
 							<h3>Pago</h3>

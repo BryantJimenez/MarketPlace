@@ -34,8 +34,20 @@
 				<br>
 				<center><h3>Datos personales</h3></center>
 				<br>
-				
+				<h4><strong>Nombre:</strong> {{$data->user->name}} {{$data->user->lastname}}</h4>
+				<br>
+
+				<h4><strong>Número de teléfono:</strong> {{$data->user->phone}}</h4>
+				<br>
+
 				<h4><strong>Dirección de taller:</strong> {{$data->address}}</h4> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h3><center>Experiencia</center></h3>
+				<br>
+				{{$data->experience}}
 			</div>
 		</div>
 	</div>
